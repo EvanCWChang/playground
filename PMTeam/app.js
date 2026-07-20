@@ -4,7 +4,7 @@
 const GOOGLE_SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8mQSajp7nmhpQirCC2f7jmRooF5fJ9Yt85zopl009AjyGk1rCY1EAAV1aAS2wZPpyoQ/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
-    let isGalleryUnlocked = false;
+    let isGalleryUnlocked = true;
     let highestStepReached = 1;
 
     // ==========================================================================
@@ -113,10 +113,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const navCabin = document.getElementById('nav-cabin');
 
     function goBackToHome() {
-        // 主頁面隱藏
+        // 主頁面與結尾護照隱藏
         mainContent.style.opacity = '0';
         mainContent.style.transform = 'translateY(20px)';
         mainContent.style.transition = 'all 0.5s ease-in';
+        
+        const endingScreen = document.getElementById('passport-ending-screen');
+        if (endingScreen) {
+            endingScreen.classList.add('hidden');
+        }
         
         // 隱藏 Flight Information Widget
         const infoWidget = document.getElementById('flight-info-widget');
@@ -381,11 +386,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Generating Your Premium PM Flight Passport',
                 'fa-passport',
                 () => {
-                    // 1. 隱藏原有的 Step 3 表單區與側邊欄，讓 Ending Passport 專屬展示
-                    const workspaceGrid = document.querySelector('.workspace-grid');
-                    const passengerSection = document.querySelector('.passenger-checkin-section');
-                    if (workspaceGrid) workspaceGrid.classList.add('hidden');
-                    if (passengerSection) passengerSection.classList.add('hidden');
+                    // 1. 隱藏整個主機艙頁面，讓 Ending Passport 作為獨立的下一頁 Ending 展示
+                    const mainContent = document.getElementById('main-content');
+                    if (mainContent) mainContent.classList.add('hidden');
 
                     // 2. 顯示 Passport 結束頁面
                     const endingScreen = document.getElementById('passport-ending-screen');
@@ -527,8 +530,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnViewAllPassports = document.getElementById('btn-view-all-passports');
     if (btnViewAllPassports) {
         btnViewAllPassports.addEventListener('click', () => {
-            // 點選後直接滑動到已通過海關成員藝廊
-            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth' });
+            // 1. 顯示主艙面 (包含已解鎖的藝廊)，並隱藏個人護照頁
+            const mainContent = document.getElementById('main-content');
+            const endingScreen = document.getElementById('passport-ending-screen');
+            if (mainContent) mainContent.classList.remove('hidden');
+            if (endingScreen) endingScreen.classList.add('hidden');
+            
+            // 2. 平滑滾動到藝廊
+            setTimeout(() => {
+                document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth' });
+            }, 50);
         });
     }
 
@@ -942,99 +953,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // 直接納入 FIDS 即可
     }
 
-    // 初始化載入 Mock 卡片
-    function initMockCards() {
-        if (galleryEmpty) {
-            galleryEmpty.classList.add('hidden');
-        }
-        if (galleryGrid) {
-            galleryGrid.classList.remove('hidden');
-            
-            mockMembers.forEach(member => {
-                const cardHtml = `
-                    <div class="profile-card is-locked">
-                        <div class="card-status-bar"></div>
-                        <div class="card-header">
-                            <div class="card-avatar" style="background: ${member.avatarBg}">${member.avatar}</div>
-                            <div class="card-header-info">
-                                <h3>${member.name}</h3>
-                                <p class="card-sub">${member.background}</p>
-                            </div>
-                        </div>
-                        <div class="customs-stamp">APPROVED / CLEARED</div>
-
-                        <div class="card-body">
-                            <div class="card-item">
-                                <span class="card-icon"><i class="fa-solid fa-plane-departure"></i></span>
-                                <div class="card-item-content">
-                                    <label>最酷異地經歷</label>
-                                    <p>${member.exp}</p>
-                                </div>
-                            </div>
-
-                            <div class="card-item">
-                                <span class="card-icon"><i class="fa-solid fa-arrows-spin"></i></span>
-                                <div class="card-item-content">
-                                    <label>職涯 Pivot 轉折點</label>
-                                    <p>${member.pivot}</p>
-                                </div>
-                            </div>
-
-                            <div class="card-item font-danger">
-                                <span class="card-icon"><i class="fa-solid fa-skull-crossbones"></i></span>
-                                <div class="card-item-content">
-                                    <label>踩過最大的坑</label>
-                                    <p>${member.pit}</p>
-                                </div>
-                            </div>
-
-                            <div class="card-item">
-                                <span class="card-icon"><i class="fa-solid fa-trophy"></i></span>
-                                <div class="card-item-content">
-                                    <label>最引以為傲的事</label>
-                                    <p>${member.proud}</p>
-                                </div>
-                            </div>
-
-                            <div class="card-grid-2">
-                                <div class="card-item">
-                                    <span class="card-icon"><i class="fa-solid fa-masks-theater"></i></span>
-                                    <div class="card-item-content">
-                                        <label>隱藏才藝</label>
-                                        <p>${member.talent}</p>
-                                    </div>
-                                </div>
-                                <div class="card-item">
-                                    <span class="card-icon"><i class="fa-solid fa-dragon"></i></span>
-                                    <div class="card-item-content">
-                                        <label>Fun Fact</label>
-                                        <p>${member.funfact}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-item">
-                                <span class="card-icon"><i class="fa-solid fa-book"></i></span>
-                                <div class="card-item-content">
-                                    <label>推薦書/電影</label>
-                                    <p>${member.influence}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="quote-container">
-                                <i class="fa-solid fa-quote-left quote-icon-left"></i>
-                                <p id="card-quote">${member.quote}</p>
-                                <i class="fa-solid fa-quote-right quote-icon-right"></i>
-                            </div>
-                        </div>
-
-    // 渲染從 Google Sheets 讀取的卡片到藝廊
-    function renderMemberToGallery(member) {
-        // 直接納入 FIDS 即可
-    }
-
     // 將成員加入至 FIDS 乘客名單表格
     function addMemberToFids(member) {
         const fidsTbody = document.getElementById('fids-tbody');
@@ -1089,176 +1007,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 渲染自填卡片到藝廊 (這裏改為無操作，因為填寫完成後已不再直接追加一般卡片，而是打開 Premium Ending Passport)
     function renderToGallery() {
         // No-op to avoid breaking submitBtn logic
-    }
-
-        const tr = document.createElement('tr');
-        tr.className = 'fids-row dynamic-row';
-        tr.innerHTML = `
-            <td class="passenger-name-cell">${name}</td>
-            <td class="seat-cell">${seat}</td>
-            <td class="gate-cell">小樹屋</td>
-            <td class="dest-cell">${dest}</td>
-            <td><span class="fids-status-badge status-boarded">BOARDED</span></td>
-        `;
-
-        if (userFidsRow) {
-            fidsTbody.insertBefore(tr, userFidsRow);
-        } else {
-            fidsTbody.appendChild(tr);
-        }
-    }
-
-    // 載入 Google Sheets 資料
-    async function loadGoogleSheetData() {
-        if (!GOOGLE_SHEET_SCRIPT_URL) return;
-        try {
-            const response = await fetch(GOOGLE_SHEET_SCRIPT_URL);
-            const result = await response.json();
-            if (result.result === 'success' && result.data) {
-                result.data.forEach(member => {
-                    renderMemberToGallery(member);
-                    addMemberToFids(member);
-                });
-            }
-        } catch (e) {
-            console.error("無法載入 Google Sheet 資料:", e);
-        }
-    }
-
-    // 啟動載入 Mock 卡片與 Google Sheets 資料
-    initMockCards();
-    loadGoogleSheetData();
-
-    // 渲染自填卡片到藝廊
-    function renderToGallery() {
-        // 直接從 inputs 與 defaults 擷取目前的所有填寫值
-        const currentName = (inputs.name && inputs.name.value.trim()) || defaults.name;
-        const inputBg = inputs.background && inputs.background.value.trim();
-        const currentBackground = inputBg ? `🎓 ${inputBg}` : defaults.background;
-        const currentExp = (inputs.exp && inputs.exp.value.trim()) || defaults.exp;
-        const currentPivot = (inputs.pivot && inputs.pivot.value.trim()) || defaults.pivot;
-        const currentPit = (inputs.pit && inputs.pit.value.trim()) || defaults.pit;
-        const currentProud = (inputs.proud && inputs.proud.value.trim()) || defaults.proud;
-        const currentTalent = (inputs.talent && inputs.talent.value.trim()) || defaults.talent;
-        const currentFunfact = (inputs.funfact && inputs.funfact.value.trim()) || defaults.funfact;
-        const currentInfluence = (inputs.influence && inputs.influence.value.trim()) || defaults.influence;
-        const currentQuote = (inputs.quote && inputs.quote.value.trim()) || defaults.quote;
-        const currentAvatar = currentName.substring(0, 2).toUpperCase();
-
-        // 生成一個不重複的隨機背景顏色，讓藝廊更繽紛
-        const hue = Math.floor(Math.random() * 360);
-        const randomAvatarBg = `linear-gradient(135deg, hsl(${hue}, 70%, 45%) 0%, hsl(${(hue + 40) % 360}, 80%, 35%) 100%)`;
-
-        const lockClass = isGalleryUnlocked ? "" : "is-locked";
-
-        // 建立精巧的全新畫像卡 HTML 結構
-        const cardHtml = `
-            <div class="profile-card ${lockClass}" style="opacity: 0; transform: scale(0.9); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-                <div class="card-status-bar"></div>
-                <div class="card-header">
-                    <div class="card-avatar" style="background: ${randomAvatarBg}">${currentAvatar}</div>
-                    <div class="card-header-info">
-                        <h3>${currentName}</h3>
-                        <p class="card-sub">${currentBackground}</p>
-                    </div>
-                </div>
-                <div class="customs-stamp">APPROVED / CLEARED</div>
-
-                <div class="card-body">
-                    <div class="card-item">
-                        <span class="card-icon"><i class="fa-solid fa-plane-departure"></i></span>
-                        <div class="card-item-content">
-                            <label>最酷異地經歷</label>
-                            <p>${currentExp}</p>
-                        </div>
-                    </div>
-
-                    <div class="card-item">
-                        <span class="card-icon"><i class="fa-solid fa-arrows-spin"></i></span>
-                        <div class="card-item-content">
-                            <label>職涯 Pivot 轉折點</label>
-                            <p>${currentPivot}</p>
-                        </div>
-                    </div>
-
-                    <div class="card-item font-danger">
-                        <span class="card-icon"><i class="fa-solid fa-skull-crossbones"></i></span>
-                        <div class="card-item-content">
-                            <label>踩過最大的坑</label>
-                            <p>${currentPit}</p>
-                        </div>
-                    </div>
-
-                    <div class="card-item">
-                        <span class="card-icon"><i class="fa-solid fa-trophy"></i></span>
-                        <div class="card-item-content">
-                            <label>最引以為傲的事</label>
-                            <p>${currentProud}</p>
-                        </div>
-                    </div>
-
-                    <div class="card-grid-2">
-                        <div class="card-item">
-                            <span class="card-icon"><i class="fa-solid fa-masks-theater"></i></span>
-                            <div class="card-item-content">
-                                <label>隱藏才藝</label>
-                                <p>${currentTalent}</p>
-                            </div>
-                        </div>
-                        <div class="card-item">
-                            <span class="card-icon"><i class="fa-solid fa-dragon"></i></span>
-                            <div class="card-item-content">
-                                <label>Fun Fact</label>
-                                <p>${currentFunfact}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-item">
-                        <span class="card-icon"><i class="fa-solid fa-book"></i></span>
-                        <div class="card-item-content">
-                            <label>推薦書/電影</label>
-                            <p>${currentInfluence}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-footer">
-                    <div class="quote-container">
-                        <i class="fa-solid fa-quote-left quote-icon-left"></i>
-                        <p id="card-quote">${currentQuote}</p>
-                        <i class="fa-solid fa-quote-right quote-icon-right"></i>
-                    </div>
-                </div>
-
-                <div class="card-lock-overlay">
-                    <div class="lock-icon">🔒</div>
-                    <div class="lock-text">海關查驗中：請先完成並送出您的機票表單以解鎖隊員檔案</div>
-                </div>
-            </div>
-        `;
-
-        // 將 HTML 轉換為 DOM 節點
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = cardHtml.trim();
-        const newCard = tempDiv.firstChild;
-
-        // 隱藏空狀態，顯示藝廊
-        if (galleryEmpty) {
-            galleryEmpty.classList.add('hidden');
-        }
-        if (galleryGrid) {
-            galleryGrid.classList.remove('hidden');
-            
-            // 插入到藝廊的最前面
-            galleryGrid.insertBefore(newCard, galleryGrid.firstChild);
-
-            // 觸發滑順的淡入與放大動畫
-            setTimeout(() => {
-                newCard.style.opacity = '1';
-                newCard.style.transform = 'scale(1)';
-            }, 50);
-        }
     }
 
     // ==========================================================================

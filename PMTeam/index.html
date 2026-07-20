@@ -80,7 +80,7 @@
             </div>
 
             <!-- 主標題與副標題 -->
-            <h1 class="hero-title">從過去到現在，至未來的我們</h1>
+            <h1 class="hero-title">從過去到現在，致未來的我們</h1>
 
             <!-- 導覽敘述內文 -->
             <p class="hero-description">
@@ -569,7 +569,28 @@
             </div>
         </section>
 
-        <!-- 新增：Final Passport Ending Screen -->
+        <!-- 新增：PM 團隊畫像藝廊區塊 -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2><i class="fa-solid fa-palette"></i> 已通過海關的成員</h2>
+                <p>已點亮的團隊成員畫像，攜手見證過往的成長與未來的力量</p>
+            </div>
+            
+            <!-- 預設無卡片時的空狀態 -->
+            <div class="gallery-empty" id="gallery-empty">
+                <i class="fa-regular fa-folder-open empty-icon"></i>
+                <p>目前藝廊還空空如也，快去上面填寫表單，產生你的第一張個人畫像卡吧！</p>
+            </div>
+
+            <!-- 卡片藝廊網格 -->
+            <div class="gallery-grid hidden" id="gallery-grid">
+                <!-- 動態產生的卡片會被 Append 到這裡 -->
+            </div>
+        </section>
+        </section>
+    </main>
+
+    <!-- 新增：Final Passport Ending Screen -->
         <div id="passport-ending-screen" class="hidden">
             <div class="passport-ending-container">
                 
@@ -754,26 +775,8 @@
             </div>
         </div>
 
-        <!-- 新增：PM 團隊畫像藝廊區塊 -->
-        <section class="gallery-section">
-            <div class="gallery-header">
-                <h2><i class="fa-solid fa-palette"></i> 已通過海關的成員</h2>
-                <p>已點亮的團隊成員畫像，攜手見證過往的成長與未來的力量</p>
-            </div>
-            
-            <!-- 預設無卡片時的空狀態 -->
-            <div class="gallery-empty" id="gallery-empty">
-                <i class="fa-regular fa-folder-open empty-icon"></i>
-                <p>目前藝廊還空空如也，快去上面填寫表單，產生你的第一張個人畫像卡吧！</p>
-            </div>
+        
 
-            <!-- 卡片藝廊網格 -->
-            <div class="gallery-grid hidden" id="gallery-grid">
-                <!-- 動態產生的卡片會被 Append 到這裡 -->
-            </div>
-        </section>
-        </section>
-    </main>
 
     <!-- 全螢幕過場動畫 Overlay -->
     <div id="fullscreen-transition-overlay" class="fullscreen-transition-overlay hidden">
