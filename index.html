@@ -3,110 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>方塊大冒險</title>
+  <title>俄羅斯方塊</title>
   <link rel="stylesheet" href="style.css" />
   <script src="game.js" defer></script>
 </head>
 <body>
-  <header class="topbar">
-    <h1>方塊大冒險</h1>
-
-    <nav class="mode-tabs" aria-label="遊戲模式">
-      <button class="mode-tab active" type="button">單人</button>
-      <button class="mode-tab" type="button" disabled>對戰</button>
-    </nav>
-
-    <div class="toolbar" aria-label="遊戲工具">
-      <button id="pauseBtn" class="round-btn" type="button" title="暫停/繼續" aria-label="暫停/繼續">Ⅱ</button>
-      <button id="helpBtn" class="round-btn" type="button" title="操作說明" aria-label="操作說明">?</button>
-      <button id="restartBtn" class="round-btn" type="button" title="重新開始" aria-label="重新開始">↻</button>
-      <button id="themeBtn" class="round-btn" type="button" title="切換主題" aria-label="切換主題">☀</button>
-    </div>
-  </header>
-
   <main class="app">
-    <section class="game-card" aria-label="俄羅斯方塊遊戲">
-      <aside class="left-panel">
-        <section class="hold-section">
-          <h2>保留方塊</h2>
-          <canvas id="hold" width="150" height="120" aria-label="保留方塊"></canvas>
-        </section>
+    <section class="game-panel">
+      <h1>俄羅斯方塊</h1>
 
-        <section class="score-section">
-          <p>本局分數</p>
-          <strong id="score">0</strong>
+      <div class="game-layout">
+        <canvas id="board" width="300" height="600"></canvas>
 
-          <dl class="score-list">
-            <div>
-              <dt>歷史新高</dt>
-              <dd id="bestScore">0</dd>
-            </div>
-            <div>
-              <dt>今日最高</dt>
-              <dd id="todayBest">0</dd>
-            </div>
-            <div>
-              <dt>消除行數</dt>
-              <dd id="lines">0</dd>
-            </div>
-            <div>
-              <dt>等級</dt>
-              <dd id="level">1</dd>
-            </div>
-          </dl>
-        </section>
-      </aside>
-
-      <section class="board-section">
-        <div id="status" class="status-pill">準備開始</div>
-        <canvas id="board" width="300" height="600" aria-label="遊戲區"></canvas>
-      </section>
-
-      <aside class="right-panel">
-        <section class="queue-section">
-          <h2>即將出現</h2>
-          <div class="preview-stack">
-            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 1"></canvas>
-            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 2"></canvas>
-            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 3"></canvas>
-            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 4"></canvas>
+        <aside class="sidebar">
+          <div class="stat">
+            <span>分數</span>
+            <strong id="score">0</strong>
           </div>
-        </section>
 
-        <section class="rank-section">
-          <div class="divider"></div>
-          <p>本週排名</p>
-          <strong id="weeklyRank">第 1 名</strong>
-          <span id="rankHint">目前排名第一！</span>
-          <button id="rankBtn" class="outline-btn" type="button">♜ 查看排行榜</button>
-        </section>
-      </aside>
+          <div class="stat">
+            <span>等級</span>
+            <strong id="level">1</strong>
+          </div>
+
+          <div class="stat">
+            <span>消除行數</span>
+            <strong id="lines">0</strong>
+          </div>
+
+          <div class="next-box">
+            <span>下一個</span>
+            <canvas id="next" width="120" height="120"></canvas>
+          </div>
+
+          <button id="startBtn">開始</button>
+          <button id="pauseBtn">暫停</button>
+          <button id="restartBtn">重新開始</button>
+        </aside>
+      </div>
+
+      <div class="mobile-controls">
+        <button data-action="left">左</button>
+        <button data-action="rotate">旋轉</button>
+        <button data-action="right">右</button>
+        <button data-action="down">下</button>
+        <button data-action="drop">落下</button>
+      </div>
     </section>
-
-    <div class="mobile-controls" aria-label="手機操作">
-      <button data-action="left" type="button">←</button>
-      <button data-action="rotate" type="button">旋轉</button>
-      <button data-action="right" type="button">→</button>
-      <button data-action="down" type="button">下</button>
-      <button data-action="drop" type="button">落下</button>
-      <button data-action="hold" type="button">保留</button>
-    </div>
   </main>
-
-  <dialog id="helpDialog" class="modal">
-    <form method="dialog">
-      <h2>操作說明</h2>
-      <p>方向鍵左右移動、上鍵旋轉、下鍵加速、空白鍵直接落下、C 或 Shift 保留方塊。</p>
-      <button class="outline-btn" type="submit">知道了</button>
-    </form>
-  </dialog>
-
-  <dialog id="rankDialog" class="modal">
-    <form method="dialog">
-      <h2>排行榜</h2>
-      <ol id="rankList" class="rank-list"></ol>
-      <button class="outline-btn" type="submit">關閉</button>
-    </form>
-  </dialog>
 </body>
 </html>

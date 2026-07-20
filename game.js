@@ -1,7 +1,8 @@
 const COLS = 10;
 const ROWS = 20;
 const BLOCK = 30;
-const NEXT_BLOCK = 24;
+const MINI_BLOCK = 22;
+const STORAGE_KEY = "blockAdventureStats";
 
 const SHAPES = {
   I: [[1, 1, 1, 1]],
@@ -32,30 +33,43 @@ const SHAPES = {
 };
 
 const COLORS = {
-  I: "#30d5ff",
-  J: "#3f7cff",
-  L: "#ff9f3f",
-  O: "#ffd84a",
-  S: "#48d86f",
-  T: "#b869ff",
-  Z: "#ff5a74",
+  I: "#00c8ff",
+  J: "#276ef1",
+  L: "#f5a000",
+  O: "#f2ea00",
+  S: "#08e017",
+  T: "#a800f2",
+  Z: "#f00000",
 };
 
 const boardCanvas = document.querySelector("#board");
 const boardContext = boardCanvas.getContext("2d");
-const nextCanvas = document.querySelector("#next");
-const nextContext = nextCanvas.getContext("2d");
+const holdCanvas = document.querySelector("#hold");
+const holdContext = holdCanvas.getContext("2d");
+const nextCanvases = [...document.querySelectorAll(".next-board")];
+const nextContexts = nextCanvases.map((canvas) => canvas.getContext("2d"));
 const scoreEl = document.querySelector("#score");
+const bestScoreEl = document.querySelector("#bestScore");
+const todayBestEl = document.querySelector("#todayBest");
 const levelEl = document.querySelector("#level");
 const linesEl = document.querySelector("#lines");
+const weeklyRankEl = document.querySelector("#weeklyRank");
+const rankHintEl = document.querySelector("#rankHint");
+const rankListEl = document.querySelector("#rankList");
 const statusEl = document.querySelector("#status");
-const startBtn = document.querySelector("#startBtn");
 const pauseBtn = document.querySelector("#pauseBtn");
 const restartBtn = document.querySelector("#restartBtn");
+const helpBtn = document.querySelector("#helpBtn");
+const themeBtn = document.querySelector("#themeBtn");
+const rankBtn = document.querySelector("#rankBtn");
+const helpDialog = document.querySelector("#helpDialog");
+const rankDialog = document.querySelector("#rankDialog");
 
 let board = createBoard();
 let activePiece = createPiece();
-let nextPiece = createPiece();
+let queue = createQueue();
+let holdPiece = null;
+let canHold = true;
 let score = 0;
 let lines = 0;
 let level = 1;
@@ -64,16 +78,18 @@ let lastTime = 0;
 let isRunning = false;
 let isPaused = false;
 let animationId = null;
+let stats = loadStats();
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => Array(COLS).fill(null));
 }
 
-function createPiece() {
-  const types = Object.keys(SHAPES);
-  const type = types[Math.floor(Math.random() * types.length)];
-  const matrix = SHAPES[type].map((row) => [...row]);
+function cloneMatrix(matrix) {
+  return matrix.map((row) => [...row]);
+}
 
+function createPiece(type = randomType()) {
+  const matrix = cloneMatrix(SHAPES[type]);
   return {
     type,
     matrix,
@@ -82,35 +98,77 @@ function createPiece() {
   };
 }
 
-function drawCell(context, x, y, size, color) {
-  context.fillStyle = color;
-  context.fillRect(x * size, y * size, size, size);
-  context.strokeStyle = "rgba(255, 255, 255, 0.18)";
+function randomType() {
+  const types = Object.keys(SHAPES);
+  return types[Math.floor(Math.random() * types.length)];
+}
+
+function createQueue() {
+  return Array.from({ length: 4 }, () => createPiece());
+}
+
+function popNextPiece() {
+  const nextPiece = queue.shift();
+  queue.push(createPiece());
+  nextPiece.x = Math.floor((COLS - nextPiece.matrix[0].length) / 2);
+  nextPiece.y = 0;
+  return nextPiece;
+}
+
+function loadStats() {
+  const today = new Date().toISOString().slice(0, 10);
+  const fallback = { best: 0, today, todayBest: 0, scores: [] };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || fallback;
+    if (saved.today !== today) {
+      saved.today = today;
+      saved.todayBest = 0;
+    }
+    return { ...fallback, ...saved };
+  } catch {
+    return fallback;
+  }
+}
+
+function saveStats() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+}
+
+function getCssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function drawGrid(context, width, height, size) {
+  context.fillStyle = getCssVar("--board");
+  context.fillRect(0, 0, width, height);
+  context.strokeStyle = getCssVar("--grid");
   context.lineWidth = 2;
-  context.strokeRect(x * size + 1, y * size + 1, size - 2, size - 2);
+
+  for (let x = 0; x <= width; x += size) {
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, height);
+    context.stroke();
+  }
+
+  for (let y = 0; y <= height; y += size) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(width, y);
+    context.stroke();
+  }
+}
+
+function drawCell(context, x, y, size, color, alpha = 1) {
+  context.globalAlpha = alpha;
+  context.fillStyle = color;
+  context.fillRect(x * size + 2, y * size + 2, size - 4, size - 4);
+  context.globalAlpha = 1;
 }
 
 function drawBoard() {
-  boardContext.clearRect(0, 0, boardCanvas.width, boardCanvas.height);
-  boardContext.fillStyle = "#0d1217";
-  boardContext.fillRect(0, 0, boardCanvas.width, boardCanvas.height);
-
-  boardContext.strokeStyle = "rgba(255, 255, 255, 0.04)";
-  boardContext.lineWidth = 1;
-
-  for (let x = 1; x < COLS; x += 1) {
-    boardContext.beginPath();
-    boardContext.moveTo(x * BLOCK, 0);
-    boardContext.lineTo(x * BLOCK, ROWS * BLOCK);
-    boardContext.stroke();
-  }
-
-  for (let y = 1; y < ROWS; y += 1) {
-    boardContext.beginPath();
-    boardContext.moveTo(0, y * BLOCK);
-    boardContext.lineTo(COLS * BLOCK, y * BLOCK);
-    boardContext.stroke();
-  }
+  drawGrid(boardContext, boardCanvas.width, boardCanvas.height, BLOCK);
 
   board.forEach((row, y) => {
     row.forEach((type, x) => {
@@ -120,7 +178,28 @@ function drawBoard() {
     });
   });
 
+  drawGhostPiece();
   drawPiece(boardContext, activePiece, BLOCK);
+}
+
+function drawGhostPiece() {
+  const ghost = {
+    ...activePiece,
+    matrix: cloneMatrix(activePiece.matrix),
+  };
+
+  while (!isColliding(ghost)) {
+    ghost.y += 1;
+  }
+
+  ghost.y -= 1;
+  ghost.matrix.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value) {
+        drawCell(boardContext, ghost.x + x, ghost.y + y, BLOCK, COLORS[ghost.type], 0.28);
+      }
+    });
+  });
 }
 
 function drawPiece(context, piece, size) {
@@ -133,21 +212,32 @@ function drawPiece(context, piece, size) {
   });
 }
 
-function drawNext() {
-  nextContext.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
-  nextContext.fillStyle = "#10161b";
-  nextContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+function drawMiniPiece(context, canvas, piece) {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = getCssVar("--board");
+  context.fillRect(0, 0, canvas.width, canvas.height);
 
-  const matrix = nextPiece.matrix;
-  const offsetX = Math.floor((nextCanvas.width / NEXT_BLOCK - matrix[0].length) / 2);
-  const offsetY = Math.floor((nextCanvas.height / NEXT_BLOCK - matrix.length) / 2);
+  if (!piece) {
+    return;
+  }
+
+  const matrix = piece.matrix;
+  const offsetX = Math.floor((canvas.width / MINI_BLOCK - matrix[0].length) / 2);
+  const offsetY = Math.floor((canvas.height / MINI_BLOCK - matrix.length) / 2);
 
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        drawCell(nextContext, offsetX + x, offsetY + y, NEXT_BLOCK, COLORS[nextPiece.type]);
+        drawCell(context, offsetX + x, offsetY + y, MINI_BLOCK, COLORS[piece.type]);
       }
     });
+  });
+}
+
+function drawPreviews() {
+  drawMiniPiece(holdContext, holdCanvas, holdPiece);
+  nextContexts.forEach((context, index) => {
+    drawMiniPiece(context, nextCanvases[index], queue[index]);
   });
 }
 
@@ -243,9 +333,7 @@ function dropPiece() {
 
   if (isColliding(activePiece)) {
     activePiece.y -= 1;
-    mergePiece();
-    sweepLines();
-    spawnPiece();
+    lockPiece();
   }
 
   dropCounter = 0;
@@ -259,23 +347,45 @@ function hardDrop() {
 
   while (!isColliding(activePiece)) {
     activePiece.y += 1;
+    score += 1;
   }
 
   activePiece.y -= 1;
-  mergePiece();
-  score += 2;
-  sweepLines();
-  spawnPiece();
+  lockPiece();
   updateHud();
   drawBoard();
 }
 
+function holdCurrentPiece() {
+  if (!isRunning || isPaused || !canHold) {
+    return;
+  }
+
+  const currentType = activePiece.type;
+  if (!holdPiece) {
+    holdPiece = createPiece(currentType);
+    activePiece = popNextPiece();
+  } else {
+    const heldType = holdPiece.type;
+    holdPiece = createPiece(currentType);
+    activePiece = createPiece(heldType);
+  }
+
+  canHold = false;
+  drawPreviews();
+  drawBoard();
+}
+
+function lockPiece() {
+  mergePiece();
+  sweepLines();
+  spawnPiece();
+}
+
 function spawnPiece() {
-  activePiece = nextPiece;
-  activePiece.x = Math.floor((COLS - activePiece.matrix[0].length) / 2);
-  activePiece.y = 0;
-  nextPiece = createPiece();
-  drawNext();
+  activePiece = popNextPiece();
+  canHold = true;
+  drawPreviews();
 
   if (isColliding(activePiece)) {
     endGame();
@@ -286,6 +396,17 @@ function updateHud() {
   scoreEl.textContent = score.toLocaleString("zh-TW");
   levelEl.textContent = level;
   linesEl.textContent = lines;
+  bestScoreEl.textContent = stats.best.toLocaleString("zh-TW");
+  todayBestEl.textContent = stats.todayBest.toLocaleString("zh-TW");
+
+  const rank = calculateRank(score);
+  weeklyRankEl.textContent = `第 ${rank} 名`;
+  rankHintEl.textContent = rank === 1 ? "目前排名第一！" : `距離第 1 名還差 ${Math.max(0, stats.best - score).toLocaleString("zh-TW")} 分`;
+}
+
+function calculateRank(currentScore) {
+  const scores = [...stats.scores.map((item) => item.score), currentScore].sort((a, b) => b - a);
+  return scores.indexOf(currentScore) + 1;
 }
 
 function setStatus(text) {
@@ -293,7 +414,7 @@ function setStatus(text) {
 }
 
 function getDropInterval() {
-  return Math.max(120, 780 - (level - 1) * 62);
+  return Math.max(110, 760 - (level - 1) * 58);
 }
 
 function update(time = 0) {
@@ -314,18 +435,6 @@ function update(time = 0) {
 }
 
 function startGame() {
-  if (isRunning && isPaused) {
-    isPaused = false;
-    lastTime = 0;
-    setStatus("遊戲中");
-    animationId = requestAnimationFrame(update);
-    return;
-  }
-
-  if (isRunning) {
-    return;
-  }
-
   resetGame();
   isRunning = true;
   isPaused = false;
@@ -333,12 +442,14 @@ function startGame() {
   animationId = requestAnimationFrame(update);
 }
 
-function pauseGame() {
+function togglePause() {
   if (!isRunning) {
+    startGame();
     return;
   }
 
   isPaused = !isPaused;
+  pauseBtn.textContent = isPaused ? "▶" : "Ⅱ";
   setStatus(isPaused ? "已暫停" : "遊戲中");
 
   if (!isPaused) {
@@ -353,8 +464,10 @@ function resetGame() {
   }
 
   board = createBoard();
-  activePiece = createPiece();
-  nextPiece = createPiece();
+  queue = createQueue();
+  activePiece = popNextPiece();
+  holdPiece = null;
+  canHold = true;
   score = 0;
   lines = 0;
   level = 1;
@@ -362,8 +475,9 @@ function resetGame() {
   lastTime = 0;
   isRunning = false;
   isPaused = false;
+  pauseBtn.textContent = "Ⅱ";
   updateHud();
-  drawNext();
+  drawPreviews();
   drawBoard();
   setStatus("準備開始");
 }
@@ -372,15 +486,45 @@ function endGame() {
   isRunning = false;
   isPaused = false;
   setStatus("遊戲結束");
+  recordScore();
 
-  boardContext.fillStyle = "rgba(13, 18, 23, 0.74)";
+  boardContext.fillStyle = "rgba(247, 245, 249, 0.76)";
   boardContext.fillRect(0, 0, boardCanvas.width, boardCanvas.height);
-  boardContext.fillStyle = "#f4f7fb";
-  boardContext.font = "700 26px system-ui";
+  boardContext.fillStyle = getCssVar("--ink");
+  boardContext.font = "800 28px system-ui";
   boardContext.textAlign = "center";
-  boardContext.fillText("遊戲結束", boardCanvas.width / 2, boardCanvas.height / 2 - 8);
-  boardContext.font = "600 15px system-ui";
-  boardContext.fillText("按重新開始再挑戰一次", boardCanvas.width / 2, boardCanvas.height / 2 + 22);
+  boardContext.fillText("遊戲結束", boardCanvas.width / 2, boardCanvas.height / 2 - 12);
+  boardContext.font = "700 16px system-ui";
+  boardContext.fillText("按 ↻ 重新開始", boardCanvas.width / 2, boardCanvas.height / 2 + 22);
+}
+
+function recordScore() {
+  stats.best = Math.max(stats.best, score);
+  stats.todayBest = Math.max(stats.todayBest, score);
+  stats.scores = [
+    { score, date: new Date().toISOString() },
+    ...stats.scores,
+  ]
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 10);
+  saveStats();
+  updateHud();
+  renderRanks();
+}
+
+function renderRanks() {
+  const scores = stats.scores.length ? stats.scores : [{ score: 16050, date: "示範紀錄" }];
+  rankListEl.innerHTML = scores
+    .slice(0, 5)
+    .map((item, index) => `<li>第 ${index + 1} 名：${item.score.toLocaleString("zh-TW")} 分</li>`)
+    .join("");
+}
+
+function toggleTheme() {
+  document.documentElement.classList.toggle("dark");
+  themeBtn.textContent = document.documentElement.classList.contains("dark") ? "☾" : "☀";
+  drawBoard();
+  drawPreviews();
 }
 
 document.addEventListener("keydown", (event) => {
@@ -408,6 +552,11 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     hardDrop();
   }
+
+  if (event.key.toLowerCase() === "c" || event.key === "Shift") {
+    event.preventDefault();
+    holdCurrentPiece();
+  }
 });
 
 document.querySelectorAll("[data-action]").forEach((button) => {
@@ -429,14 +578,20 @@ document.querySelectorAll("[data-action]").forEach((button) => {
     if (action === "drop") {
       hardDrop();
     }
+    if (action === "hold") {
+      holdCurrentPiece();
+    }
   });
 });
 
-startBtn.addEventListener("click", startGame);
-pauseBtn.addEventListener("click", pauseGame);
-restartBtn.addEventListener("click", () => {
-  resetGame();
-  startGame();
+pauseBtn.addEventListener("click", togglePause);
+restartBtn.addEventListener("click", startGame);
+helpBtn.addEventListener("click", () => helpDialog.showModal());
+rankBtn.addEventListener("click", () => {
+  renderRanks();
+  rankDialog.showModal();
 });
+themeBtn.addEventListener("click", toggleTheme);
 
+renderRanks();
 resetGame();
