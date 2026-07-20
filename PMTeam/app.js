@@ -43,27 +43,34 @@ document.addEventListener('DOMContentLoaded', () => {
             boardingBtn.style.opacity = '0';
             boardingBtn.style.pointerEvents = 'none';
 
-            // 2. 觸發極致絲滑的「機票向螢幕前方放大並淡出」3D 破風起飛動畫，避免卡頓
-            boardingPassCard.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            // 2. 觸發極致絲滑的「機票向螢幕前方放大並淡出」3D 破風起飛動畫，避免卡頓 - 加速為 0.5s
+            boardingPassCard.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
             boardingPassCard.style.transform = 'translate3d(0, -30px, 400px) rotateX(15deg) scale(1.5)';
             boardingPassCard.style.opacity = '0';
 
             // 3. 同步觸發背景遮罩柔和淡出轉場
-            onboardingScreen.style.transition = 'all 0.8s ease-out';
+            onboardingScreen.style.transition = 'all 0.5s ease-out';
             onboardingScreen.style.opacity = '0';
 
-            // 4. 等待 800ms 動畫完結後，順暢、無縫切換到機艙頁面
+            // 4. 等待 500ms 動畫完結後，順暢、無縫切換到機艙頁面
             setTimeout(() => {
                 onboardingScreen.classList.add('hidden');
                 mainContent.classList.remove('hidden');
                 
+                // 顯示 Flight Information Widget
+                const infoWidget = document.getElementById('flight-info-widget');
+                if (infoWidget) {
+                    infoWidget.classList.remove('hidden');
+                }
+                startWidgetClock();
+
                 // 讓主畫面從深處縮放淡入，製造穿透雲霧進入機艙的沈浸感
                 mainContent.style.opacity = '0';
-                mainContent.style.transform = 'scale(0.96) translateY(10px)';
+                mainContent.style.transform = 'scale(0.98) translateY(10px)';
                 mainContent.style.transition = 'none'; // 先重設
                 void mainContent.offsetWidth; // 強制回流
                 
-                mainContent.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+                mainContent.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
                 mainContent.style.opacity = '1';
                 mainContent.style.transform = 'scale(1) translateY(0)';
                 
@@ -74,8 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     onboardingScreen.style.opacity = '1';
                     boardingBtn.style.opacity = '1';
                     boardingBtn.style.pointerEvents = 'auto';
-                }, 1000);
-            }, 800);
+                }, 800);
+
+                // 動畫初始化
+                setTimeout(() => {
+                    updatePlaneAnimations(1);
+                    updateFlightStatus(1);
+                }, 50);
+            }, 500);
         });
     }
 
@@ -91,10 +104,26 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.style.transform = 'translateY(20px)';
         mainContent.style.transition = 'all 0.5s ease-in';
         
+        // 隱藏 Flight Information Widget
+        const infoWidget = document.getElementById('flight-info-widget');
+        if (infoWidget) {
+            infoWidget.classList.add('hidden');
+        }
+
         // 每次回到首頁，都視為重新填寫，重置所有輸入欄位與步驟
         if (boardingNameInput) boardingNameInput.value = '';
         if (boardingDestinationInput) boardingDestinationInput.value = '';
         if (stubDestination) stubDestination.textContent = 'Future & Growth';
+
+        // 重設 FIDS 顯示
+        const fidsName = document.getElementById('user-fids-name');
+        const fidsDest = document.getElementById('user-fids-dest');
+        if (fidsName) fidsName.textContent = 'GUEST';
+        if (fidsDest) fidsDest.textContent = 'FUTURE & GROWTH';
+
+        // 移除所有 Passport Stamp 蓋章
+        const stamps = document.querySelectorAll('.passport-stamp');
+        stamps.forEach(s => s.classList.remove('stamped'));
 
         for (const key in inputs) {
             if (inputs[key]) {
@@ -135,6 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
         inputs.name.value = nameVal;
         updateCardField('name');
 
+        // 顯示 Flight Information Widget
+        const infoWidget = document.getElementById('flight-info-widget');
+        if (infoWidget) {
+            infoWidget.classList.remove('hidden');
+        }
+        startWidgetClock();
+
         onboardingScreen.classList.add('fly-out');
         setTimeout(() => {
             onboardingScreen.classList.add('hidden');
@@ -146,6 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
             void mainContent.offsetWidth; // 強制回流
             mainContent.style.opacity = '1';
             mainContent.style.transform = 'translateY(0)';
+
+            // 動畫初始化
+            setTimeout(() => {
+                updatePlaneAnimations(1);
+                updateFlightStatus(1);
+            }, 100);
         }, 750);
     }
 
@@ -271,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         progressSteps.forEach((pStep, idx) => {
             if (pStep) {
-                if (idx < stepNum) {
+                if (idx === stepNum - 1) { // Highlighting current departure board style step
                     pStep.classList.add('active');
                 } else {
                     pStep.classList.remove('active');
@@ -279,17 +321,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        progressLines.forEach((pLine, idx) => {
-            if (pLine) {
-                if (idx < stepNum - 1) {
-                    pLine.style.backgroundColor = '#bca46a';
-                } else {
-                    pLine.style.backgroundColor = 'rgba(188, 164, 106, 0.2)';
-                }
-            }
-        });
-
         updateStepAccessibilityStyles();
+
+        // Slide airplane animation & update status
+        setTimeout(() => {
+            updatePlaneAnimations(stepNum);
+            updateFlightStatus(stepNum);
+        }, 50);
 
         // 滾動畫面讓使用者看見表單頂部
         if (shouldScroll) {
@@ -325,45 +363,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const step3Finish = document.getElementById('step-3-finish');
 
     if (step2Prev) step2Prev.addEventListener('click', () => goToStep(1));
-    if (step2Next) step2Next.addEventListener('click', () => goToStep(3));
+    if (step2Next) {
+        step2Next.addEventListener('click', () => {
+            triggerFullscreenTransition(
+                'Immigration Cleared',
+                'Proceeding to Departure Gate',
+                'fa-passport',
+                () => {
+                    goToStep(3);
+                }
+            );
+        });
+    }
     if (step3Prev) step3Prev.addEventListener('click', () => goToStep(2));
     
     // Step 3 完成按鈕 (最後匯入藝廊)
     if (step3Finish) {
         step3Finish.addEventListener('click', () => {
-            // 順暢滾動到「已通過海關的成員」區
-            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth' });
-            
-            // 觸發星宇精品閃耀提示
-            const successToast = document.createElement('div');
-            successToast.style.cssText = `
-                position: fixed;
-                bottom: 2rem;
-                left: 50%;
-                transform: translateX(-50%) translateY(20px);
-                background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
-                color: #111518;
-                padding: 0.8rem 2rem;
-                border-radius: 30px;
-                font-weight: 800;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-                z-index: 1000;
-                opacity: 0;
-                transition: all 0.4s ease-out;
-            `;
-            successToast.innerHTML = `🎉 恭喜！客製化機票已成功登錄至「已通過海關的成員」！`;
-            document.body.appendChild(successToast);
-            
-            setTimeout(() => {
-                successToast.style.opacity = '1';
-                successToast.style.transform = 'translateX(-50%) translateY(0)';
-            }, 100);
+            triggerFullscreenTransition(
+                'Boarding Complete',
+                'Welcome Aboard Flight JX-2026',
+                'fa-plane-departure',
+                () => {
+                    goToStep(3); // Stay on step 3 form
+                    updateFlightStatus(4); // Updates user status on vertical timeline & FIDS to 'DEPARTED'
+                    updatePlaneAnimations(4); // Slides vertical plane to Destination node!
 
-            setTimeout(() => {
-                successToast.style.opacity = '0';
-                successToast.style.transform = 'translateX(-50%) translateY(-20px)';
-                setTimeout(() => successToast.remove(), 400);
-            }, 3000);
+                    // 順暢滾動到「已通過海關的成員」區
+                    document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth' });
+                    
+                    // 觸發星宇精品閃耀提示
+                    const successToast = document.createElement('div');
+                    successToast.style.cssText = `
+                        position: fixed;
+                        bottom: 2rem;
+                        left: 50%;
+                        transform: translateX(-50%) translateY(20px);
+                        background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
+                        color: #111518;
+                        padding: 0.8rem 2rem;
+                        border-radius: 30px;
+                        font-weight: 800;
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+                        z-index: 1000;
+                        opacity: 0;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    `;
+                    successToast.innerHTML = `🎉 歡迎登機！客製化機票已成功登錄，與全體成員一同航向未來！`;
+                    document.body.appendChild(successToast);
+                    
+                    setTimeout(() => {
+                        successToast.style.opacity = '1';
+                        successToast.style.transform = 'translateX(-50%) translateY(0)';
+                    }, 100);
+
+                    setTimeout(() => {
+                        successToast.style.opacity = '0';
+                        successToast.style.transform = 'translateX(-50%) translateY(-20px)';
+                        setTimeout(() => successToast.remove(), 400);
+                    }, 4000);
+                }
+            );
         });
     }
 
@@ -383,18 +443,32 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('click', (e) => {
         e.preventDefault();
 
-        // ----------------- 將卡片 Append 渲染進 Gallery 藝廊 -----------------
-        renderToGallery();
+        // Validate name before proceeding
+        const nameVal = inputs.name.value.trim();
+        if (!nameVal) {
+            inputs.name.style.borderColor = 'var(--accent-color)';
+            inputs.name.focus();
+            setTimeout(() => { inputs.name.style.borderColor = ''; }, 1000);
+            return;
+        }
 
-        // 觸發解鎖機制
-        setTimeout(() => {
-            unlockGallery();
-        }, 300);
+        triggerFullscreenTransition(
+            'Baggage Checked',
+            'Proceeding to Passport Control',
+            'fa-suitcase-rolling',
+            () => {
+                // ----------------- 將卡片 Append 渲染進 Gallery 藝廊 -----------------
+                renderToGallery();
 
-        // 順利跳轉到 Step 2 (Future) 填寫頁面！
-        setTimeout(() => {
-            goToStep(2);
-        }, 1200);
+                // 觸發解鎖機制
+                setTimeout(() => {
+                    unlockGallery();
+                }, 300);
+
+                // 順利跳轉到 Step 2 (Future) 填寫頁面！
+                goToStep(2);
+            }
+        );
     });
 
     // ==========================================================================
@@ -682,4 +756,220 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 50);
         }
     }
+
+    // ==========================================================================
+    // 新增：機場候機沈浸式互動體驗邏輯
+    // ==========================================================================
+
+    // 1. 數位時鐘計時
+    function startWidgetClock() {
+        const timeVal = document.getElementById('widget-time');
+        const boardTime = document.getElementById('board-live-time');
+        const sidebarClock = document.getElementById('sidebar-clock');
+        
+        const updateClock = () => {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeStr = `${hours}:${minutes}:${seconds}`;
+            if (timeVal) timeVal.textContent = timeStr;
+            if (boardTime) boardTime.textContent = timeStr;
+            if (sidebarClock) sidebarClock.textContent = timeStr;
+        };
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
+
+    // 2. 飛機動畫定位 (頂部 Status Bar 與 左側 Journey Timeline)
+    function updatePlaneAnimations(stepNum) {
+        // 頂部飛機動畫
+        const topPlane = document.getElementById('step-plane-anim');
+        const topProgress = document.querySelector('.steps-progress');
+        const activeStep = document.getElementById(`progress-step-${stepNum > 3 ? 3 : stepNum}`);
+        if (topPlane && topProgress && activeStep) {
+            const containerRect = topProgress.getBoundingClientRect();
+            const activeRect = activeStep.getBoundingClientRect();
+            const leftOffset = activeRect.left - containerRect.left + (activeRect.width / 2) - (topPlane.offsetWidth / 2);
+            topPlane.style.transform = `translateX(${leftOffset}px)`;
+        }
+
+        // 左側飛機動畫與高亮
+        const leftPlane = document.getElementById('timeline-plane-indicator');
+        const timelineWrapper = document.querySelector('.timeline-steps-wrapper');
+        const timelineActiveItem = document.getElementById(`timeline-step-${stepNum}`);
+        
+        for (let i = 1; i <= 4; i++) {
+            const item = document.getElementById(`timeline-step-${i}`);
+            if (item) {
+                if (i === stepNum) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            }
+        }
+
+        if (leftPlane && timelineWrapper && timelineActiveItem) {
+            const wrapperRect = timelineWrapper.getBoundingClientRect();
+            const itemRect = timelineActiveItem.getBoundingClientRect();
+            const topOffset = itemRect.top - wrapperRect.top + (itemRect.height / 2) - (leftPlane.offsetHeight / 2);
+            leftPlane.style.transform = `translateY(${topOffset}px)`;
+        }
+    }
+
+    // 3. 即時更新航班看板 FIDS & Widget 的狀態
+    function updateFlightStatus(stepNum) {
+        const widgetStatus = document.getElementById('widget-status');
+        const userFidsStatus = document.getElementById('user-fids-status');
+        const sidebarStatus = document.getElementById('sidebar-status');
+        
+        let statusText = 'BOARDING';
+        let badgeClass = 'status-checking-in';
+        
+        if (stepNum === 1) {
+            statusText = 'BOARDING';
+            badgeClass = 'status-checking-in';
+        } else if (stepNum === 2) {
+            statusText = 'IMMIGRATION';
+            badgeClass = 'status-immigration';
+        } else if (stepNum === 3) {
+            statusText = 'FINAL CALL';
+            badgeClass = 'status-boarding';
+        } else if (stepNum === 4) {
+            statusText = 'DEPARTED';
+            badgeClass = 'status-boarded';
+        }
+
+        if (widgetStatus) {
+            widgetStatus.textContent = statusText;
+            widgetStatus.className = 'widget-value';
+            if (statusText === 'BOARDING') widgetStatus.classList.add('blink-green');
+            else if (statusText === 'IMMIGRATION') widgetStatus.classList.add('blink-blue');
+            else if (statusText === 'FINAL CALL') widgetStatus.classList.add('blink-orange');
+            else if (statusText === 'DEPARTED') widgetStatus.classList.add('glow-green');
+        }
+
+        if (sidebarStatus) {
+            sidebarStatus.textContent = statusText;
+            sidebarStatus.className = 'panel-val badge-fids-status';
+            if (statusText === 'BOARDING') sidebarStatus.classList.add('status-checking-in');
+            else if (statusText === 'IMMIGRATION') sidebarStatus.classList.add('status-immigration');
+            else if (statusText === 'FINAL CALL') sidebarStatus.classList.add('status-boarding');
+            else if (statusText === 'DEPARTED') sidebarStatus.classList.add('status-boarded');
+        }
+
+        if (userFidsStatus) {
+            userFidsStatus.textContent = statusText;
+            userFidsStatus.className = `fids-status-badge ${badgeClass}`;
+        }
+    }
+
+    // 4. 全螢幕過場轉場動畫 (Smooth Screen Transitions) - 加速版
+    function triggerFullscreenTransition(title, subtitle, iconClass, callback) {
+        const overlay = document.getElementById('fullscreen-transition-overlay');
+        if (!overlay) {
+            if (callback) callback();
+            return;
+        }
+        const titleEl = overlay.querySelector('.transition-title');
+        const subtitleEl = overlay.querySelector('.transition-subtitle');
+        const iconEl = overlay.querySelector('.transition-icon');
+        const fillEl = overlay.querySelector('.transition-progress-fill');
+
+        if (titleEl) titleEl.textContent = title.toUpperCase();
+        if (subtitleEl) subtitleEl.textContent = subtitle.toUpperCase();
+        if (iconEl) iconEl.className = `fa-solid ${iconClass} transition-icon`;
+        if (fillEl) fillEl.style.width = '0%';
+
+        overlay.classList.remove('hidden');
+        overlay.classList.add('active');
+
+        setTimeout(() => {
+            if (fillEl) fillEl.style.width = '100%';
+        }, 50);
+
+        setTimeout(() => {
+            if (callback) callback();
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 200);
+            }, 300);
+        }, 800);
+    }
+
+    // 5. 每完成一題，欄位自動蓋章動畫 (Passport Stamp Validation)
+    function initPassportStamps() {
+        const allFormInputs = document.querySelectorAll('.form-group input');
+        allFormInputs.forEach(input => {
+            const formGroup = input.closest('.form-group');
+            if (formGroup && !formGroup.querySelector('.passport-stamp')) {
+                const stamp = document.createElement('div');
+                stamp.className = 'passport-stamp';
+                stamp.innerHTML = '<span class="stamp-text">APPROVED</span>';
+                
+                if (getComputedStyle(formGroup).position === 'static') {
+                    formGroup.style.position = 'relative';
+                }
+                formGroup.appendChild(stamp);
+
+                const triggerStamp = () => {
+                    if (input.value.trim().length > 0) {
+                        stamp.classList.add('stamped');
+                    } else {
+                        stamp.classList.remove('stamped');
+                    }
+                };
+
+                input.addEventListener('blur', triggerStamp);
+                input.addEventListener('change', triggerStamp);
+                
+                // Initialize if pre-filled
+                if (input.value.trim().length > 0) {
+                    setTimeout(triggerStamp, 200);
+                }
+            }
+        });
+    }
+
+    // 6. 即時同步在線乘客名單
+    const fidsName = document.getElementById('user-fids-name');
+    const fidsDest = document.getElementById('user-fids-dest');
+    
+    if (boardingNameInput) {
+        boardingNameInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim().toUpperCase();
+            if (fidsName) fidsName.textContent = val || 'GUEST';
+        });
+    }
+    if (inputs.name) {
+        inputs.name.addEventListener('input', (e) => {
+            const val = e.target.value.trim().toUpperCase();
+            if (fidsName) fidsName.textContent = val || 'GUEST';
+        });
+    }
+    if (boardingDestinationInput) {
+        boardingDestinationInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim().toUpperCase();
+            if (fidsDest) fidsDest.textContent = val || 'FUTURE & GROWTH';
+        });
+    }
+    if (inputs.futureTravel) {
+        inputs.futureTravel.addEventListener('input', (e) => {
+            const val = e.target.value.trim().toUpperCase();
+            if (fidsDest) fidsDest.textContent = val || 'FUTURE & GROWTH';
+        });
+    }
+
+    // 初始化蓋章、飛機定位與縮放重新適應
+    initPassportStamps();
+    window.addEventListener('resize', () => {
+        // Only run if cabin is currently open
+        if (!mainContent.classList.contains('hidden')) {
+            const activeStepNum = highestStepReached > 3 ? 3 : highestStepReached;
+            updatePlaneAnimations(activeStepNum);
+        }
+    });
 });
