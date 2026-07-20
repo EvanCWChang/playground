@@ -37,7 +37,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    font-size: 0.92rem;
+    font-size: 1.05rem; /* Overall font size increased */
     scrollbar-gutter: stable !important;
 }
 
@@ -54,7 +54,7 @@ body {
     transition: all 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.35);
     opacity: 1;
     transform: scale(1);
-    max-width: 680px; /* 完美容納橫式機票 */
+    max-width: 1020px; /* 完美容納橫式機票 - 放大1.5倍 */
     margin: 0 auto;
 }
 
@@ -164,7 +164,7 @@ body {
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 1;
     transform: scale(1);
-    max-width: 680px; /* 完美容納橫式機票 */
+    max-width: 1020px; /* 完美容納橫式機票 - 放大1.5倍 */
     margin: 0 auto;
     perspective: 1200px; /* 3D 空間透視 */
 }
@@ -263,7 +263,7 @@ body {
 
 /* 左側主機票 */
 .ticket-left {
-    padding: 1.5rem;
+    padding: 2.25rem; /* 1.5rem * 1.5 */
     background: #f4efe6; /* 暖卡其色 */
     flex: 1.8;
     box-sizing: border-box;
@@ -274,12 +274,12 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgba(139, 116, 67, 0.2);
-    padding-bottom: 0.75rem;
-    margin-bottom: 1rem;
+    padding-bottom: 1.125rem; /* 0.75rem * 1.5 */
+    margin-bottom: 1.5rem; /* 1rem * 1.5 */
 }
 
 .airline {
-    font-size: 0.75rem;
+    font-size: 1.125rem; /* 0.75rem * 1.5 */
     font-weight: 800;
     letter-spacing: 2px;
     color: #8b7443; /* 曜沙深金 */
@@ -288,12 +288,12 @@ body {
 }
 
 .flight-no {
-    font-size: 0.7rem;
+    font-size: 1.05rem; /* 0.7rem * 1.5 */
     font-weight: 800;
     background-color: #8b7443; /* 深金底色 */
     color: #f4efe6; /* 卡其色文字 */
-    padding: 0.15rem 0.4rem;
-    border-radius: 4px;
+    padding: 0.225rem 0.6rem; /* 1.5x scaled */
+    border-radius: 6px;
     letter-spacing: 0.5px;
 }
 
@@ -302,8 +302,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.25rem;
-    margin-bottom: 1rem;
+    gap: 1.875rem; /* 1.25rem * 1.5 */
+    margin-bottom: 1.5rem; /* 1rem * 1.5 */
 }
 
 .code-block {
@@ -312,7 +312,7 @@ body {
 }
 
 .code-block .code {
-    font-size: 1.8rem;
+    font-size: 2.7rem; /* 1.8rem * 1.5 */
     font-weight: 900;
     color: #111518; /* 深色代碼 */
     line-height: 1;
@@ -320,10 +320,10 @@ body {
 }
 
 .code-block .airport-name {
-    font-size: 0.75rem;
+    font-size: 1.125rem; /* 0.75rem * 1.5 */
     font-weight: 600;
     color: #8b7443;
-    margin-top: 0.1rem;
+    margin-top: 0.15rem;
 }
 
 .code-block.text-right {
@@ -331,7 +331,7 @@ body {
 }
 
 .plane-animation {
-    width: 60px;
+    width: 90px; /* 60px * 1.5 */
     display: flex;
     align-items: center;
     justify-content: flex-start; /* 改為靠左起飛 */
@@ -353,19 +353,19 @@ body {
 }
 
 .plane-icon {
-    font-size: 1rem;
+    font-size: 1.5rem; /* 1rem * 1.5 */
     color: #8b7443;
     transform: rotate(45deg); /* FontAwesome fa-plane 預設朝向東北(45度)，旋轉 45 度即可水平向右飛行 */
     z-index: 2;
     background: #f4efe6; /* 暖卡其背景 */
-    padding: 0 0.2rem;
+    padding: 0 0.3rem;
     animation: flightPath 3s linear infinite;
     position: relative;
 }
 
 @keyframes flightPath {
     0% {
-        left: -20px;
+        left: -30px;
         opacity: 0;
     }
     10% {
@@ -375,7 +375,7 @@ body {
         opacity: 1;
     }
     100% {
-        left: 60px;
+        left: 90px;
         opacity: 0;
     }
 }
@@ -384,17 +384,17 @@ body {
 .ticket-details {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 1.275rem; /* 0.85rem * 1.5 */
 }
 
 .detail-group {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.3rem; /* 0.2rem * 1.5 */
 }
 
 .detail-group label {
-    font-size: 0.6rem;
+    font-size: 0.9rem; /* 0.6rem * 1.5 */
     font-weight: 700;
     color: #718096; /* 灰銀色文字 */
     letter-spacing: 0.05em;
@@ -403,10 +403,10 @@ body {
 
 .detail-group input {
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 1.125rem; /* 0.5rem 0.75rem * 1.5 */
     border: 1px solid rgba(139, 116, 67, 0.3); /* 輕深金邊框 */
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 12px; /* 8px * 1.5 */
+    font-size: 1.35rem; /* 0.9rem * 1.5 */
     font-weight: 600;
     color: #111518; /* 輸入字為深曜石黑 */
     background-color: rgba(0, 0, 0, 0.03); /* 半透明高質感輸入框 */
@@ -421,19 +421,19 @@ body {
 }
 
 .detail-group input::placeholder {
-    font-size: 0.82rem;
+    font-size: 1.23rem; /* 0.82rem * 1.5 */
     color: rgba(0, 0, 0, 0.3);
 }
 
 .detail-row {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem; /* 1rem * 1.5 */
     align-items: flex-end;
 }
 
 .detail-value {
-    font-size: 0.85rem;
+    font-size: 1.275rem; /* 0.85rem * 1.5 */
     font-weight: 700;
     color: #111518; /* 深色數值 */
 }
@@ -443,46 +443,46 @@ body {
     position: relative;
     display: flex;
     flex-direction: column; /* 橫式機票撕線改為垂直 (notch 在上下) */
-    width: 16px;
+    width: 24px; /* 16px * 1.5 */
     background-color: #f4efe6;
     align-items: center;
     justify-content: space-between;
 }
 
 .ticket-divider .notch {
-    width: 16px;
-    height: 8px;
+    width: 24px; /* 16px * 1.5 */
+    height: 12px; /* 8px * 1.5 */
     background-color: var(--bg-color); /* 切角顯示網頁底色 */
 }
 
 .ticket-divider .notch.top {
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 12px 12px; /* 8px * 1.5 */
     transform: none;
 }
 
 .ticket-divider .notch.bottom {
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0; /* 8px * 1.5 */
     transform: none;
 }
 
 .ticket-divider .dashed-line {
     flex-grow: 1;
-    border-left: 1.5px dashed rgba(139, 116, 67, 0.3); /* 深金虛線 */
+    border-left: 2.25px dashed rgba(139, 116, 67, 0.3); /* 1.5px * 1.5 */
     border-top: none;
     width: 1px;
-    margin: 8px 0;
+    margin: 12px 0; /* 8px * 1.5 */
 }
 
 .ticket-right {
-    padding: 1.25rem 1.5rem;
+    padding: 1.875rem 2.25rem; /* 1.25rem 1.5rem * 1.5 */
     background: #eae4d8; /* 稍深一階的暖卡其色 */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 0.85rem;
-    min-width: 180px; /* 給予存根聯固定最小寬度確保橫式時比例完美 */
-    max-width: 180px; /* 鎖死寬度防止寬度在任何情況下內縮或變形 */
+    gap: 1.275rem; /* 0.85rem * 1.5 */
+    min-width: 270px; /* 給予存根聯固定最小寬度確保橫式時比例完美 - 180px * 1.5 */
+    max-width: 270px; /* 鎖死寬度防止寬度在任何情況下內縮或變形 - 180px * 1.5 */
     box-sizing: border-box;
 }
 
@@ -492,17 +492,17 @@ body {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    gap: 0.65rem;
+    gap: 0.975rem; /* 0.65rem * 1.5 */
 }
 
 .stub-flight-no {
-    font-size: 0.9rem;
+    font-size: 1.35rem; /* 0.9rem * 1.5 */
     font-weight: 800;
     color: #8b7443;
 }
 
 .stub-name-preview {
-    font-size: 0.85rem;
+    font-size: 1.275rem; /* 0.85rem * 1.5 */
     font-weight: 700;
     color: #111518;
     text-transform: uppercase;
@@ -512,16 +512,16 @@ body {
 .btn-boarding {
     background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
     color: #111518; /* 曜石灰 */
-    padding: 0.75rem 2rem;
-    font-size: 0.95rem;
-    border-radius: 20px;
-    box-shadow: 0 6px 15px rgba(139, 116, 67, 0.25);
+    padding: 1.125rem 3rem; /* 1.5x scaled */
+    font-size: 1.425rem; /* 0.95rem * 1.5 */
+    border-radius: 30px; /* 20px * 1.5 */
+    box-shadow: 0 9px 22.5px rgba(139, 116, 67, 0.25);
     font-weight: 800;
 }
 
 .btn-boarding:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(139, 116, 67, 0.35);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(139, 116, 67, 0.35);
     background: linear-gradient(135deg, #cbb47b 0%, #9c844f 100%);
 }
 
@@ -541,7 +541,7 @@ header {
 }
 
 .header-container {
-    max-width: 1140px;
+    max-width: 1400px; /* Aligned to new container width */
     margin: 0 auto;
     padding: 0.75rem 1.5rem;
     display: flex;
@@ -583,7 +583,7 @@ nav a.active, nav a:hover {
    主容器與進度條 (Layout & Progress) - 頂奢星空機艙背景
    ========================================================================== */
 #main-content {
-    background: radial-gradient(circle at 50% 35%, #0f172a 0%, #070a12 100%);
+    background: transparent; /* Remove deep blue background */
     border-radius: var(--radius-lg);
     border: 1px solid rgba(188, 164, 106, 0.2);
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), inset 0 0 150px rgba(188, 164, 106, 0.08);
@@ -593,7 +593,7 @@ nav a.active, nav a:hover {
 }
 
 .container {
-    max-width: 1140px;
+    max-width: 1400px; /* Increased max-width to host larger elements */
     margin: 0 auto;
     padding: 1.5rem;
 }
@@ -606,10 +606,10 @@ nav a.active, nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.25rem; /* 1.5rem * 1.5 */
     background: #1e2328; /* 深航藍灰 */
     border: 1px solid rgba(188, 164, 106, 0.15);
-    padding: 0.75rem 1.5rem;
+    padding: 1.125rem 2.25rem; /* 1.5x scaled */
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
 }
@@ -617,7 +617,7 @@ nav a.active, nav a:hover {
 .step {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.6rem; /* 0.4rem * 1.5 */
     color: var(--text-muted);
 }
 
@@ -647,8 +647,8 @@ nav a.active, nav a:hover {
 }
 
 .step-number {
-    width: 22px;
-    height: 22px;
+    width: 33px; /* 22px * 1.5 */
+    height: 33px; /* 22px * 1.5 */
     border-radius: 50%;
     background-color: #1a202c;
     border: 1px solid rgba(188, 164, 106, 0.3);
@@ -656,20 +656,20 @@ nav a.active, nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 1.125rem; /* 0.75rem * 1.5 */
     font-weight: 600;
 }
 
 .step-label {
-    font-size: 0.8rem;
+    font-size: 1.2rem; /* 0.8rem * 1.5 */
 }
 
 .step-line {
     flex: 1;
-    max-width: 80px;
+    max-width: 120px; /* 80px * 1.5 */
     height: 1px;
     background-color: rgba(188, 164, 106, 0.2);
-    margin: 0 0.75rem;
+    margin: 0 1.125rem; /* 0.75rem * 1.5 */
 }
 
 /* ==========================================================================
@@ -688,27 +688,27 @@ nav a.active, nav a:hover {
 .form-section {
     background: #ffffff; /* 淺色質感白背景 */
     border: 1px solid rgba(188, 164, 106, 0.25);
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
+    padding: 2.25rem; /* 1.5rem * 1.5 */
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
-    max-width: 640px;
+    max-width: 960px; /* 640px * 1.5 */
     width: 100%;
     margin: 0 auto;
 }
 
 .section-header {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.875rem; /* 1.25rem * 1.5 */
     border-bottom: 1px solid rgba(188, 164, 106, 0.15);
-    padding-bottom: 0.75rem;
+    padding-bottom: 1.125rem; /* 0.75rem * 1.5 */
 }
 
 .section-header h2 {
-    font-size: 1.15rem;
+    font-size: 1.725rem; /* 1.15rem * 1.5 */
     font-weight: 700;
     color: #1e293b; /* 曜石深灰 */
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem; /* 0.5rem * 1.5 */
 }
 
 .section-header h2 i {
@@ -716,15 +716,15 @@ nav a.active, nav a:hover {
 }
 
 .section-subtitle {
-    font-size: 0.8rem;
+    font-size: 1.2rem; /* 0.8rem * 1.5 */
     color: #475569; /* 清楚深灰 */
-    margin-top: 0.2rem;
+    margin-top: 0.3rem; /* 0.2rem * 1.5 */
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 1.5rem; /* 1rem * 1.5 */
 }
 
 @media (max-width: 600px) {
@@ -739,7 +739,7 @@ nav a.active, nav a:hover {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.6rem; /* 0.4rem * 1.5 */
 }
 
 .form-group.full-width {
@@ -747,20 +747,20 @@ nav a.active, nav a:hover {
 }
 
 .form-group label {
-    font-size: 0.82rem;
+    font-size: 1.23rem; /* 0.82rem * 1.5 */
     font-weight: 600;
     color: #334155; /* 深灰藍，高可讀性 */
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.6rem; /* 0.4rem * 1.5 */
 }
 
 .badge {
     display: inline-block;
-    padding: 0.1rem 0.35rem;
-    font-size: 0.7rem;
+    padding: 0.15rem 0.525rem; /* 1.5x scaled */
+    font-size: 1.05rem; /* 0.7rem * 1.5 */
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .badge-primary {
@@ -771,10 +771,10 @@ nav a.active, nav a:hover {
 
 .form-group input {
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 1.125rem; /* 0.5rem 0.75rem * 1.5 */
     border: 1px solid rgba(188, 164, 106, 0.3);
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 12px; /* 8px * 1.5 */
+    font-size: 1.35rem; /* 0.9rem * 1.5 */
     color: #1e293b; /* 曜石深灰 */
     background-color: #f8fafc; /* 淺灰藍，高對比底色 */
     transition: var(--transition-base);
@@ -788,14 +788,14 @@ nav a.active, nav a:hover {
 }
 
 .form-group input::placeholder {
-    font-size: 0.82rem;
+    font-size: 1.23rem; /* 0.82rem * 1.5 */
     color: #94a3b8; /* 清晰但輕柔的預設提示字 */
 }
 
 .form-actions {
-    margin-top: 1.5rem;
+    margin-top: 2.25rem; /* 1.5rem * 1.5 */
     border-top: 1px solid rgba(188, 164, 106, 0.15);
-    padding-top: 1rem;
+    padding-top: 1.5rem; /* 1rem * 1.5 */
     display: flex;
     justify-content: flex-end;
 }
@@ -803,9 +803,9 @@ nav a.active, nav a:hover {
 .btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.65rem 1.25rem;
-    font-size: 0.9rem;
+    gap: 0.6rem; /* 0.4rem * 1.5 */
+    padding: 0.975rem 1.875rem; /* 1.5x scaled */
+    font-size: 1.35rem; /* 0.9rem * 1.5 */
     font-weight: 600;
     border: none;
     border-radius: var(--radius-sm);
@@ -974,20 +974,20 @@ nav a.active, nav a:hover {
     padding: 1rem 1.5rem 0.5rem 1.5rem;
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 1.25rem; /* increased from 0.85rem */
     margin-top: 15px;
 }
 
 .card-avatar {
-    width: 56px;
-    height: 56px;
+    width: 66px; /* increased from 56px */
+    height: 66px; /* increased from 56px */
     border-radius: 50%;
     background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.5rem; /* increased from 1.25rem */
     font-weight: 700;
     border: 3px solid #ffffff;
     box-shadow: var(--shadow-sm);
@@ -998,14 +998,14 @@ nav a.active, nav a:hover {
 }
 
 .card-header-info h3 {
-    font-size: 1.15rem;
+    font-size: 1.4rem; /* increased from 1.15rem (by 2 levels) */
     font-weight: 700;
     margin-bottom: 0.1rem;
     color: #111518;
 }
 
 .card-sub {
-    font-size: 0.75rem;
+    font-size: 0.95rem; /* increased from 0.75rem (by 2 levels) */
     background: rgba(139, 116, 67, 0.1);
     color: #8b7443;
     border: 1px solid rgba(139, 116, 67, 0.25);
@@ -1051,7 +1051,7 @@ nav a.active, nav a:hover {
 }
 
 .card-icon {
-    font-size: 0.95rem;
+    font-size: 1.15rem; /* increased from 0.95rem */
     color: #8b7443;
     margin-top: 0.1rem;
 }
@@ -1066,7 +1066,7 @@ nav a.active, nav a:hover {
 }
 
 .card-item-content label {
-    font-size: 0.7rem;
+    font-size: 0.9rem; /* increased from 0.7rem (by 2 levels) */
     font-weight: 700;
     color: #8b7443;
     text-transform: uppercase;
@@ -1074,7 +1074,7 @@ nav a.active, nav a:hover {
 }
 
 .card-item-content p {
-    font-size: 0.72rem; /* 縮小2級字體，提昇細節層次 */
+    font-size: 0.92rem; /* increased from 0.72rem (by 2 levels) */
     font-weight: 500;
     color: #111518;
     margin-top: 0.05rem;
@@ -1135,7 +1135,7 @@ nav a.active, nav a:hover {
 }
 
 .gallery-header h2 {
-    font-size: 1.25rem;
+    font-size: 1.6rem; /* increased from 1.25rem (by 2 levels) */
     font-weight: 800;
     color: #ffffff; /* 白色文字，使其在深色背景中可見 */
     display: flex;
@@ -1149,7 +1149,7 @@ nav a.active, nav a:hover {
 }
 
 .gallery-header p {
-    font-size: 0.8rem;
+    font-size: 1.0rem; /* increased from 0.8rem (by 2 levels) */
     color: #cbd5e1; /* 亮銀灰色，提昇可讀性 */
     margin-top: 0.2rem;
 }
@@ -1180,7 +1180,7 @@ nav a.active, nav a:hover {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
-    max-width: 1200px; /* 專為 3 欄設計的最大寬度 */
+    max-width: 1400px; /* 專為 3 欄設計的最大寬度 - Increased to support larger cards */
     margin: 0 auto;
     justify-content: center;
     padding-bottom: 2rem;
@@ -1230,26 +1230,26 @@ nav a.active, nav a:hover {
 .gallery-grid .card-header {
     margin-top: 5px;
     padding: 0.75rem 1rem 0.35rem 1rem;
-    gap: 0.6rem;
+    gap: 0.85rem; /* increased from 0.6rem */
 }
 
 .gallery-grid .card-avatar {
-    width: 42px;
-    height: 42px;
-    font-size: 1rem;
+    width: 52px; /* increased from 42px */
+    height: 52px; /* increased from 42px */
+    font-size: 1.25rem; /* increased from 1rem */
     border: 2px solid #bca46a !important; /* 金屬質感 Avatar 框 */
     box-shadow: var(--shadow-sm);
 }
 
 .gallery-grid .card-header-info h3 {
-    font-size: 1rem;
+    font-size: 1.25rem; /* increased from 1rem (by 2 levels) */
     color: #111518; /* 高對比黑 */
     font-weight: 700;
 }
 
 .gallery-grid .card-sub {
-    font-size: 0.7rem;
-    padding: 0.05rem 0.35rem;
+    font-size: 0.95rem; /* increased from 0.7rem (by 2 levels) */
+    padding: 0.15rem 0.45rem; /* scaled padding */
     background: rgba(139, 116, 67, 0.1);
     color: #8b7443;
     border: 1px solid rgba(139, 116, 67, 0.2);
@@ -1279,21 +1279,21 @@ nav a.active, nav a:hover {
 }
 
 .gallery-grid .card-icon {
-    font-size: 0.85rem;
+    font-size: 1.05rem; /* increased from 0.85rem */
     color: #8b7443; /* 曜金標題 */
     margin-top: 0.05rem;
 }
 
 .gallery-grid .card-item-content label {
-    font-size: 0.62rem;
+    font-size: 0.85rem; /* increased from 0.62rem (by 2 levels) */
     color: #8b7443; /* 曜金標題 */
     letter-spacing: 0.5px;
 }
 
 .gallery-grid .card-item-content p {
-    font-size: 0.7rem; /* 縮小2級字體，提昇細節層次 */
+    font-size: 0.95rem; /* increased from 0.7rem (by 2 levels) */
     color: #111518; /* 曜石黑 */
-    margin-top: 1px;
+    margin-top: 2px;
     line-height: 1.4;
 }
 
@@ -1312,7 +1312,7 @@ nav a.active, nav a:hover {
 }
 
 .gallery-grid #card-quote {
-    font-size: 0.72rem;
+    font-size: 0.95rem; /* increased from 0.72rem (by 2 levels) */
     color: #111518;
 }
 
@@ -1414,7 +1414,7 @@ nav a.active, nav a:hover {
 }
 
 .status-text {
-    font-size: 0.75rem;
+    font-size: 1rem; /* increased from 0.75rem */
     font-weight: 700;
     color: var(--text-color, #f0f2f5);
     letter-spacing: 2px;
@@ -1422,7 +1422,7 @@ nav a.active, nav a:hover {
 }
 
 .status-tag {
-    font-size: 0.65rem;
+    font-size: 0.9rem; /* increased from 0.65rem */
     font-weight: 800;
     background-color: var(--primary-color, #bca46a);
     color: #111518;
@@ -1434,7 +1434,7 @@ nav a.active, nav a:hover {
 
 /* 主標題 */
 .hero-title {
-    font-size: 2.25rem;
+    font-size: 3rem; /* 2.25rem * 1.33 */
     font-weight: 800;
     color: #ffffff;
     letter-spacing: 1.5px;
@@ -1469,10 +1469,10 @@ nav a.active, nav a:hover {
 
 /* 導覽敘述內文 */
 .hero-description {
-    font-size: 0.95rem;
+    font-size: 1.3rem; /* increased from 0.95rem */
     line-height: 1.7;
     color: var(--text-muted, #8c9ba5);
-    max-width: 580px;
+    max-width: 780px; /* increased to fit larger size */
     margin: 0 auto;
     font-weight: 400;
 }
@@ -1605,7 +1605,7 @@ nav a.active, nav a:hover {
 }
 
 .lock-text {
-    font-size: 0.75rem;
+    font-size: 0.95rem; /* increased from 0.75rem */
     font-weight: 700;
     color: #8b7443;
     line-height: 1.5;
@@ -1622,7 +1622,7 @@ nav a.active, nav a:hover {
     width: 100%;
     padding: 0.35rem 1rem;
     font-family: monospace;
-    font-size: 0.65rem;
+    font-size: 0.85rem; /* increased from 0.65rem */
     font-weight: 800;
     text-align: center;
     letter-spacing: 1.5px;
