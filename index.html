@@ -1,85 +1,112 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EC Test - AI 工具導航</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>方塊大冒險</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="game.js" defer></script>
 </head>
-<body class="bg-slate-900 text-white font-sans">
+<body>
+  <header class="topbar">
+    <h1>方塊大冒險</h1>
 
-    <nav class="p-6 border-b border-slate-700 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-400">EC Test</h1>
-        <a href="https://github.com" class="hover:text-blue-400">GitHub Repo</a>
+    <nav class="mode-tabs" aria-label="遊戲模式">
+      <button class="mode-tab active" type="button">單人</button>
+      <button class="mode-tab" type="button" disabled>對戰</button>
     </nav>
 
-    <header class="text-center py-20 px-4">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4">發現最強大的 AI 工具</h2>
-        <p class="text-slate-400 text-lg mb-8">精選、分類、快速上手的 AI 生產力指南</p>
-        <input type="text" placeholder="搜尋工具..." class="p-3 w-full max-w-md rounded-lg bg-slate-800 border border-slate-600 focus:outline-none focus:border-blue-500 text-white">
-    </header>
-
-    <div class="flex justify-center gap-4 mb-12 flex-wrap px-4">
-        <button class="px-4 py-2 bg-slate-800 rounded-full hover:bg-blue-600 transition">全部</button>
-        <button class="px-4 py-2 bg-slate-800 rounded-full hover:bg-blue-600 transition">文字生成</button>
-        <button class="px-4 py-2 bg-slate-800 rounded-full hover:bg-blue-600 transition">圖像處理</button>
-        <button class="px-4 py-2 bg-slate-800 rounded-full hover:bg-blue-600 transition">程式輔助</button>
+    <div class="toolbar" aria-label="遊戲工具">
+      <button id="pauseBtn" class="round-btn" type="button" title="暫停/繼續" aria-label="暫停/繼續">Ⅱ</button>
+      <button id="helpBtn" class="round-btn" type="button" title="操作說明" aria-label="操作說明">?</button>
+      <button id="restartBtn" class="round-btn" type="button" title="重新開始" aria-label="重新開始">↻</button>
+      <button id="themeBtn" class="round-btn" type="button" title="切換主題" aria-label="切換主題">☀</button>
     </div>
+  </header>
 
-    <main class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-        
-        <div class="bg-slate-800 p-6 rounded-xl hover:shadow-lg hover:shadow-blue-500/20 transition border border-slate-700">
-            <div class="flex justify-between items-start mb-4">
-                <h3 class="text-xl font-bold">ChatGPT</h3>
-                <span class="bg-green-900 text-green-300 text-xs px-2 py-1 rounded">免費/付費</span>
-            </div>
-            <p class="text-slate-400 mb-4 text-sm">OpenAI 開發的最強大對話式 AI 模型，適用於各種文本任務。</p>
-            <div class="flex gap-2 mb-4">
-                <span class="text-xs bg-slate-700 px-2 py-1 rounded">文字</span>
-                <span class="text-xs bg-slate-700 px-2 py-1 rounded">助理</span>
-            </div>
-            <a href="#" class="block text-center w-full py-2 bg-blue-600 rounded hover:bg-blue-500 transition">前往網站</a>
-        </div>
+  <main class="app">
+    <section class="game-card" aria-label="俄羅斯方塊遊戲">
+      <aside class="left-panel">
+        <section class="hold-section">
+          <h2>保留方塊</h2>
+          <canvas id="hold" width="150" height="120" aria-label="保留方塊"></canvas>
+        </section>
 
-        <div class="bg-slate-800 p-6 rounded-xl hover:shadow-lg hover:shadow-blue-500/20 transition border border-slate-700">
-            <div class="flex justify-between items-start mb-4">
-                <h3 class="text-xl font-bold">Midjourney</h3>
-                <span class="bg-purple-900 text-purple-300 text-xs px-2 py-1 rounded">付費</span>
-            </div>
-            <p class="text-slate-400 mb-4 text-sm">目前效果最驚人的 AI 繪圖工具，需透過 Discord 操作。</p>
-            <div class="flex gap-2 mb-4">
-                <span class="text-xs bg-slate-700 px-2 py-1 rounded">繪圖</span>
-                <span class="text-xs bg-slate-700 px-2 py-1 rounded">藝術</span>
-            </div>
-            <a href="#" class="block text-center w-full py-2 bg-blue-600 rounded hover:bg-blue-500 transition">前往網站</a>
-        </div>
+        <section class="score-section">
+          <p>本局分數</p>
+          <strong id="score">0</strong>
 
-        </main>
+          <dl class="score-list">
+            <div>
+              <dt>歷史新高</dt>
+              <dd id="bestScore">0</dd>
+            </div>
+            <div>
+              <dt>今日最高</dt>
+              <dd id="todayBest">0</dd>
+            </div>
+            <div>
+              <dt>消除行數</dt>
+              <dd id="lines">0</dd>
+            </div>
+            <div>
+              <dt>等級</dt>
+              <dd id="level">1</dd>
+            </div>
+          </dl>
+        </section>
+      </aside>
 
-    <footer class="text-center py-8 text-slate-500 text-sm border-t border-slate-800">
-        <p>© 2024 EC Test. Hosted on GitHub Pages.</p>
-    </footer>
-<!-- CL-SDK-GENERATED-CODE-START -->
-<link
-  rel="stylesheet"
-  href="https://websdk.cresclab.com/latest/default-ui/dist/default.css"
-/>
-<script>
-  window.onClWidgetScriptLoad = function () {
-    window.clWidget = window.createClWidget({
-      clWebChannelId: "CL-CD6519EC",
-      plugins: [clPluginDataLayer()],
-    });
-  };
-</script>
-<script
-  src="https://websdk.cresclab.com/latest/core/dist/iife/plugins/dataLayer/window.global.js"
-  defer
-></script>
-<script
-  src="https://websdk.cresclab.com/latest/default-preset/dist/iife/production/window.global.js"
-  defer
-></script>
-<!-- CL-SDK-GENERATED-CODE-END -->
+      <section class="board-section">
+        <div id="status" class="status-pill">準備開始</div>
+        <canvas id="board" width="300" height="600" aria-label="遊戲區"></canvas>
+      </section>
+
+      <aside class="right-panel">
+        <section class="queue-section">
+          <h2>即將出現</h2>
+          <div class="preview-stack">
+            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 1"></canvas>
+            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 2"></canvas>
+            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 3"></canvas>
+            <canvas class="next-board" width="150" height="78" aria-label="下一個方塊 4"></canvas>
+          </div>
+        </section>
+
+        <section class="rank-section">
+          <div class="divider"></div>
+          <p>本週排名</p>
+          <strong id="weeklyRank">第 1 名</strong>
+          <span id="rankHint">目前排名第一！</span>
+          <button id="rankBtn" class="outline-btn" type="button">♜ 查看排行榜</button>
+        </section>
+      </aside>
+    </section>
+
+    <div class="mobile-controls" aria-label="手機操作">
+      <button data-action="left" type="button">←</button>
+      <button data-action="rotate" type="button">旋轉</button>
+      <button data-action="right" type="button">→</button>
+      <button data-action="down" type="button">下</button>
+      <button data-action="drop" type="button">落下</button>
+      <button data-action="hold" type="button">保留</button>
+    </div>
+  </main>
+
+  <dialog id="helpDialog" class="modal">
+    <form method="dialog">
+      <h2>操作說明</h2>
+      <p>方向鍵左右移動、上鍵旋轉、下鍵加速、空白鍵直接落下、C 或 Shift 保留方塊。</p>
+      <button class="outline-btn" type="submit">知道了</button>
+    </form>
+  </dialog>
+
+  <dialog id="rankDialog" class="modal">
+    <form method="dialog">
+      <h2>排行榜</h2>
+      <ol id="rankList" class="rank-list"></ol>
+      <button class="outline-btn" type="submit">關閉</button>
+    </form>
+  </dialog>
 </body>
 </html>

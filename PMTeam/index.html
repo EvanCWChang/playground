@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Team 專案管理 - 建立個人畫像</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 星空背景畫布 -->
+    <canvas id="starfield"></canvas>
+
+    <header>
+        <div class="header-container">
+            <h1 id="brand-logo"><i class="fa-solid fa-plane"></i> PM Flight</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" id="nav-cabin">進到機艙</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 1. 開場 Onboarding 登機證畫面 -->
+    <div class="onboarding-overlay" id="onboarding-screen">
+        <!-- 3D 轉場紙飛機容器 (預設隱藏) -->
+        <div class="transition-plane-container hidden" id="transition-plane-container">
+            <svg class="paper-plane-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 2L2 8.66667L11.5 12.5L22 2Z" fill="#bca46a"/>
+                <path d="M22 2L11.5 12.5L15.3333 22L22 2Z" fill="#9c844f"/>
+                <path d="M11.5 12.5L9 17L11.5 12.5Z" fill="#8b7443"/>
+            </svg>
+        </div>
+
+        <div class="hero-section-terminal">
+            <!-- 機場狀態標籤 -->
+            <div class="terminal-status-bar">
+                <span class="status-dot"></span>
+                <span class="status-text">FLIGHT JX-2026 // GATE OPEN</span>
+                <span class="status-tag">BOARDING</span>
+            </div>
+
+            <!-- 主標題與副標題 -->
+            <h1 class="hero-title">從過去到未來，至現在的我們</h1>
+
+            <!-- 導覽敘述內文 -->
+            <p class="hero-description">
+                職涯這趟長途飛行裡，能坐在相鄰位置成為旅伴，是一期一會的幸運。<br>
+                期待你分享過去踩過的坑、隱藏的特殊才藝等精彩的人生故事。<br>
+                在下一次航程起飛之前，讓我們先在這裡停靠。
+            </p>
+        </div>
+
+        <div class="boarding-pass" id="boarding-pass-card">
+            <!-- 登機票左半部：主機票 -->
+            <div class="ticket-left">
+                <div class="ticket-header">
+                    <span class="airline"><i class="fa-solid fa-star"></i> XC ╳ PM</span>
+                    <span class="flight-no">FLIGHT JX-2026</span>
+                </div>
+                <div class="ticket-body">
+                    <div class="airport-codes">
+                        <div class="code-block">
+                            <span class="code">PAST</span>
+                        </div>
+                        <div class="plane-animation">
+                            <i class="fa-solid fa-plane plane-icon"></i>
+                        </div>
+                        <div class="code-block text-right">
+                            <span class="code">FUTR</span>
+                        </div>
+                    </div>
+                    <div class="ticket-details">
+                        <div class="detail-group">
+                            <label>PASSENGER NAME / 旅客姓名</label>
+                            <input type="text" id="boarding-name" placeholder="請輸入名字" required autocomplete="off">
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-group">
+                                <label>DESTINATION / 目的地</label>
+                                <input type="text" id="boarding-destination" placeholder="請輸入此時最想去的國家" required autocomplete="off">
+                            </div>
+                            <div class="detail-group" style="min-width: 100px;">
+                                <label>GATE / 登機門</label>
+                                <span class="detail-value" style="display: block; margin-top: 5px;">小樹屋</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 登機票切撕線與圓形凹孔 -->
+            <div class="ticket-divider">
+                <div class="notch top"></div>
+                <div class="dashed-line"></div>
+                <div class="notch bottom"></div>
+            </div>
+            
+            <!-- 登機票右半部：存根聯 -->
+            <div class="ticket-right">
+                <div class="stub-body">
+                    <div class="detail-group">
+                        <label>FLIGHT / 航班</label>
+                        <span class="detail-value" style="font-size: 0.85rem; color: #bca46a;">JX-2026</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>DESTINATION / 目的地</label>
+                        <span class="detail-value" id="stub-destination" style="font-size: 0.8rem;">Future & Growth</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>GATE / 登機門</label>
+                        <span class="detail-value" style="font-size: 0.8rem;">小樹屋</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="boarding-btn" class="btn btn-boarding">
+            🎫 領取機票 <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <main class="container hidden" id="main-content">
+        <!-- 階段進度條 -->
+        <div class="steps-progress">
+            <div class="step active" id="progress-step-1">
+                <span class="step-number">1</span>
+                <span class="step-label">🛂 Step 1: 海關查驗 (Past)</span>
+            </div>
+            <div class="step-line" id="progress-line-1"></div>
+            <div class="step" id="progress-step-2">
+                <span class="step-number">2</span>
+                <span class="step-label">🛫 Step 2: 登機起飛 (Future)</span>
+            </div>
+            <div class="step-line" id="progress-line-2"></div>
+            <div class="step" id="progress-step-3">
+                <span class="step-number">3</span>
+                <span class="step-label">🧳 Step 3: 行李整備 (Present)</span>
+            </div>
+        </div>
+
+        <div class="workspace-grid">
+            <!-- 左側：輸入表單 -->
+            <section class="form-section">
+                <form id="past-form" onsubmit="return false;">
+                    <!-- Step 1: Past 海關查驗 -->
+                    <div id="step-1-container">
+                        <div class="section-header" style="margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                            <h2>Step 1: 海關查驗 - 翻開你的護照與經歷</h2>
+                            <p class="section-subtitle">你是誰？你從哪裡來？你要去哪裡？你身上的冒險勳章是哪來的</p>
+                        </div>
+                        <div class="form-grid">
+                        <!-- 1. 暱稱 -->
+                        <div class="form-group">
+                            <label for="input-name"><span class="badge badge-primary">1</span> 暱稱 / 名字</label>
+                            <input type="text" id="input-name" placeholder="例如：Alex" required>
+                        </div>
+
+                        <!-- 2. 非 PM 背景 / 主修 -->
+                        <div class="form-group">
+                            <label for="input-background"><span class="badge badge-primary">2</span> 非 PM 本業背景 / 主修</label>
+                            <input type="text" id="input-background" placeholder="例如：企管系 / 以前是工程師">
+                        </div>
+
+                        <!-- 3. 最酷海外/異地經歷 -->
+                        <div class="form-group full-width">
+                            <label for="input-exp"><span class="badge badge-primary">3</span> 過往最酷的海外/異地經歷</label>
+                            <input type="text" id="input-exp" placeholder="例如：交換學生 / 遊學 / 獨旅經歷">
+                        </div>
+
+                        <!-- 4. 重要 Pivot 轉折點 -->
+                        <div class="form-group full-width">
+                            <label for="input-pivot"><span class="badge badge-primary">4</span> 職涯最重要的 Pivot 轉折點</label>
+                            <input type="text" id="input-pivot" placeholder="安排轉行 PM 的那天">
+                        </div>
+
+                        <!-- 5. 踩過最大的坑 / 挫折 -->
+                        <div class="form-group full-width">
+                            <label for="input-pit"><span class="badge badge-primary">5</span> 過去踩過最大的坑 / 挫折</label>
+                            <input type="text" id="input-pit" placeholder="例如：專案爆炸延期 / 需求沒留紀錄">
+                        </div>
+
+                        <!-- 6. 最引以為傲的一件事 -->
+                        <div class="form-group full-width">
+                            <label for="input-proud"><span class="badge badge-primary">6</span> 至今最引以為傲的一件事</label>
+                            <input type="text" id="input-proud" placeholder="例如：獨立完成一個新產品">
+                        </div>
+
+                        <!-- 7. 隱藏才藝 / 特殊專長 -->
+                        <div class="form-group">
+                            <label for="input-talent"><span class="badge badge-primary">7</span> 隱藏才藝 / 特殊專長</label>
+                            <input type="text" id="input-talent" placeholder="例如：拉花冠軍 / 精通調酒">
+                        </div>
+
+                        <!-- 8. 大家不知道的 Fun Fact -->
+                        <div class="form-group">
+                            <label for="input-funfact"><span class="badge badge-primary">8</span> 大家不知道的 Fun Fact</label>
+                            <input type="text" id="input-funfact" placeholder="例如：在冰島被羊追 / 一天喝 5 杯咖啡">
+                        </div>
+
+                        <!-- 9. 影響最深的一本書或電影 -->
+                        <div class="form-group full-width">
+                            <label for="input-influence"><span class="badge badge-primary">9</span> 對你影響最深的一本書或電影</label>
+                            <input type="text" id="input-influence" placeholder="例如：《原子習慣》">
+                        </div>
+
+                        <!-- 10. 過去學到最重要的一句話 -->
+                        <div class="form-group full-width">
+                            <label for="input-quote"><span class="badge badge-primary">10</span> 過去學到最重要的一句話</label>
+                            <input type="text" id="input-quote" placeholder="例如：沒有完美的決策，只有承擔結果">
+                        </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="submit-btn" class="btn btn-generate">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> ✨ 生成客製化機票 (下一步)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Future 登機起飛 -->
+                    <div id="step-2-container" class="hidden">
+                        <div class="section-header" style="margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                            <h2>Step 2: 登機起飛 - 鎖定未來的航向與目的地</h2>
+                            <p class="section-subtitle">設定下半年最想去的地方，準備與團隊一同降落新成就</p>
+                        </div>
+                        <div class="form-grid">
+                        <!-- 11. 硬實力解鎖 -->
+                        <div class="form-group">
+                            <label for="input-future-hard"><span class="badge badge-primary">11</span> 🎯 下半年最想解鎖的 PM 硬技能</label>
+                            <input type="text" id="input-future-hard" placeholder="例如：數據分析 SQL / 需求模組化">
+                        </div>
+
+                        <!-- 12. 軟實力提升 -->
+                        <div class="form-group">
+                            <label for="input-future-soft"><span class="badge badge-primary">12</span> 🗣️ 下半年最想提升的軟實力</label>
+                            <input type="text" id="input-future-soft" placeholder="例如：向上管理 / 跨部門衝突溝通">
+                        </div>
+
+                        <!-- 13. 專案目標 -->
+                        <div class="form-group full-width">
+                            <label for="input-future-proj"><span class="badge badge-primary">13</span> 🚀 下半年最想推動或上線的專案</label>
+                            <input type="text" id="input-future-proj" placeholder="例如：優化結帳流程 / 完成系統重構">
+                        </div>
+
+                        <!-- 14. 生活願望 -->
+                        <div class="form-group">
+                            <label for="input-future-life"><span class="badge badge-primary">14</span> 🌈 下半年私下最想完成的生活目標</label>
+                            <input type="text" id="input-future-life" placeholder="例如：考取潛水執照 / 跑一次半馬">
+                        </div>
+
+                        <!-- 15. 旅行地圖 -->
+                        <div class="form-group">
+                            <label for="input-future-travel"><span class="badge badge-primary">15</span> ✈️ 下半年最想去旅遊的地方</label>
+                            <input type="text" id="input-future-travel" placeholder="例如：去日本滑雪 / 泰國度假">
+                        </div>
+
+                        <!-- 16. 習慣養成 -->
+                        <div class="form-group">
+                            <label for="input-future-habit"><span class="badge badge-primary">16</span> 🧘 下半年想建立的新習慣</label>
+                            <input type="text" id="input-future-habit" placeholder="例如：每天冥想 10 分鐘 / 11點前睡覺">
+                        </div>
+
+                        <!-- 17. 斷捨離 -->
+                        <div class="form-group">
+                            <label for="input-future-bad"><span class="badge badge-primary">17</span> 🚫 下半年想徹底戒掉的壞習慣</label>
+                            <input type="text" id="input-future-bad" placeholder="例如：睡前滑手機 / 報復性熬夜">
+                        </div>
+
+                        <!-- 18. 願景北極星 -->
+                        <div class="form-group full-width">
+                            <label for="input-future-star"><span class="badge badge-primary">18</span> 🌟 1-2 年後理想中的自己 (Northern Star)</label>
+                            <input type="text" id="input-future-star" placeholder="例如：游刃有餘的 Senior PM">
+                        </div>
+
+                        <!-- 19. 人生書名 -->
+                        <div class="form-group full-width">
+                            <label for="input-future-bio"><span class="badge badge-primary">19</span> 🔮 如果未來出了一本你的自傳，書名會叫</label>
+                            <input type="text" id="input-future-bio" placeholder="例如：《在 Bug 中尋找哲學的 PM》">
+                        </div>
+
+                        <!-- 20. 犒賞機制 -->
+                        <div class="form-group full-width">
+                            <label for="input-future-gift"><span class="badge badge-primary">20</span> 🎁 達成目標後最想送給自己的禮物</label>
+                            <input type="text" id="input-future-gift" placeholder="例如：PS5 / 去奢華 SPA 放鬆">
+                        </div>
+                        </div>
+
+                        <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+                            <button type="button" id="step-2-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
+                            <button type="button" id="step-2-next" class="btn btn-generate">下一步 (行李整備) <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Present 行李整備 -->
+                    <div id="step-3-container" class="hidden">
+                        <div class="section-header" style="margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                            <h2>Step 3: 行李整備 - 帶上現在的工具與裝備</h2>
+                            <p class="section-subtitle">檢查你擁有的專業技能，以及旅途中需要的夥伴支援</p>
+                        </div>
+                        <div class="form-grid">
+                        <!-- 1. 早上開機必備儀式 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-morning"><span class="badge badge-primary">21</span> ☕ 早上開機必備儀式</label>
+                            <input type="text" id="input-present-morning" placeholder="例如：美式咖啡 / 聽音樂 15 分鐘 / 漂浮發呆">
+                        </div>
+
+                        <!-- 2. 跟你溝通最順暢的小撇步 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-comm"><span class="badge badge-primary">22</span> ⚡ 跟你溝通最順暢的小撇步</label>
+                            <input type="text" id="input-present-comm" placeholder="例如：比起打字更喜歡面聊 / 請直接講重點">
+                        </div>
+
+                        <!-- 3. 你的地雷 / 能量歸零開關 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-mine"><span class="badge badge-primary">23</span> 🪫 你的地雷 / 能量歸零開關</label>
+                            <input type="text" id="input-present-mine" placeholder="例如：臨時插急件 / 沒目的的會議">
+                        </div>
+
+                        <!-- 4. 你的充電方式 / 快樂源泉 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-charge"><span class="badge badge-primary">24</span> 🔋 你的充電方式 / 快樂源泉</label>
+                            <input type="text" id="input-present-charge" placeholder="例如：吃甜點 / 聽 Podcast / 狂揍手作貓咪">
+                        </div>
+
+                        <!-- 5. 你可以給團隊的硬核支援 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-support-hard"><span class="badge badge-primary">25</span> 💡 你可以給團隊的硬核支援</label>
+                            <input type="text" id="input-present-support-hard" placeholder="例如：熟練 Figma / 幫忙除錯 SQL / 擅長寫文件">
+                        </div>
+
+                        <!-- 6. 你可以給團隊的私房支援 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-support-soft"><span class="badge badge-primary">26</span> 🍔 你可以給團隊的私房支援</label>
+                            <input type="text" id="input-present-support-soft" placeholder="例如：知道全公司最讚便當 / 團購食物大師">
+                        </div>
+
+                        <!-- 7. 你現在最需要的「工作應援」 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-need-work"><span class="badge badge-primary">27</span> 🆘 你現在最需要的「工作應援」</label>
+                            <input type="text" id="input-present-need-work" placeholder="例如：求 Code Review / 需要數據工具教學">
+                        </div>
+
+                        <!-- 8. 你現在最需要的「生活應援」 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-need-life"><span class="badge badge-primary">28</span> 🏃‍♂️ 你現在最需要的「生活應援」</label>
+                            <input type="text" id="input-present-need-life" placeholder="例如：求運動揪團夥伴 / 求推薦好看美劇">
+                        </div>
+
+                        <!-- 9. 你最欣賞 PM 團隊的一個優點 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-admire"><span class="badge badge-primary">29</span> ❤️ 你最欣賞 PM 團隊的一個優點</label>
+                            <input type="text" id="input-present-admire" placeholder="例如：大家反應很快 / 包容度很高">
+                        </div>
+
+                        <!-- 10. 想給現在 the PM 團隊大家的一句話 -->
+                        <div class="form-group full-width">
+                            <label for="input-present-message"><span class="badge badge-primary">30</span> 💌 想給現在的 PM 團隊大家的一句話</label>
+                            <input type="text" id="input-present-message" placeholder="例如：下半年大家一起加油，準時下班！">
+                        </div>
+                    </div>
+
+                    <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+                        <button type="button" id="step-3-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
+                        <button type="button" id="step-3-finish" class="btn btn-generate">完成冒險 / 登入行程 <i class="fa-solid fa-check"></i></button>
+                    </div>
+                </div>
+            </form>
+            </section>
+        </div>
+
+        <!-- 新增：PM 團隊畫像藝廊區塊 -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2><i class="fa-solid fa-palette"></i> 已通過海關的成員</h2>
+                <p>已點亮的團隊成員畫像，攜手見證過往的成長與未來的力量</p>
+            </div>
+            
+            <!-- 預設無卡片時的空狀態 -->
+            <div class="gallery-empty" id="gallery-empty">
+                <i class="fa-regular fa-folder-open empty-icon"></i>
+                <p>目前藝廊還空空如也，快去上面填寫表單，產生你的第一張個人畫像卡吧！</p>
+            </div>
+
+            <!-- 卡片藝廊網格 -->
+            <div class="gallery-grid hidden" id="gallery-grid">
+                <!-- 動態產生的卡片會被 Append 到這裡 -->
+            </div>
+        </section>
+        </section>
+    </main>
+
+    <script src="starfield.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1693 @@
+/* ==========================================================================
+   全域變數與重設 (Theme & Reset) - 星宇航空頂奢黑金科技風 (STARLUX Black Gold)
+   ========================================================================== */
+:root {
+    --primary-color: #bca46a; /* 星宇金 */
+    --primary-hover: #9c844f; /* 曜沙深金 */
+    --secondary-color: #13c2c2; /* 湖青科技藍 */
+    --bg-color: #1a1e22; /* 質感深邃航藍色/深太空藍灰（非純黑） */
+    --card-bg: #24292e; /* 輕盈深藍灰卡片底色 */
+    --text-color: #f0f2f5; /* 太空白 */
+    --text-muted: #8c9ba5; /* 銀河灰 */
+    --border-color: rgba(188, 164, 106, 0.2); /* 星宇金細緻邊框 */
+    --accent-color: #f5222d;
+    --accent-bg: rgba(245, 34, 45, 0.1);
+    --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.6);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    overflow-y: scroll !important;
+    scrollbar-gutter: stable !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    font-size: 0.92rem;
+    scrollbar-gutter: stable !important;
+}
+
+/* ==========================================================================
+   Onboarding (Boarding Pass View) - 星宇航空奢華曜石金風格 (Starlux Luxury)
+   ========================================================================== */
+.onboarding-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 1.5rem;
+    transition: all 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.35);
+    opacity: 1;
+    transform: scale(1);
+    max-width: 680px; /* 完美容納橫式機票 */
+    margin: 0 auto;
+}
+
+.onboarding-overlay.fly-out {
+    opacity: 0;
+    transform: scale(0.85) translateY(-100px) rotate(-6deg);
+    pointer-events: none;
+}
+
+/* 登機證主卡片 - 星宇航空高科技曜石灰搭配星宇金、圓孔切角 */
+.boarding-pass {
+    display: flex;
+    flex-direction: row; /* 橫式排版 */
+    width: 100%;
+    background: #111518; /* 曜石灰 */
+    border-radius: var(--radius-lg);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(188, 164, 106, 0.25); /* 星宇玫瑰金細邊框 */
+}
+
+@media (max-width: 768px) {
+    .boarding-pass {
+        flex-direction: row; /* 行動端也強制定橫式 */
+    }
+}
+
+/* 左側主機票 */
+.ticket-left {
+    padding: 1.5rem;
+    background: #111518; /* 曜石灰 */
+    flex: 1.8;
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(188, 164, 106, 0.2);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.airline {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #bca46a; /* 星宇玫瑰金 */
+    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.flight-no {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background-color: #bca46a; /* 玫瑰金底色 */
+    color: #111518; /* 曜石灰文字 */
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* 機場代碼與飛機動畫 */
+.airport-codes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.code-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.code-block .code {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffffff; /* 白色代碼 */
+    line-height: 1;
+    letter-spacing: 1px;
+}
+
+.code-block .airport-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #bca46a; /* 金色名稱 */
+    margin-top: 0.1rem;
+}
+
+.code-block.text-right {
+    text-align: right;
+}
+
+/* ==========================================================================
+   Onboarding (Boarding Pass View) - 星宇航空優雅暖卡其風格 (Starlux Warm Khaki)
+   ========================================================================== */
+.onboarding-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 1.5rem;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: scale(1);
+    max-width: 680px; /* 完美容納橫式機票 */
+    margin: 0 auto;
+    perspective: 1200px; /* 3D 空間透視 */
+}
+
+/* 紙飛機折疊動畫類別 */
+.boarding-pass.fold-to-plane {
+    animation: ticketFold 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    pointer-events: none;
+}
+
+@keyframes ticketFold {
+    0% {
+        transform: rotateX(0) rotateY(0) scale(1);
+        opacity: 1;
+    }
+    40% {
+        transform: rotateX(45deg) rotateY(-20deg) scale(0.7);
+        opacity: 0.9;
+    }
+    100% {
+        transform: rotateX(85deg) rotateY(-180deg) scale(0.01);
+        opacity: 0;
+        display: none !important;
+    }
+}
+
+/* 3D 轉場紙飛機飛射動畫容器 */
+.transition-plane-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    pointer-events: none;
+}
+
+.paper-plane-svg {
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.4));
+    transform: rotate3d(1, 1, 1, 0) scale(0.1);
+    opacity: 0;
+}
+
+/* 紙飛機啟航衝刺類別 */
+.paper-plane-svg.fly-shoot {
+    animation: paperFly 1.6s cubic-bezier(0.25, 1, 0.2, 1) forwards;
+}
+
+@keyframes paperFly {
+    0% {
+        transform: translate3d(0, 50px, -500px) rotateX(15deg) rotateY(-10deg) rotateZ(-5deg) scale(0.1);
+        opacity: 0;
+    }
+    25% {
+        transform: translate3d(0, 0, -100px) rotateX(25deg) rotateY(-15deg) rotateZ(-10deg) scale(1.1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate3d(-30px, -15px, 100px) rotateX(20deg) rotateY(-5deg) rotateZ(-8deg) scale(1.5);
+        opacity: 1;
+    }
+    100% {
+        transform: translate3d(50px, -120px, 1000px) rotateX(10deg) rotateY(15deg) rotateZ(5deg) scale(3.5);
+        opacity: 0;
+    }
+}
+
+.onboarding-overlay.fly-out {
+    opacity: 0;
+    transform: scale(0.92);
+    pointer-events: none;
+}
+
+/* 登機證主卡片 - 優雅奢華的暖卡其色搭配曜石黑/深金 */
+.boarding-pass {
+    display: flex;
+    flex-direction: row; /* 橫式排版 */
+    width: 100%;
+    background: #f4efe6; /* 溫暖淺卡其色 */
+    border-radius: var(--radius-lg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(139, 116, 67, 0.35); /* 曜沙金細邊框 */
+    transform-style: preserve-3d;
+    transition: var(--transition-base);
+    box-sizing: border-box; /* 確保內距與寬度絕對鎖定 */
+}
+
+@media (max-width: 768px) {
+    .boarding-pass {
+        flex-direction: row; /* 行動端也強制定橫式 */
+    }
+}
+
+/* 左側主機票 */
+.ticket-left {
+    padding: 1.5rem;
+    background: #f4efe6; /* 暖卡其色 */
+    flex: 1.8;
+    box-sizing: border-box;
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(139, 116, 67, 0.2);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.airline {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #8b7443; /* 曜沙深金 */
+    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.flight-no {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background-color: #8b7443; /* 深金底色 */
+    color: #f4efe6; /* 卡其色文字 */
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* 機場代碼與飛機動畫 */
+.airport-codes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.code-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.code-block .code {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #111518; /* 深色代碼 */
+    line-height: 1;
+    letter-spacing: 1px;
+}
+
+.code-block .airport-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #8b7443;
+    margin-top: 0.1rem;
+}
+
+.code-block.text-right {
+    text-align: right;
+}
+
+.plane-animation {
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 改為靠左起飛 */
+    position: relative;
+    overflow: hidden; /* 確保超出範圍時隱藏 */
+}
+
+.plane-animation::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-image: linear-gradient(to right, #8b7443 40%, rgba(255, 255, 255, 0) 0%);
+    background-position: top;
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.plane-icon {
+    font-size: 1rem;
+    color: #8b7443;
+    transform: rotate(45deg); /* FontAwesome fa-plane 預設朝向東北(45度)，旋轉 45 度即可水平向右飛行 */
+    z-index: 2;
+    background: #f4efe6; /* 暖卡其背景 */
+    padding: 0 0.2rem;
+    animation: flightPath 3s linear infinite;
+    position: relative;
+}
+
+@keyframes flightPath {
+    0% {
+        left: -20px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        left: 60px;
+        opacity: 0;
+    }
+}
+
+/* 機票明細 */
+.ticket-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.detail-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.detail-group label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #718096; /* 灰銀色文字 */
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.detail-group input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(139, 116, 67, 0.3); /* 輕深金邊框 */
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #111518; /* 輸入字為深曜石黑 */
+    background-color: rgba(0, 0, 0, 0.03); /* 半透明高質感輸入框 */
+    transition: var(--transition-base);
+}
+
+.detail-group input:focus {
+    outline: none;
+    border-color: #8b7443;
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 3px rgba(139, 116, 67, 0.15);
+}
+
+.detail-group input::placeholder {
+    font-size: 0.82rem;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.detail-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #111518; /* 深色數值 */
+}
+
+/* 存根聯與分割撕線 */
+.ticket-divider {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* 橫式機票撕線改為垂直 (notch 在上下) */
+    width: 16px;
+    background-color: #f4efe6;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ticket-divider .notch {
+    width: 16px;
+    height: 8px;
+    background-color: var(--bg-color); /* 切角顯示網頁底色 */
+}
+
+.ticket-divider .notch.top {
+    border-radius: 0 0 8px 8px;
+    transform: none;
+}
+
+.ticket-divider .notch.bottom {
+    border-radius: 8px 8px 0 0;
+    transform: none;
+}
+
+.ticket-divider .dashed-line {
+    flex-grow: 1;
+    border-left: 1.5px dashed rgba(139, 116, 67, 0.3); /* 深金虛線 */
+    border-top: none;
+    width: 1px;
+    margin: 8px 0;
+}
+
+.ticket-right {
+    padding: 1.25rem 1.5rem;
+    background: #eae4d8; /* 稍深一階的暖卡其色 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.85rem;
+    min-width: 180px; /* 給予存根聯固定最小寬度確保橫式時比例完美 */
+    max-width: 180px; /* 鎖死寬度防止寬度在任何情況下內縮或變形 */
+    box-sizing: border-box;
+}
+
+.stub-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0.65rem;
+}
+
+.stub-flight-no {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #8b7443;
+}
+
+.stub-name-preview {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #111518;
+    text-transform: uppercase;
+}
+
+/* 按鈕 - 星宇玫瑰金尊榮風格 */
+.btn-boarding {
+    background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
+    color: #111518; /* 曜石灰 */
+    padding: 0.75rem 2rem;
+    font-size: 0.95rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(139, 116, 67, 0.25);
+    font-weight: 800;
+}
+
+.btn-boarding:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(139, 116, 67, 0.35);
+    background: linear-gradient(135deg, #cbb47b 0%, #9c844f 100%);
+}
+
+/* ==========================================================================
+   Header & Navigation (Compact Navigation)
+   ========================================================================== */
+/* ==========================================================================
+   Header & Navigation (Compact Navigation) - 黑金高科技風
+   ========================================================================== */
+header {
+    background-color: #1e2328; /* 深航藍灰 */
+    border-bottom: 1px solid rgba(188, 164, 106, 0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-color); /* 星宇金 */
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-base);
+}
+
+nav a.active, nav a:hover {
+    background-color: rgba(188, 164, 106, 0.1);
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   主容器與進度條 (Layout & Progress) - 頂奢星空機艙背景
+   ========================================================================== */
+#main-content {
+    background: radial-gradient(circle at 50% 35%, #0f172a 0%, #070a12 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(188, 164, 106, 0.2);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), inset 0 0 150px rgba(188, 164, 106, 0.08);
+    position: relative;
+    overflow: hidden;
+    padding: 2.5rem 2rem;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.container.hidden {
+    display: none !important;
+}
+
+.steps-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    background: #1e2328; /* 深航藍灰 */
+    border: 1px solid rgba(188, 164, 106, 0.15);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+}
+
+.step.clickable {
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.step.clickable:hover {
+    color: var(--primary-color);
+    opacity: 0.9;
+}
+
+.step.clickable:hover .step-number {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(188, 164, 106, 0.4);
+}
+
+.step.active {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.step.active .step-number {
+    background-color: var(--primary-color);
+    color: #111518; /* 金底黑字 */
+}
+
+.step-number {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #1a202c;
+    border: 1px solid rgba(188, 164, 106, 0.3);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.step-label {
+    font-size: 0.8rem;
+}
+
+.step-line {
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background-color: rgba(188, 164, 106, 0.2);
+    margin: 0 0.75rem;
+}
+
+/* ==========================================================================
+   主工作區 Grid (Workspace Grid)
+   ========================================================================== */
+.workspace-grid {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+/* ==========================================================================
+   左側：輸入表單區 (Form Section - max-width: 640px) - 黑金奢華化
+   ========================================================================== */
+.form-section {
+    background: #ffffff; /* 淺色質感白背景 */
+    border: 1px solid rgba(188, 164, 106, 0.25);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(188, 164, 106, 0.15);
+    padding-bottom: 0.75rem;
+}
+
+.section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b; /* 曜石深灰 */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-header h2 i {
+    color: var(--primary-color);
+}
+
+.section-subtitle {
+    font-size: 0.8rem;
+    color: #475569; /* 清楚深灰 */
+    margin-top: 0.2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .full-width {
+        grid-column: span 1 !important;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155; /* 深灰藍，高可讀性 */
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.badge-primary {
+    background-color: rgba(188, 164, 106, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(188, 164, 106, 0.2);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(188, 164, 106, 0.3);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #1e293b; /* 曜石深灰 */
+    background-color: #f8fafc; /* 淺灰藍，高對比底色 */
+    transition: var(--transition-base);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(188, 164, 106, 0.15);
+}
+
+.form-group input::placeholder {
+    font-size: 0.82rem;
+    color: #94a3b8; /* 清晰但輕柔的預設提示字 */
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(188, 164, 106, 0.15);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.btn-generate {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #8b7443 100%);
+    color: #111518;
+    box-shadow: 0 4px 12px rgba(188, 164, 106, 0.2);
+    font-weight: 700;
+}
+
+.btn-generate:hover {
+    transform: translateY(-1.5px);
+    box-shadow: 0 6px 15px rgba(188, 164, 106, 0.3);
+}
+
+.btn-generate:hover {
+    transform: translateY(-1.5px);
+    box-shadow: 0 6px 12px rgba(74, 111, 165, 0.2);
+}
+
+/* ==========================================================================
+   右側：預覽與卡片區域 (Preview & Card Section) - max-width: 520px
+   ========================================================================== */
+.preview-section {
+    position: sticky;
+    top: calc(1rem + 50px);
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.preview-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.preview-title h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.preview-status {
+    padding: 0.15rem 0.5rem;
+    background-color: #fffbe6;
+    border: 1px solid #ffe58f;
+    color: #d46b08;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 12px;
+}
+
+.preview-status.generated {
+    background-color: #f6ffed;
+    border: 1px solid #b7eb8f;
+    color: #389e0d;
+}
+
+.card-container {
+    perspective: 1000px;
+    width: 100%;
+}
+
+.profile-card-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 440px;
+}
+
+/* --- 1. 骨架卡片 (Skeleton Card) --- */
+.profile-card-skeleton {
+    width: 100%;
+    min-height: 440px;
+    background: #ffffff;
+    border: 2px dashed #cbd5e0;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.skeleton-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #edf2f7;
+    color: #a0aec0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    animation: pulse 1.8s infinite ease-in-out;
+}
+
+.skeleton-line {
+    height: 10px;
+    background-color: #edf2f7;
+    border-radius: 4px;
+    animation: pulse 1.8s infinite ease-in-out;
+}
+
+.skeleton-line.title {
+    width: 100px;
+    height: 14px;
+}
+
+.skeleton-line.subtitle {
+    width: 140px;
+}
+
+.skeleton-line-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.5rem 0;
+}
+
+.skeleton-line.short { width: 35%; }
+.skeleton-line.medium { width: 65%; }
+.skeleton-line.long { width: 85%; }
+
+.skeleton-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* --- 2. 正式卡片 (Real Profile Card) --- */
+.profile-card {
+    width: 100%;
+    min-height: 440px;
+    background: #f4efe6; /* 溫溫淺卡其色 */
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(139, 116, 67, 0.35); /* 曜沙金細邊框 */
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition-base);
+}
+
+.profile-card::before {
+    display: none !important;
+}
+
+.card-header {
+    position: relative;
+    z-index: 2;
+    padding: 1rem 1.5rem 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 15px;
+}
+
+.card-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border: 3px solid #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+.card-header-info {
+    color: #111518;
+}
+
+.card-header-info h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.1rem;
+    color: #111518;
+}
+
+.card-sub {
+    font-size: 0.75rem;
+    background: rgba(139, 116, 67, 0.1);
+    color: #8b7443;
+    border: 1px solid rgba(139, 116, 67, 0.25);
+    padding: 0.15rem 0.45rem;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+/* 卡片主體與內容項目 */
+.card-body {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-grow: 1;
+    background: transparent;
+}
+
+.card-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    background: transparent;
+    padding: 0.4rem 0 !important;
+    border-radius: 0;
+    border: none !important;
+    border-bottom: 1px dashed rgba(139, 116, 67, 0.15) !important;
+    transition: var(--transition-base);
+}
+
+.card-item:last-child {
+    border-bottom: none !important;
+}
+
+.card-item:hover {
+    transform: translateX(2px);
+    background: transparent;
+}
+
+.card-item.font-danger {
+    border-bottom-color: rgba(245, 34, 45, 0.25) !important;
+    background: transparent;
+}
+
+.card-icon {
+    font-size: 0.95rem;
+    color: #8b7443;
+    margin-top: 0.1rem;
+}
+
+.card-item.font-danger .card-icon {
+    color: var(--accent-color);
+}
+
+.card-item-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-item-content label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #8b7443;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.card-item-content p {
+    font-size: 0.72rem; /* 縮小2級字體，提昇細節層次 */
+    font-weight: 500;
+    color: #111518;
+    margin-top: 0.05rem;
+}
+
+.card-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+/* 卡片頁尾與金句 */
+.card-footer {
+    padding: 0.85rem 1.5rem;
+    background-color: #eae4d8;
+    border-top: 1.5px dashed rgba(139, 116, 67, 0.25);
+}
+
+.quote-container {
+    position: relative;
+    padding: 0.35rem 1.25rem;
+    text-align: center;
+}
+
+.quote-icon-left, .quote-icon-right {
+    position: absolute;
+    font-size: 0.7rem;
+    color: #8b7443;
+}
+
+.quote-icon-left { top: 0; left: 0; }
+.quote-icon-right { bottom: 0; right: 0; }
+
+#card-quote {
+    font-size: 0.78rem;
+    font-style: italic;
+    font-weight: 700;
+    color: #111518;
+    line-height: 1.3;
+}
+
+/* ==========================================================================
+   全員畫像卡展覽區 (Cards Gallery - max-width: 1140px)
+   ========================================================================== */
+.gallery-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1.5px dashed var(--border-color);
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.gallery-header h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff; /* 白色文字，使其在深色背景中可見 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.gallery-header h2 i {
+    color: #f1c40f;
+}
+
+.gallery-header p {
+    font-size: 0.8rem;
+    color: #cbd5e1; /* 亮銀灰色，提昇可讀性 */
+    margin-top: 0.2rem;
+}
+
+/* 空白狀態 */
+.gallery-empty {
+    text-align: center;
+    background: #ffffff;
+    border: 2px dashed var(--border-color);
+    padding: 2.5rem 1.5rem;
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
+}
+
+.empty-icon {
+    font-size: 2.5rem;
+    color: #cbd5e0;
+    margin-bottom: 0.75rem;
+}
+
+.gallery-empty p {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* 藝廊 Grid 排版：置中一排 3 欄 (星宇經典 3-Column Layout) */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px; /* 專為 3 欄設計的最大寬度 */
+    margin: 0 auto;
+    justify-content: center;
+    padding-bottom: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   縮小版畫像卡樣式 (Scoped to .gallery-grid) - 星宇現代精品航空風格
+   ========================================================================== */
+.gallery-grid .profile-card {
+    min-height: auto;
+    height: 100%;
+    background: #f4efe6; /* 溫溫淺卡其色 */
+    border: 1px solid rgba(139, 116, 67, 0.35); /* 精緻曜沙金邊框 */
+    border-radius: var(--radius-lg) !important; /* 微圓角或大圓角 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transition: var(--transition-base);
+}
+
+.gallery-grid .profile-card:hover {
+    box-shadow: 0 15px 30px rgba(139, 116, 67, 0.2);
+    transform: translateY(-4px);
+    border-color: rgba(139, 116, 67, 0.6);
+}
+
+.gallery-grid .profile-card::before {
+    display: none !important;
+}
+
+.gallery-grid .card-header {
+    margin-top: 5px;
+    padding: 0.75rem 1rem 0.35rem 1rem;
+    gap: 0.6rem;
+}
+
+.gallery-grid .card-avatar {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+    border: 2px solid #bca46a !important; /* 金屬質感 Avatar 框 */
+    box-shadow: var(--shadow-sm);
+}
+
+.gallery-grid .card-header-info h3 {
+    font-size: 1rem;
+    color: #111518; /* 高對比黑 */
+    font-weight: 700;
+}
+
+.gallery-grid .card-sub {
+    font-size: 0.7rem;
+    padding: 0.05rem 0.35rem;
+    background: rgba(139, 116, 67, 0.1);
+    color: #8b7443;
+    border: 1px solid rgba(139, 116, 67, 0.2);
+}
+
+.gallery-grid .card-body {
+    padding: 0.75rem 1.2rem;
+    gap: 0.6rem;
+}
+
+.gallery-grid .card-item {
+    padding: 0.45rem 0 !important;
+    gap: 0.45rem;
+    background: transparent !important; /* 極簡半透明 */
+    border: none !important;
+    border-bottom: 1px dashed rgba(139, 116, 67, 0.15) !important; /* 星宇經典下金邊 */
+    border-radius: 0 !important;
+}
+
+.gallery-grid .card-item:last-child {
+    border-bottom: none !important;
+}
+
+.gallery-grid .card-item:hover {
+    background: transparent !important;
+    transform: translateX(2px);
+}
+
+.gallery-grid .card-icon {
+    font-size: 0.85rem;
+    color: #8b7443; /* 曜金標題 */
+    margin-top: 0.05rem;
+}
+
+.gallery-grid .card-item-content label {
+    font-size: 0.62rem;
+    color: #8b7443; /* 曜金標題 */
+    letter-spacing: 0.5px;
+}
+
+.gallery-grid .card-item-content p {
+    font-size: 0.7rem; /* 縮小2級字體，提昇細節層次 */
+    color: #111518; /* 曜石黑 */
+    margin-top: 1px;
+    line-height: 1.4;
+}
+
+.gallery-grid .card-grid-2 {
+    gap: 0.5rem;
+}
+
+.gallery-grid .card-footer {
+    padding: 0.65rem 1rem;
+    background-color: #eae4d8;
+    border-top: 1.5px dashed rgba(139, 116, 67, 0.25);
+}
+
+.gallery-grid .quote-container {
+    padding: 0.25rem 0.85rem;
+}
+
+.gallery-grid #card-quote {
+    font-size: 0.72rem;
+    color: #111518;
+}
+
+/* ==========================================================================
+   動畫效果 (Animations & Hidden Classes)
+   ========================================================================== */
+.hidden {
+    display: none !important;
+}
+
+/* 點亮卡片動畫效果 */
+.animate-lit {
+    animation: litCard 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
+}
+
+@keyframes litCard {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* 卡片內層項目依序淡入 */
+.animate-item {
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+.reveal-item {
+    animation: revealItem 0.4s ease-out forwards;
+}
+
+@keyframes revealItem {
+    0% {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* 響應式手機微調 (< 768px) */
+@media (max-width: 768px) {
+    .onboarding-overlay, .form-section, .preview-section {
+        width: 92%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .container {
+        padding: 1rem;
+    }
+}
+
+/* ==========================================================================
+   機場航站樓 (Airport Terminal) 風格 Hero 導覽區塊
+   ========================================================================== */
+.hero-section-terminal {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* 機場狀態標籤 */
+.terminal-status-bar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    background: rgba(188, 164, 106, 0.08);
+    border: 1px solid rgba(188, 164, 106, 0.25);
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--secondary-color, #13c2c2);
+    border-radius: 50%;
+    display: inline-block;
+    animation: terminalPulse 2s infinite ease-in-out;
+}
+
+.status-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-color, #f0f2f5);
+    letter-spacing: 2px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.status-tag {
+    font-size: 0.65rem;
+    font-weight: 800;
+    background-color: var(--primary-color, #bca46a);
+    color: #111518;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* 主標題 */
+.hero-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    line-height: 1.35;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 航線分隔線與飛機圖示 */
+.hero-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+.flight-line {
+    width: 80px;
+    height: 1px;
+    border-top: 1px dashed var(--primary-color, #bca46a);
+    opacity: 0.6;
+}
+
+.plane-icon {
+    color: var(--primary-color, #bca46a);
+    font-size: 1.15rem;
+    transform: rotate(45deg);
+    display: inline-block;
+    animation: planeGlide 3s ease-in-out infinite alternate;
+}
+
+/* 導覽敘述內文 */
+.hero-description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted, #8c9ba5);
+    max-width: 580px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+/* 關鍵影格動畫 */
+@keyframes terminalPulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(19, 194, 194, 0.7);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 6px rgba(19, 194, 194, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(19, 194, 194, 0);
+        opacity: 0.6;
+    }
+}
+
+@keyframes planeGlide {
+    0% {
+        transform: rotate(45deg) translateY(0);
+    }
+    100% {
+        transform: rotate(45deg) translateY(-3px);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 響應式微調 */
+@media (max-width: 768px) {
+    .hero-section-terminal {
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+    }
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    .hero-description {
+        font-size: 0.88rem;
+        line-height: 1.6;
+    }
+    .flight-line {
+        width: 50px;
+    }
+}
+
+/* ==========================================================================
+   星空背景 (Starfield Background)
+   ========================================================================== */
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    display: block;
+}
+
+/* ==========================================================================
+   海關查驗鎖定與解鎖機制 (Customs Lock & Unlock Mechanism)
+   ========================================================================== */
+
+/* 1. 鎖定狀態卡片內容模糊與半透明 */
+.profile-card.is-locked .card-body,
+.profile-card.is-locked .card-footer {
+    filter: blur(6px);
+    opacity: 0.5;
+    pointer-events: none;
+    transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.profile-card:not(.is-locked) .card-body,
+.profile-card:not(.is-locked) .card-footer {
+    filter: blur(0);
+    opacity: 1;
+    transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 2. 鎖定蓋章提示 Overlay */
+.card-lock-overlay {
+    position: absolute;
+    top: 90px; /* 從 header 以下開始遮罩，確保暱稱與大頭照不被蓋住且清晰可見 */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(244, 239, 230, 0.9); /* 與卡片背景色相近的半透明遮罩 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    z-index: 10;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.profile-card.is-locked .card-lock-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.profile-card:not(.is-locked) .card-lock-overlay {
+    opacity: 0;
+    transform: translateY(-30px);
+    pointer-events: none;
+}
+
+.lock-icon {
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+    animation: pulseLock 2s infinite ease-in-out;
+}
+
+.lock-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #8b7443;
+    line-height: 1.5;
+    max-width: 85%;
+}
+
+@keyframes pulseLock {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* 3. 卡片頂部標頭 Status Bar */
+.card-status-bar {
+    width: 100%;
+    padding: 0.35rem 1rem;
+    font-family: monospace;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid rgba(139, 116, 67, 0.15);
+    transition: background 0.4s ease, color 0.4s ease;
+    z-index: 3;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.profile-card.is-locked .card-status-bar {
+    background: #f5222d;
+    color: #ffffff;
+}
+
+.profile-card.is-locked .card-status-bar::after {
+    content: "STATUS: RESTRICTED";
+}
+
+.profile-card:not(.is-locked) .card-status-bar {
+    background: #52c41a;
+    color: #ffffff;
+}
+
+.profile-card:not(.is-locked) .card-status-bar::after {
+    content: "STATUS: CLEARED / APPROVED";
+}
+
+/* 4. 金色海關印章 */
+.customs-stamp {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: 3px double #d4af37; /* 金色雙邊線，營造正式海關鋼印感 */
+    color: #d4af37;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    transform: rotate(-15deg) scale(0);
+    opacity: 0;
+    border-radius: 4px;
+    z-index: 5;
+    pointer-events: none;
+    letter-spacing: 1px;
+    background: rgba(244, 239, 230, 0.92);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+
+.profile-card:not(.is-locked) .customs-stamp {
+    animation: stampDrop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes stampDrop {
+    0% {
+        opacity: 0;
+        transform: rotate(-40deg) scale(3.5);
+    }
+    70% {
+        opacity: 1;
+        transform: rotate(-12deg) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(-15deg) scale(1);
+    }
+}
