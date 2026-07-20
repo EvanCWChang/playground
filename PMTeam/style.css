@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@300;400;600;700&family=Inter:wght@300;400;600;700;800&display=swap');
-
 /* ==========================================================================
    全域變數與重設 (Theme & Reset) - 星宇航空頂奢黑金科技風 (STARLUX Black Gold)
    ========================================================================== */
@@ -7,10 +5,10 @@
     --primary-color: #bca46a; /* 星宇金 */
     --primary-hover: #9c844f; /* 曜沙深金 */
     --secondary-color: #13c2c2; /* 湖青科技藍 */
-    --bg-color: #0c0f12; /* 更具沉浸感的深夜機場黑藍色 */
-    --card-bg: #15191d; /* 機場櫃檯/休息室黑金卡片底色 */
-    --text-color: #f8fafc; /* 高對比太空白 */
-    --text-muted: #64748b; /* 沉穩灰藍 */
+    --bg-color: #1a1e22; /* 質感深邃航藍色/深太空藍灰（非純黑） */
+    --card-bg: #24292e; /* 輕盈深藍灰卡片底色 */
+    --text-color: #f0f2f5; /* 太空白 */
+    --text-muted: #8c9ba5; /* 銀河灰 */
     --border-color: rgba(188, 164, 106, 0.2); /* 星宇金細緻邊框 */
     --accent-color: #f5222d;
     --accent-bg: rgba(245, 34, 45, 0.1);
@@ -20,32 +18,26 @@
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
-    --transition-base: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    
-    /* 專業機場資訊系統字型 */
-    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+    --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
-    overflow-y: scroll !important;
-    scrollbar-gutter: stable !important;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: var(--font-body);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    font-size: 1.05rem; /* Overall font size increased */
-    scrollbar-gutter: stable !important;
+    font-size: 0.92rem;
 }
 
 /* ==========================================================================
@@ -61,7 +53,7 @@ body {
     transition: all 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.35);
     opacity: 1;
     transform: scale(1);
-    max-width: 1020px; /* 完美容納橫式機票 - 放大1.5倍 */
+    max-width: 680px; /* 完美容納橫式機票 */
     margin: 0 auto;
 }
 
@@ -131,7 +123,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1.25rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .code-block {
@@ -171,7 +163,7 @@ body {
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 1;
     transform: scale(1);
-    max-width: 1020px; /* 完美容納橫式機票 - 放大1.5倍 */
+    max-width: 680px; /* 完美容納橫式機票 */
     margin: 0 auto;
     perspective: 1200px; /* 3D 空間透視 */
 }
@@ -270,7 +262,7 @@ body {
 
 /* 左側主機票 */
 .ticket-left {
-    padding: 2.25rem; /* 1.5rem * 1.5 */
+    padding: 1.5rem;
     background: #f4efe6; /* 暖卡其色 */
     flex: 1.8;
     box-sizing: border-box;
@@ -281,12 +273,12 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgba(139, 116, 67, 0.2);
-    padding-bottom: 1.125rem; /* 0.75rem * 1.5 */
-    margin-bottom: 1.5rem; /* 1rem * 1.5 */
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .airline {
-    font-size: 1.125rem; /* 0.75rem * 1.5 */
+    font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 2px;
     color: #8b7443; /* 曜沙深金 */
@@ -295,12 +287,12 @@ body {
 }
 
 .flight-no {
-    font-size: 1.05rem; /* 0.7rem * 1.5 */
+    font-size: 0.7rem;
     font-weight: 800;
     background-color: #8b7443; /* 深金底色 */
     color: #f4efe6; /* 卡其色文字 */
-    padding: 0.225rem 0.6rem; /* 1.5x scaled */
-    border-radius: 6px;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
     letter-spacing: 0.5px;
 }
 
@@ -309,8 +301,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.875rem; /* 1.25rem * 1.5 */
-    margin-bottom: 1.5rem; /* 1rem * 1.5 */
+    gap: 1.25rem;
+    margin-bottom: 0.5rem;
 }
 
 .code-block {
@@ -319,7 +311,7 @@ body {
 }
 
 .code-block .code {
-    font-size: 2.7rem; /* 1.8rem * 1.5 */
+    font-size: 1.8rem;
     font-weight: 900;
     color: #111518; /* 深色代碼 */
     line-height: 1;
@@ -327,10 +319,10 @@ body {
 }
 
 .code-block .airport-name {
-    font-size: 1.125rem; /* 0.75rem * 1.5 */
+    font-size: 0.75rem;
     font-weight: 600;
     color: #8b7443;
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
 }
 
 .code-block.text-right {
@@ -338,7 +330,7 @@ body {
 }
 
 .plane-animation {
-    width: 90px; /* 60px * 1.5 */
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: flex-start; /* 改為靠左起飛 */
@@ -360,19 +352,19 @@ body {
 }
 
 .plane-icon {
-    font-size: 1.5rem; /* 1rem * 1.5 */
+    font-size: 1rem;
     color: #8b7443;
-    transform: rotate(45deg); /* FontAwesome fa-plane 預設朝向東北(45度)，旋轉 45 度即可水平向右飛行 */
+    transform: rotate(0deg) !important; /* 改為 0deg 即可恢復 FontAwesome 預設朝向正右方/水平向右飛行 */
     z-index: 2;
-    background: #f4efe6; /* 暖卡其背景 */
-    padding: 0 0.3rem;
-    animation: flightPath 3s linear infinite;
+    background: #fdfbf7 !important; /* 改為 Luxury Boarding Pass 的高質感卡片背景色，防止飛機背景不協調 */
+    padding: 0 0.2rem;
+    animation: flightPath 3s linear infinite !important; /* 確保持續保持水平飛行的動畫效果 */
     position: relative;
 }
 
 @keyframes flightPath {
     0% {
-        left: -30px;
+        left: -20px;
         opacity: 0;
     }
     10% {
@@ -382,7 +374,7 @@ body {
         opacity: 1;
     }
     100% {
-        left: 90px;
+        left: 60px;
         opacity: 0;
     }
 }
@@ -391,17 +383,17 @@ body {
 .ticket-details {
     display: flex;
     flex-direction: column;
-    gap: 1.275rem; /* 0.85rem * 1.5 */
+    gap: 0.45rem;
 }
 
 .detail-group {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem; /* 0.2rem * 1.5 */
+    gap: 0.1rem;
 }
 
 .detail-group label {
-    font-size: 0.9rem; /* 0.6rem * 1.5 */
+    font-size: 0.6rem;
     font-weight: 700;
     color: #718096; /* 灰銀色文字 */
     letter-spacing: 0.05em;
@@ -410,10 +402,10 @@ body {
 
 .detail-group input {
     width: 100%;
-    padding: 0.75rem 1.125rem; /* 0.5rem 0.75rem * 1.5 */
+    padding: 0.5rem 0.75rem;
     border: 1px solid rgba(139, 116, 67, 0.3); /* 輕深金邊框 */
-    border-radius: 12px; /* 8px * 1.5 */
-    font-size: 1.35rem; /* 0.9rem * 1.5 */
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #111518; /* 輸入字為深曜石黑 */
     background-color: rgba(0, 0, 0, 0.03); /* 半透明高質感輸入框 */
@@ -428,19 +420,19 @@ body {
 }
 
 .detail-group input::placeholder {
-    font-size: 1.23rem; /* 0.82rem * 1.5 */
+    font-size: 0.82rem;
     color: rgba(0, 0, 0, 0.3);
 }
 
 .detail-row {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
-    gap: 1.5rem; /* 1rem * 1.5 */
+    gap: 0.6rem;
     align-items: flex-end;
 }
 
 .detail-value {
-    font-size: 1.275rem; /* 0.85rem * 1.5 */
+    font-size: 0.85rem;
     font-weight: 700;
     color: #111518; /* 深色數值 */
 }
@@ -450,46 +442,46 @@ body {
     position: relative;
     display: flex;
     flex-direction: column; /* 橫式機票撕線改為垂直 (notch 在上下) */
-    width: 24px; /* 16px * 1.5 */
+    width: 16px;
     background-color: #f4efe6;
     align-items: center;
     justify-content: space-between;
 }
 
 .ticket-divider .notch {
-    width: 24px; /* 16px * 1.5 */
-    height: 12px; /* 8px * 1.5 */
+    width: 16px;
+    height: 8px;
     background-color: var(--bg-color); /* 切角顯示網頁底色 */
 }
 
 .ticket-divider .notch.top {
-    border-radius: 0 0 12px 12px; /* 8px * 1.5 */
+    border-radius: 0 0 8px 8px;
     transform: none;
 }
 
 .ticket-divider .notch.bottom {
-    border-radius: 12px 12px 0 0; /* 8px * 1.5 */
+    border-radius: 8px 8px 0 0;
     transform: none;
 }
 
 .ticket-divider .dashed-line {
     flex-grow: 1;
-    border-left: 2.25px dashed rgba(139, 116, 67, 0.3); /* 1.5px * 1.5 */
+    border-left: 1.5px dashed rgba(139, 116, 67, 0.3); /* 深金虛線 */
     border-top: none;
     width: 1px;
-    margin: 12px 0; /* 8px * 1.5 */
+    margin: 8px 0;
 }
 
 .ticket-right {
-    padding: 1.875rem 2.25rem; /* 1.25rem 1.5rem * 1.5 */
+    padding: 1.25rem 1.5rem;
     background: #eae4d8; /* 稍深一階的暖卡其色 */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 1.275rem; /* 0.85rem * 1.5 */
-    min-width: 270px; /* 給予存根聯固定最小寬度確保橫式時比例完美 - 180px * 1.5 */
-    max-width: 270px; /* 鎖死寬度防止寬度在任何情況下內縮或變形 - 180px * 1.5 */
+    gap: 0.85rem;
+    min-width: 180px; /* 給予存根聯固定最小寬度確保橫式時比例完美 */
+    max-width: 180px; /* 鎖死寬度防止寬度在任何情況下內縮或變形 */
     box-sizing: border-box;
 }
 
@@ -499,17 +491,17 @@ body {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    gap: 0.975rem; /* 0.65rem * 1.5 */
+    gap: 0.65rem;
 }
 
 .stub-flight-no {
-    font-size: 1.35rem; /* 0.9rem * 1.5 */
+    font-size: 0.9rem;
     font-weight: 800;
     color: #8b7443;
 }
 
 .stub-name-preview {
-    font-size: 1.275rem; /* 0.85rem * 1.5 */
+    font-size: 0.85rem;
     font-weight: 700;
     color: #111518;
     text-transform: uppercase;
@@ -519,16 +511,16 @@ body {
 .btn-boarding {
     background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
     color: #111518; /* 曜石灰 */
-    padding: 1.125rem 3rem; /* 1.5x scaled */
-    font-size: 1.425rem; /* 0.95rem * 1.5 */
-    border-radius: 30px; /* 20px * 1.5 */
-    box-shadow: 0 9px 22.5px rgba(139, 116, 67, 0.25);
+    padding: 0.75rem 2rem;
+    font-size: 0.95rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(139, 116, 67, 0.25);
     font-weight: 800;
 }
 
 .btn-boarding:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(139, 116, 67, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(139, 116, 67, 0.35);
     background: linear-gradient(135deg, #cbb47b 0%, #9c844f 100%);
 }
 
@@ -548,12 +540,50 @@ header {
 }
 
 .header-container {
-    max-width: 1400px; /* Aligned to new container width */
+    max-width: 1140px;
     margin: 0 auto;
     padding: 0.75rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+/* 航班資訊小工具 - 高級機場 LCD 一字排列風格 */
+.flight-info-widget {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1.5rem !important;
+    background: rgba(188, 164, 106, 0.05);
+    border: 1px solid rgba(188, 164, 106, 0.2);
+    padding: 0.35rem 1.25rem !important;
+    border-radius: 30px !important;
+    align-items: center !important;
+}
+
+.flight-info-widget .widget-col {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+}
+
+.flight-info-widget .widget-label {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    letter-spacing: 1px !important;
+    font-family: var(--font-mono) !important;
+}
+
+.flight-info-widget .widget-value {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    font-family: var(--font-mono) !important;
+}
+
+.flight-info-widget .widget-value.highlight {
+    color: var(--primary-color) !important;
 }
 
 header h1 {
@@ -590,7 +620,7 @@ nav a.active, nav a:hover {
    主容器與進度條 (Layout & Progress) - 頂奢星空機艙背景
    ========================================================================== */
 #main-content {
-    background: transparent; /* Remove deep blue background */
+    background: radial-gradient(circle at 50% 35%, #0f172a 0%, #070a12 100%);
     border-radius: var(--radius-lg);
     border: 1px solid rgba(188, 164, 106, 0.2);
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), inset 0 0 150px rgba(188, 164, 106, 0.08);
@@ -600,7 +630,7 @@ nav a.active, nav a:hover {
 }
 
 .container {
-    max-width: 1400px; /* Increased max-width to host larger elements */
+    max-width: 1140px;
     margin: 0 auto;
     padding: 1.5rem;
 }
@@ -613,10 +643,10 @@ nav a.active, nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2.25rem; /* 1.5rem * 1.5 */
+    margin-bottom: 1.5rem;
     background: #1e2328; /* 深航藍灰 */
     border: 1px solid rgba(188, 164, 106, 0.15);
-    padding: 1.125rem 2.25rem; /* 1.5x scaled */
+    padding: 0.75rem 1.5rem;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
 }
@@ -624,23 +654,8 @@ nav a.active, nav a:hover {
 .step {
     display: flex;
     align-items: center;
-    gap: 0.6rem; /* 0.4rem * 1.5 */
+    gap: 0.4rem;
     color: var(--text-muted);
-}
-
-.step.clickable {
-    cursor: pointer;
-    transition: var(--transition-base);
-}
-
-.step.clickable:hover {
-    color: var(--primary-color);
-    opacity: 0.9;
-}
-
-.step.clickable:hover .step-number {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 8px rgba(188, 164, 106, 0.4);
 }
 
 .step.active {
@@ -654,8 +669,8 @@ nav a.active, nav a:hover {
 }
 
 .step-number {
-    width: 33px; /* 22px * 1.5 */
-    height: 33px; /* 22px * 1.5 */
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background-color: #1a202c;
     border: 1px solid rgba(188, 164, 106, 0.3);
@@ -663,20 +678,20 @@ nav a.active, nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.125rem; /* 0.75rem * 1.5 */
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
 .step-label {
-    font-size: 1.2rem; /* 0.8rem * 1.5 */
+    font-size: 0.8rem;
 }
 
 .step-line {
     flex: 1;
-    max-width: 120px; /* 80px * 1.5 */
+    max-width: 80px;
     height: 1px;
     background-color: rgba(188, 164, 106, 0.2);
-    margin: 0 1.125rem; /* 0.75rem * 1.5 */
+    margin: 0 0.75rem;
 }
 
 /* ==========================================================================
@@ -690,62 +705,32 @@ nav a.active, nav a:hover {
 }
 
 /* ==========================================================================
-   左側：輸入表單區 (Form Section - Passport / Immigration Document Card Style)
+   左側：輸入表單區 (Form Section - max-width: 640px) - 黑金奢華化
    ========================================================================== */
 .form-section {
-    background: #15191d; /* Deep Dark Space */
-    border: 1px solid rgba(188, 164, 106, 0.3);
-    padding: 32px !important; /* 32px Padding */
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg), inset 0 0 40px rgba(188, 164, 106, 0.03);
-    max-width: 960px;
+    background: #ffffff; /* 淺色質感白背景 */
+    border: 1px solid rgba(188, 164, 106, 0.25);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    max-width: 640px;
     width: 100%;
     margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Paper Texture and Boarding Corner aesthetics */
-.form-section::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background-image: radial-gradient(rgba(188, 164, 106, 0.02) 1px, transparent 0), radial-gradient(rgba(188, 164, 106, 0.02) 1px, transparent 0);
-    background-size: 8px 8px;
-    background-position: 0 0, 4px 4px;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.form-section::after {
-    content: '';
-    position: absolute;
-    top: -15px; right: -15px;
-    width: 30px; height: 30px;
-    background: transparent;
-    border-bottom: 2px solid rgba(188, 164, 106, 0.4);
-    transform: rotate(45deg);
-    z-index: 2;
-    pointer-events: none;
 }
 
 .section-header {
-    margin-bottom: 32px;
-    border-bottom: 1px solid rgba(188, 164, 106, 0.2);
-    padding-bottom: 16px;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(188, 164, 106, 0.15);
+    padding-bottom: 0.75rem;
 }
 
 .section-header h2 {
-    font-size: 28px !important; /* Section Font Specification: 28px */
+    font-size: 1.15rem;
     font-weight: 700;
-    color: var(--primary-color) !important;
+    color: #1e293b; /* 曜石深灰 */
     display: flex;
     align-items: center;
-    gap: 12px;
-    text-transform: uppercase;
-    font-family: var(--font-display);
+    gap: 0.5rem;
 }
 
 .section-header h2 i {
@@ -753,21 +738,15 @@ nav a.active, nav a:hover {
 }
 
 .section-subtitle {
-    font-family: var(--font-mono);
-    font-size: 13px !important; /* Hint Font Specification: 13px */
-    font-weight: 500;
-    color: var(--text-muted) !important;
-    margin-top: 6px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #475569; /* 清楚深灰 */
+    margin-top: 0.2rem;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px; /* Input Gap Specification: 24px */
-    position: relative;
-    z-index: 2;
+    gap: 1rem;
 }
 
 @media (max-width: 600px) {
@@ -782,18 +761,7 @@ nav a.active, nav a:hover {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    background: rgba(188, 164, 106, 0.02);
-    border: 1px solid rgba(188, 164, 106, 0.1);
-    border-radius: 12px;
-    padding: 16px;
-    transition: var(--transition-base);
-}
-
-.form-group:focus-within {
-    border-color: var(--primary-color);
-    background: rgba(188, 164, 106, 0.04);
-    box-shadow: 0 4px 15px rgba(188, 164, 106, 0.05);
+    gap: 0.4rem;
 }
 
 .form-group.full-width {
@@ -801,129 +769,71 @@ nav a.active, nav a:hover {
 }
 
 .form-group label {
-    font-size: 13px !important; /* Label Font Specification: 12~13px */
-    font-weight: 700;
-    color: var(--primary-color) !important;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155; /* 深灰藍，高可讀性 */
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-family: var(--font-display);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    gap: 0.4rem;
 }
 
 .badge {
     display: inline-block;
-    padding: 2px 6px;
-    font-size: 11px;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.7rem;
     font-weight: bold;
     border-radius: 4px;
 }
 
 .badge-primary {
-    background-color: rgba(188, 164, 106, 0.15);
+    background-color: rgba(188, 164, 106, 0.1);
     color: var(--primary-color);
-    border: 1px solid rgba(188, 164, 106, 0.3);
+    border: 1px solid rgba(188, 164, 106, 0.2);
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px 14px;
-    border: 1px solid rgba(188, 164, 106, 0.2);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(188, 164, 106, 0.3);
     border-radius: 8px;
-    font-size: 16px !important; /* Body Font Specification: 16px */
-    color: #ffffff;
-    background-color: #090c0e;
+    font-size: 0.9rem;
+    color: #1e293b; /* 曜石深灰 */
+    background-color: #f8fafc; /* 淺灰藍，高對比底色 */
     transition: var(--transition-base);
-    font-family: var(--font-body);
 }
 
 .form-group input:focus {
     outline: none;
     border-color: var(--primary-color);
-    background-color: #0c0f12;
+    background-color: #ffffff;
     box-shadow: 0 0 0 3px rgba(188, 164, 106, 0.15);
 }
 
 .form-group input::placeholder {
-    font-size: 13px !important; /* Hint Font Specification: 13px */
-    color: var(--text-muted);
+    font-size: 0.82rem;
+    color: #94a3b8; /* 清晰但輕柔的預設提示字 */
 }
 
 .form-actions {
-    margin-top: 32px;
-    border-top: 1px solid rgba(188, 164, 106, 0.2);
-    padding-top: 24px;
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(188, 164, 106, 0.15);
+    padding-top: 1rem;
     display: flex;
     justify-content: flex-end;
-    gap: 20px; /* Button Gap Specification: 20px */
 }
 
-/* ==========================================================================
-   Button Design System (Unified Design System)
-   ========================================================================== */
 .btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    height: 48px; /* High consist height */
-    padding: 0 24px;
-    font-size: 1rem; /* 16px body font size */
-    font-weight: 700;
-    border-radius: 12px !important; /* Unified 12px border radius */
+    gap: 0.4rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    text-transform: uppercase;
-    font-family: var(--font-display);
-    letter-spacing: 0.5px;
+    transition: var(--transition-base);
 }
-
-/* Primary Button */
-.btn-primary, .btn-generate, .btn-boarding {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #8b7443 100%) !important;
-    color: #0c0f12 !important;
-    border: none !important;
-    box-shadow: 0 4px 12px rgba(188, 164, 106, 0.25);
-}
-
-.btn-primary:hover, .btn-generate:hover, .btn-boarding:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(188, 164, 106, 0.45);
-    background: linear-gradient(135deg, #cbb47b 0%, #9c844f 100%) !important;
-}
-
-.btn-primary:active, .btn-generate:active, .btn-boarding:active {
-    transform: translateY(0);
-}
-
-/* Secondary Button */
-.btn-secondary {
-    background: #111518 !important;
-    color: var(--primary-color) !important;
-    border: 1px solid var(--primary-color) !important;
-    box-shadow: none !important;
-}
-
-.btn-secondary:hover {
-    transform: translateY(-2px);
-    border-color: #fff9e6 !important;
-    box-shadow: 0 5px 15px rgba(188, 164, 106, 0.2) !important;
-}
-
-/* Ghost Button */
-.btn-ghost {
-    background: transparent !important;
-    color: var(--primary-color) !important;
-    border: none !important;
-}
-
-.btn-ghost:hover {
-    color: #fff9e6 !important;
-    transform: translateY(-1px);
-}
-
-/* Deprecated Button Styles removed to prevent conflicts */
 
 .btn-generate {
     background: linear-gradient(135deg, var(--primary-color) 0%, #8b7443 100%);
@@ -943,144 +853,41 @@ nav a.active, nav a:hover {
 }
 
 /* ==========================================================================
-   右側：Flight Info Panel (Cockpit Flight Panel - Airline Card Style)
+   右側：預覽與卡片區域 (Preview & Card Section) - max-width: 520px
    ========================================================================== */
-.flight-info-panel-sidebar {
+.preview-section {
     position: sticky;
-    top: 110px;
-    max-width: 440px;
+    top: calc(1rem + 50px);
+    max-width: 520px;
     width: 100%;
-    background: #111518;
-    border: 2px solid rgba(188, 164, 106, 0.25);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
-    padding: 32px !important; /* 32px padding */
     margin: 0 auto;
 }
 
-.panel-header {
-    border-bottom: 1.5px dashed rgba(188, 164, 106, 0.3);
-    padding-bottom: 16px;
-    margin-bottom: 20px;
-}
-
-.panel-title {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--primary-color);
-    letter-spacing: 2px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-transform: uppercase;
-}
-
-.panel-subtitle {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 1.5px;
-    display: block;
-    margin-top: 4px;
-}
-
-.panel-body {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.panel-row {
+.preview-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(188, 164, 106, 0.08);
-    padding-bottom: 12px;
+    margin-bottom: 1rem;
 }
 
-.panel-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.panel-lbl {
-    font-family: var(--font-display);
-    font-size: 12px;
+.preview-title h3 {
+    font-size: 0.95rem;
     font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.panel-val {
-    font-family: var(--font-mono);
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-}
-
-.panel-val.highlight-gold {
-    color: var(--primary-color);
-    text-shadow: 0 0 6px rgba(188, 164, 106, 0.3);
-}
-
-.panel-val.highlight-cyan {
-    color: #00e5ff;
-    text-shadow: 0 0 6px rgba(0, 229, 255, 0.3);
-}
-
-.panel-val.text-cyan {
-    color: #00e5ff;
-}
-
-.panel-val.text-green {
-    color: #30d158;
-}
-
-.badge-fids-status {
-    font-size: 13px !important;
-    font-weight: 800;
-    padding: 4px 10px;
-    border-radius: 4px;
-    letter-spacing: 1px;
-}
-
-.panel-footer-radar {
-    margin-top: 24px;
-    border-top: 1px solid rgba(188, 164, 106, 0.15);
-    padding-top: 16px;
+    color: #4a5568;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.4rem;
 }
 
-.radar-ping {
-    width: 10px;
-    height: 10px;
-    background-color: #30d158;
-    border-radius: 50%;
-    animation: radarPulse 1.8s infinite ease-in-out;
-}
-
-.radar-text {
-    font-family: var(--font-mono);
-    font-size: 12px;
+.preview-status {
+    padding: 0.15rem 0.5rem;
+    background-color: #fffbe6;
+    border: 1px solid #ffe58f;
+    color: #d46b08;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 1px;
+    border-radius: 12px;
 }
-
-@keyframes radarPulse {
-    0% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7); }
-    50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 0 8px rgba(48, 209, 88, 0); }
-    100% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 rgba(48, 209, 88, 0); }
-}
-
-/* Deprecated preview-section styling replaced with airline panel */
 
 .preview-status.generated {
     background-color: #f6ffed;
@@ -1189,20 +996,20 @@ nav a.active, nav a:hover {
     padding: 1rem 1.5rem 0.5rem 1.5rem;
     display: flex;
     align-items: center;
-    gap: 1.25rem; /* increased from 0.85rem */
+    gap: 0.85rem;
     margin-top: 15px;
 }
 
 .card-avatar {
-    width: 66px; /* increased from 56px */
-    height: 66px; /* increased from 56px */
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem; /* increased from 1.25rem */
+    font-size: 1.25rem;
     font-weight: 700;
     border: 3px solid #ffffff;
     box-shadow: var(--shadow-sm);
@@ -1213,14 +1020,14 @@ nav a.active, nav a:hover {
 }
 
 .card-header-info h3 {
-    font-size: 1.4rem; /* increased from 1.15rem (by 2 levels) */
+    font-size: 1.15rem;
     font-weight: 700;
     margin-bottom: 0.1rem;
     color: #111518;
 }
 
 .card-sub {
-    font-size: 0.95rem; /* increased from 0.75rem (by 2 levels) */
+    font-size: 0.75rem;
     background: rgba(139, 116, 67, 0.1);
     color: #8b7443;
     border: 1px solid rgba(139, 116, 67, 0.25);
@@ -1266,7 +1073,7 @@ nav a.active, nav a:hover {
 }
 
 .card-icon {
-    font-size: 1.15rem; /* increased from 0.95rem */
+    font-size: 0.95rem;
     color: #8b7443;
     margin-top: 0.1rem;
 }
@@ -1281,7 +1088,7 @@ nav a.active, nav a:hover {
 }
 
 .card-item-content label {
-    font-size: 0.9rem; /* increased from 0.7rem (by 2 levels) */
+    font-size: 0.7rem;
     font-weight: 700;
     color: #8b7443;
     text-transform: uppercase;
@@ -1289,7 +1096,7 @@ nav a.active, nav a:hover {
 }
 
 .card-item-content p {
-    font-size: 0.92rem; /* increased from 0.72rem (by 2 levels) */
+    font-size: 0.72rem; /* 縮小2級字體，提昇細節層次 */
     font-weight: 500;
     color: #111518;
     margin-top: 0.05rem;
@@ -1350,7 +1157,7 @@ nav a.active, nav a:hover {
 }
 
 .gallery-header h2 {
-    font-size: 1.6rem; /* increased from 1.25rem (by 2 levels) */
+    font-size: 1.25rem;
     font-weight: 800;
     color: #ffffff; /* 白色文字，使其在深色背景中可見 */
     display: flex;
@@ -1364,7 +1171,7 @@ nav a.active, nav a:hover {
 }
 
 .gallery-header p {
-    font-size: 1.0rem; /* increased from 0.8rem (by 2 levels) */
+    font-size: 0.8rem;
     color: #cbd5e1; /* 亮銀灰色，提昇可讀性 */
     margin-top: 0.2rem;
 }
@@ -1395,7 +1202,7 @@ nav a.active, nav a:hover {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
-    max-width: 1400px; /* 專為 3 欄設計的最大寬度 - Increased to support larger cards */
+    max-width: 1200px; /* 專為 3 欄設計的最大寬度 */
     margin: 0 auto;
     justify-content: center;
     padding-bottom: 2rem;
@@ -1445,26 +1252,26 @@ nav a.active, nav a:hover {
 .gallery-grid .card-header {
     margin-top: 5px;
     padding: 0.75rem 1rem 0.35rem 1rem;
-    gap: 0.85rem; /* increased from 0.6rem */
+    gap: 0.6rem;
 }
 
 .gallery-grid .card-avatar {
-    width: 52px; /* increased from 42px */
-    height: 52px; /* increased from 42px */
-    font-size: 1.25rem; /* increased from 1rem */
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
     border: 2px solid #bca46a !important; /* 金屬質感 Avatar 框 */
     box-shadow: var(--shadow-sm);
 }
 
 .gallery-grid .card-header-info h3 {
-    font-size: 1.25rem; /* increased from 1rem (by 2 levels) */
+    font-size: 1rem;
     color: #111518; /* 高對比黑 */
     font-weight: 700;
 }
 
 .gallery-grid .card-sub {
-    font-size: 0.95rem; /* increased from 0.7rem (by 2 levels) */
-    padding: 0.15rem 0.45rem; /* scaled padding */
+    font-size: 0.7rem;
+    padding: 0.05rem 0.35rem;
     background: rgba(139, 116, 67, 0.1);
     color: #8b7443;
     border: 1px solid rgba(139, 116, 67, 0.2);
@@ -1494,21 +1301,21 @@ nav a.active, nav a:hover {
 }
 
 .gallery-grid .card-icon {
-    font-size: 1.05rem; /* increased from 0.85rem */
+    font-size: 0.85rem;
     color: #8b7443; /* 曜金標題 */
     margin-top: 0.05rem;
 }
 
 .gallery-grid .card-item-content label {
-    font-size: 0.85rem; /* increased from 0.62rem (by 2 levels) */
+    font-size: 0.62rem;
     color: #8b7443; /* 曜金標題 */
     letter-spacing: 0.5px;
 }
 
 .gallery-grid .card-item-content p {
-    font-size: 0.95rem; /* increased from 0.7rem (by 2 levels) */
+    font-size: 0.7rem; /* 縮小2級字體，提昇細節層次 */
     color: #111518; /* 曜石黑 */
-    margin-top: 2px;
+    margin-top: 1px;
     line-height: 1.4;
 }
 
@@ -1527,7 +1334,7 @@ nav a.active, nav a:hover {
 }
 
 .gallery-grid #card-quote {
-    font-size: 0.95rem; /* increased from 0.72rem (by 2 levels) */
+    font-size: 0.72rem;
     color: #111518;
 }
 
@@ -1629,7 +1436,7 @@ nav a.active, nav a:hover {
 }
 
 .status-text {
-    font-size: 1rem; /* increased from 0.75rem */
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-color, #f0f2f5);
     letter-spacing: 2px;
@@ -1637,7 +1444,7 @@ nav a.active, nav a:hover {
 }
 
 .status-tag {
-    font-size: 0.9rem; /* increased from 0.65rem */
+    font-size: 0.65rem;
     font-weight: 800;
     background-color: var(--primary-color, #bca46a);
     color: #111518;
@@ -1649,7 +1456,7 @@ nav a.active, nav a:hover {
 
 /* 主標題 */
 .hero-title {
-    font-size: 3rem; /* 2.25rem * 1.33 */
+    font-size: 2.25rem;
     font-weight: 800;
     color: #ffffff;
     letter-spacing: 1.5px;
@@ -1684,10 +1491,10 @@ nav a.active, nav a:hover {
 
 /* 導覽敘述內文 */
 .hero-description {
-    font-size: 1.3rem; /* increased from 0.95rem */
+    font-size: 0.95rem;
     line-height: 1.7;
     color: var(--text-muted, #8c9ba5);
-    max-width: 780px; /* increased to fit larger size */
+    max-width: 580px;
     margin: 0 auto;
     font-weight: 400;
 }
@@ -1820,7 +1627,7 @@ nav a.active, nav a:hover {
 }
 
 .lock-text {
-    font-size: 0.95rem; /* increased from 0.75rem */
+    font-size: 0.75rem;
     font-weight: 700;
     color: #8b7443;
     line-height: 1.5;
@@ -1837,7 +1644,7 @@ nav a.active, nav a:hover {
     width: 100%;
     padding: 0.35rem 1rem;
     font-family: monospace;
-    font-size: 0.85rem; /* increased from 0.65rem */
+    font-size: 0.65rem;
     font-weight: 800;
     text-align: center;
     letter-spacing: 1.5px;
@@ -1908,328 +1715,1232 @@ nav a.active, nav a:hover {
 }
 
 /* ==========================================================================
-   機場候機沈浸式互動體驗 - 新增樣式 (Airport Boarding Experience Styles)
+   Final Passport Screen Styles (Starlux Premium Luxe Design)
    ========================================================================== */
 
-/* 1. 航班資訊小工具 (Flight Information Widget) */
-.flight-info-widget {
+#passport-ending-screen {
     display: flex;
-    gap: 1.5rem;
-    background: #090c0e;
-    border: 1px solid rgba(188, 164, 106, 0.4);
-    box-shadow: 0 0 15px rgba(188, 164, 106, 0.15), inset 0 0 10px rgba(0,0,0,0.8);
-    padding: 0.4rem 1.25rem;
-    border-radius: var(--radius-sm);
-    font-family: var(--font-mono);
-    margin-left: auto;
-    margin-right: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-out;
 }
 
-.flight-info-widget.hidden {
-    display: none !important;
+.passport-ending-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    width: 100%;
 }
 
-@media (max-width: 992px) {
-    .flight-info-widget {
-        display: none !important; /* 行動端隱藏小工具以保簡潔 */
-    }
+/* Passport View Box */
+.passport-view-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    perspective: 1500px;
 }
 
-.widget-col {
+/* Wrapper for screenshot: always 600x800 for 1200x1600 output */
+.passport-screenshot-wrapper {
+    width: 600px;
+    height: 800px;
+    background-color: #f4f3ef; /* Fine linen luxury paper / table look */
+    background-image: radial-gradient(circle at 50% 50%, #fbfbfa 0%, #eae7e1 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.widget-col.time-col {
-    border-left: 1px solid rgba(188, 164, 106, 0.25);
-    padding-left: 1.25rem;
-}
-
-.widget-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-}
-
-.widget-value {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #f8fafc;
-    letter-spacing: 0.5px;
-}
-
-.widget-value.highlight {
-    color: var(--primary-color);
-}
-
-/* 閃爍橘光 (FINAL CALL) */
-.blink-orange {
-    color: #ff9f0a;
-    animation: ledPulseOrange 1s infinite alternate;
-}
-
-/* 閃爍綠光 (BOARDING) */
-.blink-green {
-    color: #30d158;
-    animation: ledPulseGreen 1s infinite alternate;
-}
-
-/* 閃爍藍光 (IMMIGRATION) */
-.blink-blue {
-    color: #00e5ff;
-    animation: ledPulseBlue 1s infinite alternate;
-}
-
-/* 穩定的綠光 (DEPARTED) */
-.glow-green {
-    color: #30d158;
-    text-shadow: 0 0 6px rgba(48, 209, 88, 0.6);
-}
-
-@keyframes ledPulseOrange {
-    0% { opacity: 0.4; text-shadow: 0 0 1px rgba(255, 159, 10, 0.1); }
-    100% { opacity: 1; text-shadow: 0 0 8px rgba(255, 159, 10, 0.8); }
-}
-@keyframes ledPulseGreen {
-    0% { opacity: 0.4; text-shadow: 0 0 1px rgba(48, 209, 88, 0.1); }
-    100% { opacity: 1; text-shadow: 0 0 8px rgba(48, 209, 88, 0.8); }
-}
-@keyframes ledPulseBlue {
-    0% { opacity: 0.4; text-shadow: 0 0 1px rgba(0, 229, 255, 0.1); }
-    100% { opacity: 1; text-shadow: 0 0 8px rgba(0, 229, 255, 0.8); }
-}
-
-/* 2. 航班資訊看板風格進度條 (Airport Departure Board Step Bar) */
-.steps-progress.departure-board-style {
-    position: relative;
-    background: #090c0e;
-    border: 2px solid rgba(188, 164, 106, 0.25);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.8);
-    padding: 0.85rem 1.5rem;
-    border-radius: var(--radius-md);
-    margin-bottom: 2.5rem;
-    display: flex;
-    justify-content: space-around;
     align-items: center;
+    border-radius: 24px;
+    padding: 40px;
+    box-sizing: border-box;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
+    position: relative;
     overflow: hidden;
 }
 
-.flight-path-line {
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: repeating-linear-gradient(90deg, rgba(188, 164, 106, 0.15) 0px, rgba(188, 164, 106, 0.15) 8px, transparent 8px, transparent 16px);
-    z-index: 1;
-    transform: translateY(-50%);
-}
-
-.step-plane-anim {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    margin-top: -14px;
-    width: 28px;
-    height: 28px;
-    background: var(--primary-color);
-    border-radius: 50%;
+/* Passport Book Container */
+.passport-book {
+    width: 520px;
+    height: 360px;
+    background: #fdfcf9;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(13, 29, 58, 0.22), 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #0c0f12;
-    font-size: 0.75rem;
-    box-shadow: 0 0 12px var(--primary-color);
-    z-index: 2;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    pointer-events: none;
-    transform: translateX(0); /* Controlled by JS dynamically */
-}
-
-.step-plane-anim i {
-    transform: rotate(90deg);
-}
-
-.steps-progress.departure-board-style .step {
     position: relative;
-    z-index: 3;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Passport States */
+.passport-book.state-closed {
+    width: 260px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 5px 15px 35px rgba(0, 0, 0, 0.45);
+}
+
+.passport-book.state-closed .passport-page {
+    display: none !important;
+}
+
+.passport-book.state-closed .passport-cover {
+    display: flex !important;
+    width: 100%;
+}
+
+.passport-book.state-open .passport-page {
+    display: flex !important;
+    width: 50%;
+}
+
+.passport-book.state-open .passport-cover {
+    display: none !important;
+}
+
+/* Cover Styling */
+.passport-cover {
+    background: linear-gradient(135deg, #0a192f 0%, #050c18 100%);
+    color: #bca46a;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #111518;
-    border: 1px solid rgba(188, 164, 106, 0.15);
-    padding: 0.45rem 1.5rem;
+    justify-content: space-between;
+    text-align: center;
+    position: relative;
+    border-radius: 0 12px 12px 0;
+    border-left: 3px solid rgba(0, 0, 0, 0.45); /* Spine look */
+    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Spine shadow line */
+.passport-cover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.passport-cover-inner {
+    border: 1px dashed rgba(188, 164, 106, 0.4);
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    padding: 24px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.passport-crest {
+    font-size: 38px;
+    color: #bca46a;
+    margin-top: 5px;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.4));
+    animation: goldShimmer 3s infinite alternate;
+}
+
+.passport-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    color: #bca46a;
+    text-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.6);
+    margin: 5px 0;
+    text-transform: uppercase;
+}
+
+.passport-divider-line {
+    width: 50px;
+    height: 1px;
+    background-color: #bca46a;
+    opacity: 0.6;
+}
+
+.passport-subtitle {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #dfceaa;
+    text-transform: uppercase;
+}
+
+.passport-flight {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: rgba(188, 164, 106, 0.12);
+    padding: 4px 10px;
     border-radius: 4px;
-    min-width: 180px;
+    border: 1px solid rgba(188, 164, 106, 0.25);
+    letter-spacing: 1px;
+}
+
+.passport-destination {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dest-label {
+    font-family: var(--font-display);
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: rgba(188, 164, 106, 0.5);
+    text-transform: uppercase;
+}
+
+.dest-val {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+/* Passport Pages */
+.passport-page {
+    background-color: #fdfcf9;
+    background-image: radial-gradient(circle at 50% 50%, #fdfcf9 0%, #f7f5ef 100%);
+    padding: 18px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+.passport-page.page-left {
+    border-radius: 12px 0 0 12px;
+}
+
+.passport-page.page-right {
+    border-radius: 0 12px 12px 0;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Spine shadow for open pages */
+.passport-page.page-left::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+}
+
+.passport-page.page-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+}
+
+.passport-page-header {
+    border-bottom: 1.5px solid rgba(139, 116, 67, 0.25);
+    padding-bottom: 3px;
+    margin-bottom: 10px;
+}
+
+.passport-header-title {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #8b7443;
+    text-transform: uppercase;
+}
+
+.passport-page-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Left Page Identity Block */
+.passport-identity {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+}
+
+.passport-photo {
+    width: 80px;
+    height: 100px;
+    border: 1px solid rgba(139, 116, 67, 0.25);
+    background: #eef1ec;
+    border-radius: 4px;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+.photo-placeholder {
+    width: 100%;
+    height: 100%;
+    border: 1px dashed rgba(139, 116, 67, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(139, 116, 67, 0.5);
+}
+
+.photo-placeholder i {
+    font-size: 26px;
+    margin-bottom: 4px;
+}
+
+.photo-placeholder .photo-text {
+    font-size: 6.5px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+}
+
+.passport-details-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100px;
+}
+
+.passport-field {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.passport-field-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.passport-field-row .passport-field {
+    flex: 1;
+}
+
+.field-lbl {
+    font-family: var(--font-display);
+    font-size: 6.5px;
+    color: #8b7443;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.field-val {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: #111518;
+    text-transform: uppercase;
+    word-break: break-all;
+}
+
+/* Watermark Stamps */
+.watermark-stamp {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(139, 116, 67, 0.05);
+    pointer-events: none;
+    border: 1.5px dashed rgba(139, 116, 67, 0.1);
+    padding: 2px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.stamp-watermark-1 {
+    top: 35px;
+    right: 15px;
+    transform: rotate(15deg);
+}
+
+.stamp-watermark-2 {
+    bottom: 50px;
+    left: 15px;
+    transform: rotate(-12deg);
+}
+
+/* QR Code & Ink Stamps */
+.passport-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 8px;
+    border-top: 1.5px solid rgba(139, 116, 67, 0.12);
+    padding-top: 8px;
+}
+
+.passport-qrcode {
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 3px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.passport-qrcode svg {
+    width: 100%;
+    height: 100%;
+}
+
+.passport-stamp {
+    display: none !important; /* Completely hide APPROVED stamps next to form inputs as requested */
+}
+
+.passport-stamps-area {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.ink-stamp {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 5.5px;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.ink-stamp .stamp-check {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.ink-stamp.stamp-past {
+    color: rgba(39, 174, 96, 0.7);
+    border-style: dashed;
+    transform: rotate(-12deg);
+}
+
+.ink-stamp.stamp-future {
+    color: rgba(41, 128, 185, 0.7);
+    border-style: double;
+    transform: rotate(8deg);
+}
+
+.ink-stamp.stamp-present {
+    color: rgba(192, 41, 43, 0.7);
+    transform: rotate(-5deg);
+}
+
+.ink-stamp.stamped {
+    opacity: 0.8;
+}
+
+.ink-stamp.stamping {
+    animation: stampSlam 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+}
+
+/* Right Page Summary */
+.summary-section {
+    margin-bottom: 6px;
+}
+
+.summary-sec-title {
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 700;
+    color: #8b7443;
+    border-bottom: 1px dashed rgba(139, 116, 67, 0.18);
+    padding-bottom: 1px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.summary-list li {
+    font-size: 8.5px;
+    line-height: 1.25;
+    color: #2c3e50;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.summary-list .bullet {
+    margin-right: 4px;
+    color: #8b7443;
+    font-size: 9px;
+}
+
+.summary-lbl {
+    font-weight: 700;
+    color: #111518;
+    margin-right: 3px;
+    white-space: nowrap;
+}
+
+.summary-text {
+    font-weight: 400;
+    color: #334155;
+}
+
+.passport-elegant-quote {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 10px;
+    text-align: center;
+    color: #8b7443;
+    margin-top: 8px;
+    border-top: 1.5px solid rgba(139, 116, 67, 0.12);
+    padding-top: 6px;
+    letter-spacing: 0.5px;
+}
+
+/* Action Buttons Grid */
+.passport-actions-panel {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.passport-actions-panel .btn {
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
     transition: var(--transition-base);
+    box-shadow: var(--shadow-md);
 }
 
-@media (max-width: 768px) {
-    .steps-progress.departure-board-style {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    .flight-path-line, .step-plane-anim {
-        display: none !important;
-    }
-    .steps-progress.departure-board-style .step {
-        width: 100%;
-        min-width: unset;
-    }
+.passport-actions-panel .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #8b7443 100%);
+    color: #111518;
 }
 
-.step-fids-card {
+.passport-actions-panel .btn-primary:hover {
+    box-shadow: 0 0 15px rgba(188, 164, 106, 0.45);
+    transform: translateY(-2px);
+}
+
+.passport-actions-panel .btn-secondary {
+    background: rgba(21, 25, 29, 0.8);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.passport-actions-panel .btn-secondary:hover {
+    background: #ffffff;
+    color: #111518;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Team Building Footer styles */
+.team-flight-completed-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-}
-
-.step-fids-status {
-    font-family: var(--font-mono);
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: var(--transition-base);
-}
-
-.step-fids-info {
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    margin-top: 0.15rem;
-    transition: var(--transition-base);
-}
-
-.steps-progress.departure-board-style .step.active {
-    background: #090c0e;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 15px rgba(188, 164, 106, 0.2);
-}
-
-.steps-progress.departure-board-style .step.active .step-fids-status {
-    color: var(--primary-color);
-    text-shadow: 0 0 8px rgba(188, 164, 106, 0.6);
-    animation: ledPulseOrange 1.5s infinite alternate;
-}
-
-.steps-progress.departure-board-style .step.active .step-fids-info {
-    color: #f8fafc;
-}
-
-.steps-progress.departure-board-style .step.clickable:hover {
-    border-color: rgba(188, 164, 106, 0.6);
-    box-shadow: 0 0 8px rgba(188, 164, 106, 0.15);
-}
-
-/* 3. 左側 Journey Timeline (報到航程時間軸) */
-.journey-timeline-container {
-    background: #111518;
-    border: 1px solid rgba(188, 164, 106, 0.2);
+    background: linear-gradient(135deg, rgba(21, 25, 29, 0.8) 0%, rgba(12, 15, 18, 0.9) 100%);
+    border: 1px solid rgba(188, 164, 106, 0.25);
+    padding: 2.5rem;
     border-radius: var(--radius-lg);
-    padding: 2.25rem 2rem; /* Increased padding */
-    box-shadow: var(--shadow-md);
-    position: sticky;
-    top: 90px;
-    z-index: 10;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-    height: auto;
+
+.completed-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(188, 164, 106, 0.1);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 30px;
+    letter-spacing: 1px;
+}
+
+.passenger-boarded-count {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-top: 12px;
+    letter-spacing: 1px;
+}
+
+.thanks-message {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.btn-view-passengers {
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    transition: var(--transition-base);
+}
+
+.btn-view-passengers:hover {
+    background-color: var(--primary-color);
+    color: #111518;
+    box-shadow: 0 0 15px rgba(188, 164, 106, 0.35);
+}
+
+/* CSS Utilities */
+.opacity-0 {
+    opacity: 0;
+    transform: translateY(25px);
+    pointer-events: none;
+}
+
+.opacity-100 {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+}
+
+.btn-success-green {
+    background: #27ae60 !important;
+    border-color: #27ae60 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(39, 174, 96, 0.4) !important;
+}
+
+/* ==========================================================================
+   Passenger Manifest Section Redesign (Authentic FIDS Airport Boards)
+   ========================================================================== */
+.passenger-checkin-section {
+    max-width: 1280px;
+    margin: 3.5rem auto !important;
+    padding: 2.25rem !important;
+    background: linear-gradient(135deg, rgba(21, 25, 29, 0.75) 0%, rgba(12, 15, 18, 0.9) 100%) !important;
+    border: 1px solid rgba(188, 164, 106, 0.25) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.passenger-header-block {
+    margin-bottom: 2rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-bottom: 12px !important;
+}
+
+.passenger-header-block h2 {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    color: var(--primary-color) !important;
+}
+
+.passenger-header-block p {
+    font-size: 0.75rem !important;
+    color: var(--text-muted) !important;
+    letter-spacing: 1px !important;
+    font-family: var(--font-mono) !important;
+    margin-top: 4px !important;
+}
+
+/* FIDS Passenger Cards Grid */
+.passenger-cards-manifest-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+}
+
+/* FIDS Passenger Card Look */
+.fids-passenger-card {
+    background: #111417 !important;
+    border: 1px solid rgba(188, 164, 106, 0.15) !important;
+    border-radius: 12px !important;
+    padding: 1.25rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: var(--shadow-sm) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.fids-passenger-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 4px !important;
+    height: 100% !important;
+    background: #30d158 !important; /* Green for boarded */
+}
+
+.fids-passenger-card.dynamic-user-card::before {
+    background: #ff9f0a !important; /* Orange for checking in */
+}
+
+.fids-passenger-card:hover {
+    transform: translateY(-3px) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 8px 20px rgba(188, 164, 106, 0.12) !important;
+}
+
+.fids-card-top {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.fids-seat {
+    font-family: var(--font-mono) !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    color: var(--primary-color) !important;
+}
+
+.fids-status-lbl {
+    font-family: var(--font-mono) !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+}
+
+.fids-passenger-card.boarded .fids-status-lbl {
+    color: #30d158 !important;
+    background: rgba(48, 209, 88, 0.1) !important;
+    border: 1px solid rgba(48, 209, 88, 0.2) !important;
+}
+
+.fids-passenger-card.dynamic-user-card .fids-status-lbl {
+    color: #ff9f0a !important;
+    background: rgba(255, 159, 10, 0.1) !important;
+    border: 1px solid rgba(255, 159, 10, 0.2) !important;
+}
+
+.fids-card-mid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.fids-name {
+    font-family: var(--font-display) !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-transform: uppercase !important;
+}
+
+.fids-dest {
+    font-family: var(--font-mono) !important;
+    font-size: 0.7rem !important;
+    color: var(--text-muted) !important;
+    text-transform: uppercase !important;
+}
+
+.fids-card-bottom {
+    display: flex !important;
+    justify-content: space-between !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.7rem !important;
+    color: rgba(255, 255, 255, 0.35) !important;
+    border-top: 1px dashed rgba(255, 255, 255, 0.06) !important;
+    padding-top: 8px !important;
+}
+
+/* Colleague Passport Gallery Cover style */
+.gallery-passport-card {
+    position: relative;
+    background: linear-gradient(135deg, #0d233a 0%, #061222 100%);
+    border: 1.5px solid rgba(188, 164, 106, 0.3);
+    border-radius: 12px;
+    height: 340px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    min-width: 250px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease, box-shadow 0.35s ease;
+    overflow: hidden;
+    width: 100%;
+}
+
+.gallery-passport-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.gallery-passport-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--primary-color);
+    box-shadow: 0 15px 30px rgba(188, 164, 106, 0.25);
+}
+
+.gallery-passport-card.is-locked {
+    cursor: not-allowed;
+}
+
+.gallery-passport-card.is-locked:hover {
+    transform: none;
+    border-color: rgba(188, 164, 106, 0.3);
+    box-shadow: var(--shadow-md);
+}
+
+.gallery-passport-card .passport-crest {
+    font-size: 30px;
+    color: #bca46a;
+    margin-top: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.gallery-passport-card .passport-title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(188, 164, 106, 0.8);
+    text-transform: uppercase;
+}
+
+.gallery-passport-card .passport-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    border-top: 1.5px solid rgba(188, 164, 106, 0.25);
+    border-bottom: 1.5px solid rgba(188, 164, 106, 0.25);
+    padding: 8px 10px;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 8px rgba(188, 164, 106, 0.05);
+}
+
+.gallery-passport-card .passport-meta {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: rgba(188, 164, 106, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Colleague Passport Modal styles */
+.passport-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.passport-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.passport-modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(12, 15, 18, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.passport-modal-content {
+    position: relative;
+    z-index: 10;
+    transform: scale(0.92);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.passport-modal.active .passport-modal-content {
+    transform: scale(1);
+}
+
+.passport-modal-close {
+    position: absolute;
+    top: -45px;
+    right: 0px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 32px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.passport-modal-close:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive Scaling for the Passport Screenshot Wrapper to fit screen nicely */
+@media (max-width: 640px) {
+    .passport-screenshot-wrapper {
+        transform: scale(0.85);
+        transform-origin: center center;
+        margin: -40px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .passport-screenshot-wrapper {
+        transform: scale(0.65);
+        transform-origin: center center;
+        margin: -100px 0;
+    }
+}
+
+/* Extra Keyframes */
+@keyframes stampSlam {
+    0% {
+        transform: scale(3.5) rotate(-35deg);
+        opacity: 0;
+        filter: blur(4px);
+    }
+    100% {
+        transform: scale(1) rotate(-8deg);
+        opacity: 0.8;
+        filter: blur(0);
+    }
+}
+
+@keyframes goldShimmer {
+    0% {
+        filter: drop-shadow(0 2px 3px rgba(188, 164, 106, 0.35)) brightness(0.95);
+    }
+    100% {
+        filter: drop-shadow(0 3px 10px rgba(188, 164, 106, 0.75)) brightness(1.15);
+    }
+}
+
+@keyframes goldPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(188, 164, 106, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(188, 164, 106, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(188, 164, 106, 0);
+    }
+}
+
+.btn-gold-pulse {
+    animation: goldPulse 2.2s infinite;
+}
+
+/* ==========================================================================
+   XC PM Premium Lounge Redesign - STARLUX Lounge Inspired Elegance
+   ========================================================================== */
+
+/* 1. Global Themes & Dark Palette Overrides */
+:root {
+    --bg-color: #080a0c; /* Deep rich luxury black */
+    --card-bg: #111417; /* Refined luxury dark grey for cards */
+    --primary-color: #bca46a; /* Luxury Starlux Gold */
+    --primary-hover: #9c844f; /* Warm brass gold */
+    --text-color: #f8fafc; /* Crisp clean off-white */
+    --text-muted: #828f9c; /* Muted silver grey */
+    --border-color: rgba(188, 164, 106, 0.12); /* Delicate gold wire borders */
+}
+
+body {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    font-family: 'Inter', 'IBM Plex Sans', sans-serif !important;
+}
+
+/* 2. Onboarding Greeting Header Redesign (Lounge Entrance) */
+.hero-section-terminal {
+    max-width: 800px;
+    margin: 0 auto 3rem auto !important;
+    text-align: center;
+}
+
+/* Lounge Entrance welcome tag */
+.terminal-status-bar {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    background: rgba(188, 164, 106, 0.05) !important;
+    border: 1px solid rgba(188, 164, 106, 0.2) !important;
+    padding: 6px 16px !important;
+    border-radius: 100px !important;
+    margin-bottom: 1.5rem !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(10px);
+}
+
+.status-dot {
+    width: 6px !important;
+    height: 6px !important;
+    background-color: var(--primary-color) !important;
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+.status-text {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: var(--primary-color) !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    font-family: var(--font-mono) !important;
+}
+
+.status-tag {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: #111518 !important;
+    background-color: var(--primary-color) !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+    letter-spacing: 1px !important;
+}
+
+/* Elegant Title with Subtitle (Chinese main, English sub) */
+.hero-title {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 1.5px !important;
+    margin-bottom: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-shadow: none !important;
+    text-transform: none !important;
+}
+
+.hero-subtitle {
+    font-size: 0.95rem !important;
+    font-weight: 400 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 4px !important;
+    color: var(--primary-color) !important;
+    font-family: var(--font-mono) !important;
+}
+
+/* Explanation text: Make it white as requested, clean and readable */
+.hero-description {
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: rgba(255, 255, 255, 0.9) !important; /* Pure elegant white/light grey */
+    max-width: 720px !important;
+    margin: 0 auto !important;
+    font-weight: 400 !important;
+}
+
+/* 3. Luxury Boarding Pass Redesign (Starlux Warm Khaki Accent) */
+.boarding-pass {
+    background: #fdfbf7 !important; /* Extremely high quality clean linen card background */
+    border: 1px solid rgba(139, 116, 67, 0.25) !important;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4) !important;
+}
+
+.ticket-left {
+    background: #fdfbf7 !important;
+    padding: 1.5rem !important;
+}
+
+.ticket-right {
+    background: #f7f4ec !important; /* Premium cream stub */
+    padding: 1.25rem 1.5rem !important;
+    border-left: 1px dashed rgba(139, 116, 67, 0.15) !important;
+}
+
+.ticket-divider {
+    background-color: #fdfbf7 !important;
+}
+
+/* Clean Inputs in Boarding Pass */
+.detail-group input {
+    background-color: #ffffff !important; /* 預設即顯示高對比白底色，提示使用者可以填寫 */
+    border: 1px solid rgba(139, 116, 67, 0.3) !important; /* 稍微加深邊框增強對比 */
+    color: #111518 !important;
+    font-size: 0.9rem !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03) !important; /* 給予輕微陰影使填寫區更立體 */
+}
+
+.detail-group input:focus {
+    background-color: #ffffff !important;
+    border-color: #8b7443 !important;
+    box-shadow: 0 0 0 3px rgba(139, 116, 67, 0.1) !important;
+}
+
+.detail-group input::placeholder {
+    color: rgba(0, 0, 0, 0.25) !important;
+    font-size: 0.82rem !important;
+}
+
+.readonly-passport {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #111518 !important;
+    padding: 0.5rem 0 !important;
+    display: inline-block;
+    border: none !important;
+    background: none !important;
+}
+
+/* 4. Main Cabin Layout Redesign (2-Column Workspace) */
+.workspace-grid {
+    display: grid !important;
+    grid-template-columns: 220px 1fr 280px !important; /* Elegant 3-column layout */
+    gap: 2.5rem !important; /* Generous breathing room */
+    align-items: start !important;
+    max-width: 1280px !important;
+    margin: 0 auto !important;
 }
 
 @media (max-width: 1024px) {
     .workspace-grid {
-        display: flex !important;
-        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
     }
-    .journey-timeline-container {
-        display: none !important; /* 平板及手機端隱藏左側時間軸以防空間不足 */
-    }
+}
+
+/* 5. Left Timeline Navigation (Minimal & Elegant Navigation) */
+.journey-timeline-container {
+    opacity: 0.85; /* Increased default opacity for clearer visibility */
+    transition: opacity 0.3s ease;
+    padding-top: 10px;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    max-width: 220px !important;
+}
+
+.journey-timeline-container:hover {
+    opacity: 1;
 }
 
 .timeline-header-block {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid rgba(188, 164, 106, 0.15);
-    padding-bottom: 0.75rem;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
 }
 
 .timeline-header-title {
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    letter-spacing: 1.5px;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: rgba(255, 255, 255, 0.85) !important; /* Brighter title for readability */
+    letter-spacing: 2px !important;
 }
 
 .timeline-header-sub {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    margin-top: 0.15rem;
+    font-size: 0.7rem !important;
+    color: var(--primary-color) !important;
+    letter-spacing: 1px !important;
+    display: block;
+    margin-top: 2px;
 }
 
 .timeline-steps-wrapper {
-    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1.85rem;
+    gap: 20px;
 }
 
 .timeline-item {
     display: flex;
     align-items: center;
-    gap: 1.25rem; /* Increased space */
-    position: relative;
-    z-index: 3;
-    opacity: 0.35;
-    transition: var(--transition-base);
-}
-
-.timeline-item.active {
-    opacity: 1;
-}
-
-.timeline-item.completed .timeline-icon-box {
-    border-color: var(--primary-color) !important;
-    background: var(--primary-color) !important;
-    color: #0c0f12 !important;
-    box-shadow: 0 0 10px var(--primary-color);
-}
-
-.timeline-item.completed .timeline-lbl {
-    color: var(--primary-color) !important;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .timeline-icon-box {
-    width: 36px; /* increased slightly */
-    height: 36px; /* increased slightly */
-    background: #090c0e;
-    border: 1px solid rgba(188, 164, 106, 0.3);
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important; /* Extremely bright border for visibility */
+    background: transparent !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-color);
-    font-size: 0.95rem;
-    transition: var(--transition-base);
-}
-
-.timeline-item.active .timeline-icon-box {
-    border-color: var(--primary-color);
-    background: var(--primary-color);
-    color: #0c0f12;
-    box-shadow: 0 0 10px var(--primary-color);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8) !important; /* Brighter inactive icon */
+    transition: all 0.3s ease;
 }
 
 .timeline-info {
@@ -2238,436 +2949,284 @@ nav a.active, nav a:hover {
 }
 
 .timeline-lbl {
-    font-family: var(--font-display);
-    font-size: 1rem; /* 16px */
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 1px;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.9) !important; /* Highly legible off-white for step labels */
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
 }
 
 .timeline-desc {
-    font-size: 0.8125rem; /* 13px Hint */
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
-    margin-top: 0.15rem;
+    font-size: 0.7rem !important;
+    color: rgba(255, 255, 255, 0.65) !important; /* High contrast description text */
+    margin-top: 1px;
+}
+
+/* Active Step using Premium Gold Highlight */
+.timeline-item.active .timeline-icon-box {
+    border-color: #ffd88f !important; /* Brighter premium champagne gold border */
+    color: #ffd88f !important; /* Brighter champagne gold color */
+    background: rgba(255, 216, 143, 0.12) !important; /* Brighter subtle gold background glow */
+    box-shadow: 0 0 16px rgba(255, 216, 143, 0.25) !important;
 }
 
 .timeline-item.active .timeline-lbl {
-    color: var(--primary-color);
+    color: #ffd88f !important; /* Brighter text for high readability */
+    font-weight: 700 !important;
+    text-shadow: 0 0 8px rgba(255, 216, 143, 0.15) !important;
 }
 
-.timeline-vertical-line {
-    position: absolute;
-    top: 15px;
-    bottom: 15px;
-    left: 18px; /* adjusted slightly for 36px icon box */
-    width: 1px;
-    background: repeating-linear-gradient(180deg, rgba(188, 164, 106, 0.15) 0px, rgba(188, 164, 106, 0.15) 6px, transparent 6px, transparent 12px);
-    z-index: 1;
+.timeline-item.active .timeline-desc {
+    color: rgba(255, 255, 255, 0.8) !important; /* Extremely high readability description text */
 }
 
-.timeline-plane-indicator {
-    position: absolute;
-    left: 10px; /* adjusted slightly for 36px icon box */
-    top: 0;
-    width: 17px;
-    height: 17px;
-    background: #00e5ff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #090c0e;
-    font-size: 0.5rem;
-    box-shadow: 0 0 10px #00e5ff;
-    z-index: 2;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    pointer-events: none;
+/* 6. Form Card & Input Field Redesign (Single Premium Card, High Whitespace) */
+.form-section {
+    background: #eae4d8 !important; /* Slightly darker elegant warm sand/khaki background to reduce brightness further */
+    border: 1px solid rgba(139, 116, 67, 0.25) !important; /* Elegant gold border */
+    border-radius: 16px !important;
+    padding: 3rem !important; /* Generous padding for luxury feel */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25) !important;
+    position: relative;
+    max-width: none !important; /* Let structure guide it */
 }
 
-.timeline-plane-indicator i {
-    transform: rotate(90deg);
+.form-section::before, .form-section::after {
+    display: none !important; /* Remove tech grid / ticket cuts */
 }
 
-/* 4. 每完成一題欄位旁蓋章動畫 (Passport Stamp Validation) */
-.passport-stamp {
-    position: absolute;
-    right: 15px;
-    bottom: 12px;
-    border: 2px dashed #ff4d4f;
-    color: #ff4d4f;
-    font-family: var(--font-display);
-    font-size: 0.62rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    padding: 1px 4px;
-    border-radius: 3px;
-    transform: rotate(-15deg) scale(0);
-    opacity: 0;
-    pointer-events: none;
-    user-select: none;
-    background: rgba(12, 15, 18, 0.85);
-    box-shadow: 0 0 6px rgba(255, 77, 79, 0.15);
-    letter-spacing: 0.5px;
-    z-index: 5;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Section headers (Chinese title, English subtitle, no all uppercase) */
+.section-header {
+    border-bottom: 1px solid rgba(139, 116, 67, 0.15) !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 2.5rem !important;
 }
 
-.passport-stamp.stamped {
-    transform: rotate(-15deg) scale(1.1);
-    opacity: 0.75;
-    animation: passportStampDrop 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
+.section-header h2 {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #111518 !important; /* Obsidian black/gray for high contrast on light bg */
+    letter-spacing: 0.5px !important;
+    text-transform: none !important; /* Remove automatic uppercase */
+    margin-bottom: 4px !important;
 }
 
-@keyframes passportStampDrop {
-    0% {
-        transform: rotate(-35deg) scale(3);
-        opacity: 0;
-    }
-    70% {
-        transform: rotate(-15deg) scale(0.95);
-        opacity: 0.85;
-    }
-    100% {
-        transform: rotate(-15deg) scale(1.1);
-        opacity: 0.75;
-    }
-}
-
-/* 5. 全螢幕過場轉場動畫 (Fullscreen Transition Screen) */
-.fullscreen-transition-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(6, 8, 10, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease-out;
-}
-
-.fullscreen-transition-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.fullscreen-transition-overlay.hidden {
-    display: none !important;
-}
-
-.transition-message-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 500px;
-    padding: 2rem;
-}
-
-.transition-icon-container {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid var(--primary-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    font-size: 2.2rem;
-    box-shadow: 0 0 25px rgba(188, 164, 106, 0.25);
-    margin-bottom: 1.5rem;
-}
-
-.transition-title {
-    font-family: var(--font-display);
-    font-size: 1.65rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-
-.transition-subtitle {
+.section-subtitle {
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    color: #8b7443 !important; /* Elegant warm bronze gold */
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
 }
 
-.transition-progress-bar {
-    width: 250px;
-    height: 3px;
-    background: rgba(188, 164, 106, 0.15);
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.transition-progress-fill {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
-    box-shadow: 0 0 10px var(--primary-color);
-    transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* 6. 在線乘客名單區塊 (Passenger Check-In Manifest Section with Card Layout) */
-.passenger-checkin-section {
-    width: 100%;
-    background: #111518;
-    border: 1px solid rgba(188, 164, 106, 0.2);
-    border-radius: var(--radius-lg);
-    padding: 32px !important; /* 32px padding */
-    margin: 48px auto; /* 48px gap */
-    box-shadow: var(--shadow-md);
-    max-width: 1400px;
-}
-
-.passenger-header-block {
-    margin-bottom: 24px;
-    border-bottom: 1px solid rgba(188, 164, 106, 0.15);
-    padding-bottom: 12px;
-}
-
-.passenger-header-block h2 {
-    font-family: var(--font-display);
-    font-size: 28px !important; /* Section Font Specification: 28px */
-    font-weight: 800;
-    color: var(--primary-color);
-    letter-spacing: 2px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-transform: uppercase;
-}
-
-.passenger-header-block p {
-    font-family: var(--font-mono);
-    font-size: 13px !important; /* Hint Font Specification: 13px */
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 1.5px;
-    margin-top: 6px;
-    text-transform: uppercase;
-}
-
-.passenger-cards-manifest-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-}
-
-@media (max-width: 1024px) {
-    .passenger-cards-manifest-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+/* Unbox Form Group Cards back to basic inputs with plenty of whitespace */
+.form-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 2rem !important; /* Large whitespace gap */
 }
 
 @media (max-width: 600px) {
-    .passenger-cards-manifest-grid {
-        grid-template-columns: 1fr;
+    .form-grid {
+        grid-template-columns: 1fr !important;
     }
 }
 
-.fids-passenger-card {
-    background: #090c0e;
-    border: 1px solid rgba(188, 164, 106, 0.2);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 16px;
-    min-height: 140px;
-    transition: var(--transition-base);
-    position: relative;
-    overflow: hidden;
-}
-
-.fids-passenger-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: rgba(188, 164, 106, 0.15);
-}
-
-.fids-passenger-card.boarded::before {
-    background: #30d158;
-    box-shadow: 0 0 8px rgba(48, 209, 88, 0.5);
-}
-
-.fids-passenger-card.dynamic-user-card::before {
-    background: #ff9f0a;
-    box-shadow: 0 0 8px rgba(255, 159, 10, 0.5);
-}
-
-.fids-passenger-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(188, 164, 106, 0.4);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-
-.fids-card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.fids-seat {
-    font-family: var(--font-mono);
-    font-size: 16px; /* Body: 16px */
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.fids-status-lbl {
-    font-family: var(--font-mono);
-    font-size: 12px; /* Label: 12~13px */
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.boarded .fids-status-lbl {
-    color: #30d158;
-}
-
-.dynamic-user-card .fids-status-lbl {
-    color: #ff9f0a;
-}
-
-.fids-card-mid {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.fids-name {
-    font-family: var(--font-display);
-    font-size: 16px; /* Body: 16px */
-    font-weight: 700;
-    color: #ffffff;
-    text-transform: uppercase;
-}
-
-.fids-dest {
-    font-family: var(--font-mono);
-    font-size: 12px; /* Label: 12~13px */
-    color: var(--text-muted);
-    text-transform: uppercase;
-}
-
-.fids-card-bottom {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 12px; /* Label: 12~13px */
-    color: rgba(255, 255, 255, 0.4);
-}
-
-/* Old FIDS Table deprecated */
-
-.fids-status-badge {
-    font-size: 12px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 3px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.status-boarded {
-    background: rgba(48, 209, 88, 0.12);
-    border: 1px solid rgba(48, 209, 88, 0.3);
-    color: #30d158;
-    text-shadow: 0 0 6px rgba(48, 209, 88, 0.4);
-}
-
-.status-checking-in {
-    background: rgba(255, 159, 10, 0.12);
-    border: 1px solid rgba(255, 159, 10, 0.3);
-    color: #ff9f0a;
-    animation: ledPulseOrange 1.5s infinite alternate;
-}
-
-.status-immigration {
-    background: rgba(0, 229, 255, 0.12);
-    border: 1px solid rgba(0, 229, 255, 0.3);
-    color: #00e5ff;
-    animation: ledPulseBlue 1.5s infinite alternate;
-}
-
-.status-boarding {
-    background: rgba(250, 173, 20, 0.12);
-    border: 1px solid rgba(250, 173, 20, 0.3);
-    color: #faad14;
-    animation: ledPulseOrange 1.5s infinite alternate;
-}
-
-/* 7. Focus 及 Hover 微動畫調優 (Micro-animations transition speed caps) */
-.form-group input {
-    background-color: #0f1317; /* 契合黑金風，不刺眼高對比 */
-    color: #ffffff;
-    border-color: rgba(188, 164, 106, 0.2);
-    transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.form-group input:focus {
-    border-color: var(--primary-color);
-    background-color: #12171c;
-    box-shadow: 0 0 0 3px rgba(188, 164, 106, 0.18);
-}
-
-.btn-boarding, .btn-generate {
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.btn-boarding:hover, .btn-generate:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(188, 164, 106, 0.25);
-}
-
-.btn-boarding:active, .btn-generate:active {
-    transform: translateY(0);
-}
-
-/* 表單卡片在填寫時的淡入調優 */
-.form-section {
-    background: #111518; /* 改為與暗黑背景契合的曜石灰 */
-    border-color: rgba(188, 164, 106, 0.2);
-    box-shadow: var(--shadow-lg);
-    animation: cardFadeIn 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-}
-
-@keyframes cardFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(15px) scale(0.98);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.form-group {
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 1rem !important; /* Rely on whitespace */
 }
 
 .form-group label {
-    color: #cbd5e1; /* 對比白灰，提高暗黑模式下的可讀性 */
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #111518 !important; /* Obsidian black/gray for high contrast on light bg */
+    margin-bottom: 10px !important;
+    letter-spacing: 0.5px !important;
+    text-transform: none !important;
 }
 
-/* 標題及資訊排版全部英文大寫調整 */
-.section-header h2, .gallery-header h2, h1 {
-    text-transform: uppercase;
-    font-family: var(--font-display);
-    letter-spacing: 1px;
+.form-group label .badge {
+    background-color: rgba(188, 164, 106, 0.1) !important;
+    color: var(--primary-color) !important;
+    border: 1px solid rgba(188, 164, 106, 0.2) !important;
+    font-size: 0.75rem !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    margin-right: 6px !important;
+}
+
+/* Input Styles: clean, fine border, light background (matching boarding pass style) */
+.form-group input {
+    background-color: #fdfbf7 !important; /* Light cream warm background like the ticket */
+    border: 1px solid rgba(139, 116, 67, 0.3) !important; /* Golden border */
+    border-radius: 8px !important;
+    color: #111518 !important; /* Dark text for high contrast and readability */
+    font-size: 1rem !important;
+    padding: 12px 16px !important;
+    box-shadow: none !important;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.form-group input:focus {
+    border-color: #8b7443 !important; /* Golden focus */
+    background-color: #ffffff !important; /* Pure white on focus */
+    color: #111518 !important;
+    box-shadow: 0 0 0 3px rgba(139, 116, 67, 0.15) !important; /* Elegant subtle focus glow */
+}
+
+.form-group input::placeholder {
+    color: rgba(17, 21, 24, 0.4) !important; /* Legible dark placeholder */
+    font-size: 0.9rem !important;
+}
+
+/* 7. Right Flight Information Panel Redesign (Premium Boarding Info) */
+.flight-info-panel-sidebar {
+    background: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    position: sticky !important;
+    top: 100px !important;
+    max-width: 280px !important;
+    width: 100% !important;
+}
+
+.flight-info-panel-sidebar .panel-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding-bottom: 12px !important;
+    background: none !important;
+}
+
+.flight-info-panel-sidebar .panel-title {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 1px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-transform: uppercase !important;
+}
+
+.flight-info-panel-sidebar .panel-subtitle {
+    font-size: 0.7rem !important;
+    color: var(--primary-color) !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    display: block !important;
+    margin-top: 2px !important;
+}
+
+.flight-info-panel-sidebar .panel-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.flight-info-panel-sidebar .panel-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    padding-bottom: 10px !important;
+}
+
+.flight-info-panel-sidebar .panel-row:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+}
+
+.flight-info-panel-sidebar .panel-lbl {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    color: var(--text-muted) !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+}
+
+.flight-info-panel-sidebar .panel-val {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+}
+
+.flight-info-panel-sidebar .panel-val.highlight-gold {
+    color: var(--primary-color) !important;
+    font-weight: 700 !important;
+}
+
+/* Elegant status badge, no glowing blinking effects */
+.badge-fids-status {
+    display: inline-block !important;
+    padding: 4px 10px !important;
+    border-radius: 4px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    width: fit-content !important;
+    background: rgba(188, 164, 106, 0.1) !important;
+    border: 1px solid rgba(188, 164, 106, 0.2) !important;
+    color: var(--primary-color) !important;
+    animation: none !important; /* Stop all flashing blinking cyberpunk effects */
+}
+
+/* Remove radar ping footer from sidebar */
+.panel-footer-radar {
+    display: none !important;
+}
+
+/* 8. Button System Alignment */
+.btn {
+    height: 44px !important;
+    padding: 0 24px !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important; /* Sleek consistent rounded-corners */
+    transition: all 0.25s ease !important;
+    font-family: var(--font-body) !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Primary Button (Luxury Starlux Gold) */
+.btn-primary, .btn-generate, .btn-boarding {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #8b7443 100%) !important;
+    color: #111518 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(188, 164, 106, 0.15) !important;
+    border-radius: 8px !important;
+}
+
+.btn-primary:hover, .btn-generate:hover, .btn-boarding:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(188, 164, 106, 0.3) !important;
+    background: linear-gradient(135deg, #cbb47b 0%, #9c844f 100%) !important;
+}
+
+/* Secondary Button (Elegant Dark Border, No White Buttons) */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.02) !important;
+    color: var(--primary-color) !important;
+    border: 1px solid rgba(188, 164, 106, 0.3) !important;
+    box-shadow: none !important;
+    border-radius: 8px !important;
+}
+
+.btn-secondary:hover {
+    background: rgba(188, 164, 106, 0.05) !important;
+    border-color: var(--primary-color) !important;
+    transform: translateY(-2px) !important;
 }
