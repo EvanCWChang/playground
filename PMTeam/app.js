@@ -1,3 +1,8 @@
+// ==========================================================================
+// Google Sheets 整合設定 (若要啟用雲端儲存與多人共享，請填入部署後的 Web App URL)
+// ==========================================================================
+const GOOGLE_SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8mQSajp7nmhpQirCC2f7jmRooF5fJ9Yt85zopl009AjyGk1rCY1EAAV1aAS2wZPpyoQ/exec';
+
 document.addEventListener('DOMContentLoaded', () => {
     let isGalleryUnlocked = false;
     let highestStepReached = 1;
@@ -262,14 +267,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('step-2-container'),
         document.getElementById('step-3-container')
     ];
-    const progressSteps = [
-        document.getElementById('progress-step-1'),
-        document.getElementById('progress-step-2'),
-        document.getElementById('progress-step-3')
-    ];
-    const progressLines = [
-        document.getElementById('progress-line-1'),
-        document.getElementById('progress-line-2')
+    // Removed progressSteps array of old top progress bar, routing directly to left timeline clicks
+    const timelineSteps = [
+        document.getElementById('timeline-step-1'),
+        document.getElementById('timeline-step-2'),
+        document.getElementById('timeline-step-3')
     ];
 
     function isStepAccessible(stepNum) {
@@ -284,13 +286,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateStepAccessibilityStyles() {
-        progressSteps.forEach((pStep, idx) => {
-            if (pStep) {
+        timelineSteps.forEach((tStep, idx) => {
+            if (tStep) {
                 const currentStepIdx = idx + 1;
                 if (isStepAccessible(currentStepIdx)) {
-                    pStep.classList.add('clickable');
+                    tStep.classList.add('clickable');
                 } else {
-                    pStep.classList.remove('clickable');
+                    tStep.classList.remove('clickable');
                 }
             }
         });
@@ -307,16 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     step.classList.remove('hidden');
                 } else {
                     step.classList.add('hidden');
-                }
-            }
-        });
-
-        progressSteps.forEach((pStep, idx) => {
-            if (pStep) {
-                if (idx === stepNum - 1) { // Highlighting current departure board style step
-                    pStep.classList.add('active');
-                } else {
-                    pStep.classList.remove('active');
                 }
             }
         });
@@ -338,10 +330,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 為步驟進度條添加點擊監聽，只要是已填寫前面步驟，就可以自由切換
-    progressSteps.forEach((pStep, idx) => {
-        if (pStep) {
-            pStep.addEventListener('click', () => {
+    // 為步驟進度條及時間軸添加點擊監聽，只要是已填寫前面步驟，就可以自由切換
+    timelineSteps.forEach((tStep, idx) => {
+        if (tStep) {
+            tStep.addEventListener('click', () => {
                 const stepNum = idx + 1;
                 if (isStepAccessible(stepNum)) {
                     goToStep(stepNum);
@@ -622,8 +614,179 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 啟動載入 Mock 卡片
+    // 渲染從 Google Sheets 讀取的卡片到藝廊
+    function renderMemberToGallery(member) {
+        const currentName = member.name || defaults.name;
+        const currentBackground = member.background ? `🎓 ${member.background}` : defaults.background;
+        const currentExp = member.exp || defaults.exp;
+        const currentPivot = member.pivot || defaults.pivot;
+        const currentPit = member.pit || defaults.pit;
+        const currentProud = member.proud || defaults.proud;
+        const currentTalent = member.talent || defaults.talent;
+        const currentFunfact = member.funfact || defaults.funfact;
+        const currentInfluence = member.influence || defaults.influence;
+        const currentQuote = member.quote || defaults.quote;
+        const currentAvatar = currentName.substring(0, 2).toUpperCase();
+
+        const hue = Math.floor(Math.random() * 360);
+        const randomAvatarBg = `linear-gradient(135deg, hsl(${hue}, 70%, 45%) 0%, hsl(${(hue + 40) % 360}, 80%, 35%) 100%)`;
+
+        const lockClass = isGalleryUnlocked ? "" : "is-locked";
+
+        const cardHtml = `
+            <div class="profile-card ${lockClass}" style="opacity: 0; transform: scale(0.9); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                <div class="card-status-bar"></div>
+                <div class="card-header">
+                    <div class="card-avatar" style="background: ${randomAvatarBg}">${currentAvatar}</div>
+                    <div class="card-header-info">
+                        <h3>${currentName}</h3>
+                        <p class="card-sub">${currentBackground}</p>
+                    </div>
+                </div>
+                <div class="customs-stamp">APPROVED / CLEARED</div>
+
+                <div class="card-body">
+                    <div class="card-item">
+                        <span class="card-icon"><i class="fa-solid fa-plane-departure"></i></span>
+                        <div class="card-item-content">
+                            <label>最酷異地經歷</label>
+                            <p>${currentExp}</p>
+                        </div>
+                    </div>
+
+                    <div class="card-item">
+                        <span class="card-icon"><i class="fa-solid fa-arrows-spin"></i></span>
+                        <div class="card-item-content">
+                            <label>職涯 Pivot 轉折點</label>
+                            <p>${currentPivot}</p>
+                        </div>
+                    </div>
+
+                    <div class="card-item font-danger">
+                        <span class="card-icon"><i class="fa-solid fa-skull-crossbones"></i></span>
+                        <div class="card-item-content">
+                            <label>踩過最大的坑</label>
+                            <p>${currentPit}</p>
+                        </div>
+                    </div>
+
+                    <div class="card-item">
+                        <span class="card-icon"><i class="fa-solid fa-trophy"></i></span>
+                        <div class="card-item-content">
+                            <label>最引以為傲的事</label>
+                            <p>${currentProud}</p>
+                        </div>
+                    </div>
+
+                    <div class="card-grid-2">
+                        <div class="card-item">
+                            <span class="card-icon"><i class="fa-solid fa-masks-theater"></i></span>
+                            <div class="card-item-content">
+                                <label>隱藏才藝</label>
+                                <p>${currentTalent}</p>
+                            </div>
+                        </div>
+                        <div class="card-item">
+                            <span class="card-icon"><i class="fa-solid fa-dragon"></i></span>
+                            <div class="card-item-content">
+                                <label>Fun Fact</label>
+                                <p>${currentFunfact}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-item">
+                        <span class="card-icon"><i class="fa-solid fa-book"></i></span>
+                        <div class="card-item-content">
+                            <label>推薦書/電影</label>
+                            <p>${currentInfluence}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="quote-container">
+                        <i class="fa-solid fa-quote-left quote-icon-left"></i>
+                        <p id="card-quote">${currentQuote}</p>
+                        <i class="fa-solid fa-quote-right quote-icon-right"></i>
+                    </div>
+                </div>
+
+                <div class="card-lock-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <div class="lock-text">海關查驗中：請先完成並送出您的機票表單以解鎖隊員檔案</div>
+                </div>
+            </div>
+        `;
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = cardHtml.trim();
+        const newCard = tempDiv.firstChild;
+
+        if (galleryEmpty) {
+            galleryEmpty.classList.add('hidden');
+        }
+        if (galleryGrid) {
+            galleryGrid.classList.remove('hidden');
+            galleryGrid.insertBefore(newCard, galleryGrid.firstChild);
+            setTimeout(() => {
+                newCard.style.opacity = '1';
+                newCard.style.transform = 'scale(1)';
+            }, 50);
+        }
+    }
+
+    // 將成員加入至 FIDS 乘客名單表格
+    function addMemberToFids(member) {
+        const fidsTbody = document.getElementById('fids-tbody');
+        const userFidsRow = document.getElementById('user-fids-row');
+        if (!fidsTbody) return;
+
+        const seats = ['A', 'B', 'C', 'D', 'E', 'F'];
+        const randomRowNum = Math.floor(Math.random() * 20) + 1;
+        const randomSeatChar = seats[Math.floor(Math.random() * seats.length)];
+        const seat = member.seat || `${randomRowNum}${randomSeatChar}`;
+
+        const name = (member.name || 'GUEST').toUpperCase();
+        const dest = (member.futureTravel || 'FUTURE & GROWTH').toUpperCase();
+
+        const tr = document.createElement('tr');
+        tr.className = 'fids-row dynamic-row';
+        tr.innerHTML = `
+            <td class="passenger-name-cell">${name}</td>
+            <td class="seat-cell">${seat}</td>
+            <td class="gate-cell">小樹屋</td>
+            <td class="dest-cell">${dest}</td>
+            <td><span class="fids-status-badge status-boarded">BOARDED</span></td>
+        `;
+
+        if (userFidsRow) {
+            fidsTbody.insertBefore(tr, userFidsRow);
+        } else {
+            fidsTbody.appendChild(tr);
+        }
+    }
+
+    // 載入 Google Sheets 資料
+    async function loadGoogleSheetData() {
+        if (!GOOGLE_SHEET_SCRIPT_URL) return;
+        try {
+            const response = await fetch(GOOGLE_SHEET_SCRIPT_URL);
+            const result = await response.json();
+            if (result.result === 'success' && result.data) {
+                result.data.forEach(member => {
+                    renderMemberToGallery(member);
+                    addMemberToFids(member);
+                });
+            }
+        } catch (e) {
+            console.error("無法載入 Google Sheet 資料:", e);
+        }
+    }
+
+    // 啟動載入 Mock 卡片與 Google Sheets 資料
     initMockCards();
+    loadGoogleSheetData();
 
     // 渲染自填卡片到藝廊
     function renderToGallery() {
@@ -781,19 +944,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateClock, 1000);
     }
 
-    // 2. 飛機動畫定位 (頂部 Status Bar 與 左側 Journey Timeline)
+    // 2. 飛機動畫定位 (左側 Journey Timeline)
     function updatePlaneAnimations(stepNum) {
-        // 頂部飛機動畫
-        const topPlane = document.getElementById('step-plane-anim');
-        const topProgress = document.querySelector('.steps-progress');
-        const activeStep = document.getElementById(`progress-step-${stepNum > 3 ? 3 : stepNum}`);
-        if (topPlane && topProgress && activeStep) {
-            const containerRect = topProgress.getBoundingClientRect();
-            const activeRect = activeStep.getBoundingClientRect();
-            const leftOffset = activeRect.left - containerRect.left + (activeRect.width / 2) - (topPlane.offsetWidth / 2);
-            topPlane.style.transform = `translateX(${leftOffset}px)`;
-        }
-
         // 左側飛機動畫與高亮
         const leftPlane = document.getElementById('timeline-plane-indicator');
         const timelineWrapper = document.querySelector('.timeline-steps-wrapper');
@@ -802,9 +954,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i <= 4; i++) {
             const item = document.getElementById(`timeline-step-${i}`);
             if (item) {
-                if (i === stepNum) {
+                if (i <= stepNum) {
+                    item.classList.add('completed');
                     item.classList.add('active');
                 } else {
+                    item.classList.remove('completed');
                     item.classList.remove('active');
                 }
             }
@@ -861,7 +1015,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userFidsStatus) {
             userFidsStatus.textContent = statusText;
-            userFidsStatus.className = `fids-status-badge ${badgeClass}`;
+            userFidsStatus.className = `fids-status-lbl ${statusText === 'DEPARTED' ? 'boarded' : 'blinking'}`;
+            // Also update parent card class
+            const userCard = document.getElementById('user-fids-card');
+            if (userCard) {
+                if (statusText === 'DEPARTED') {
+                    userCard.className = 'fids-passenger-card boarded';
+                } else {
+                    userCard.className = 'fids-passenger-card dynamic-user-card';
+                }
+            }
         }
     }
 
