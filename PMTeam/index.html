@@ -16,7 +16,7 @@
     <meta property="twitter:title" content="XC PM Onboarding">
     <meta property="twitter:description" content="Welcome aboard Flight JX-2026. Step through immigration, unbox past lessons, align future goals, and unlock our team’s collective potential. Claim your boarding pass now.">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2026">
     <!-- 引入 Google 資訊系統風格字體 (DIN-like via Inter / IBM Plex Sans / IBM Plex Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,29 +72,15 @@
         </div>
 
         <div class="hero-section-terminal">
-            <!-- 頂級 FIDS 機場航班離境看板 (Airport Departure Board Style) -->
-            <div class="airport-departure-board">
-                <div class="board-header">
-                    <span class="terminal-text"><i class="fa-solid fa-plane-departure"></i> TAIPEI METROPOLITAN TERMINAL 1 // DEPARTURES</span>
-                    <span class="board-time-display" id="board-live-time">00:00:00</span>
-                </div>
-                <div class="board-body-grid">
-                    <div class="board-col-header">
-                        <span>FLIGHT</span>
-                        <span>DESTINATION</span>
-                        <span>GATE</span>
-                        <span>DEPARTURE</span>
-                        <span>STATUS</span>
-                    </div>
-                    <div class="board-col-data">
-                        <span class="board-flap">JX-2026</span>
-                        <span class="board-flap">FUTURE & GROWTH</span>
-                        <span class="board-flap">小樹屋</span>
-                        <span class="board-flap">19:00</span>
-                        <span class="board-flap blink-green">BOARDING</span>
-                    </div>
-                </div>
+            <!-- 機場奢華貴賓室歡迎標籤 -->
+            <div class="terminal-status-bar">
+                <span class="status-dot"></span>
+                <span class="status-text">XC PM LOUNGE // FLIGHT JX-2026</span>
+                <span class="status-tag">BOARDING</span>
             </div>
+
+            <!-- 主標題與副標題 -->
+            <h1 class="hero-title">從過去到現在，至未來的我們</h1>
 
             <!-- 導覽敘述內文 -->
             <p class="hero-description">
@@ -109,21 +95,19 @@
             <!-- 登機票左半部：主機票 -->
             <div class="ticket-left">
                 <div class="ticket-header">
-                    <span class="airline"><i class="fa-solid fa-star"></i> STARLUX ╳ XC PM</span>
+                    <span class="airline"><i class="fa-solid fa-star"></i> XC PM BOARDING PASS</span>
                     <span class="flight-no">FLIGHT JX-2026</span>
                 </div>
                 <div class="ticket-body">
                     <div class="airport-codes">
                         <div class="code-block">
                             <span class="code">PAST</span>
-                            <span class="airport-name">TPE TAIPEI</span>
                         </div>
                         <div class="plane-animation">
                             <i class="fa-solid fa-plane plane-icon"></i>
                         </div>
                         <div class="code-block text-right">
                             <span class="code">FUTR</span>
-                            <span class="airport-name">NEW GROWTH</span>
                         </div>
                     </div>
                     <div class="ticket-details terminal-checkin-style">
@@ -136,7 +120,7 @@
                             </div>
                             <div class="detail-group">
                                 <label>PASSPORT NO / 護照號碼</label>
-                                <input type="text" id="boarding-passport" value="TWN-2026PM" placeholder="TWN-2026PM" autocomplete="off" disabled>
+                                <span class="detail-value readonly-passport">TWN-2026PM</span>
                             </div>
                         </div>
                         <div class="detail-row">
@@ -149,7 +133,7 @@
                                 <span class="detail-value highlight-amber">小樹屋</span>
                             </div>
                         </div>
-                        <div class="detail-row-four">
+                        <div class="detail-row">
                             <div class="detail-group">
                                 <label>SEAT / 座位</label>
                                 <span class="detail-value highlight-gold">12D</span>
@@ -158,6 +142,8 @@
                                 <label>BOARDING TIME</label>
                                 <span class="detail-value">18:30</span>
                             </div>
+                        </div>
+                        <div class="detail-row">
                             <div class="detail-group">
                                 <label>GROUP</label>
                                 <span class="detail-value">A</span>
@@ -166,51 +152,6 @@
                                 <label>CLASS / 艙等</label>
                                 <span class="detail-value highlight-cyan">BUSINESS</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="ticket-barcode-container">
-                        <div class="ticket-barcode">
-                            <svg class="barcode-svg" viewBox="0 0 400 30">
-                                <rect x="5" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="15" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="25" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="35" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="45" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="55" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="65" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="75" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="85" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="95" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="110" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="120" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="130" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="140" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="155" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="165" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="175" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="185" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="195" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="205" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="215" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="225" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="235" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="245" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="255" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="265" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="275" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="285" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="295" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="305" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="315" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="325" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="335" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="345" y="0" width="4" height="30" fill="#111518"/>
-                                <rect x="355" y="0" width="1" height="30" fill="#111518"/>
-                                <rect x="365" y="0" width="3" height="30" fill="#111518"/>
-                                <rect x="375" y="0" width="2" height="30" fill="#111518"/>
-                                <rect x="385" y="0" width="4" height="30" fill="#111518"/>
-                            </svg>
-                            <span class="barcode-number">JX2026-BOARDINGPASS-SPECIMEN</span>
                         </div>
                     </div>
                 </div>
@@ -226,7 +167,7 @@
             <!-- 登機票右半部：存根聯 -->
             <div class="ticket-right">
                 <div class="stub-header-details">
-                    <span class="stub-logo">STAR PM</span>
+                    <span class="stub-logo">XC PM</span>
                     <span class="stub-class">BIZ CLASS</span>
                 </div>
                 <div class="stub-body">
@@ -279,48 +220,6 @@
         <button type="button" id="boarding-btn" class="btn btn-boarding">
             <i class="fa-solid fa-plane-departure"></i> GET BOARDING PASS <i class="fa-solid fa-arrow-right"></i>
         </button>
-
-        <!-- Passenger Seat Checklist Grid (7 乘客報到狀態) -->
-        <div class="passenger-checkin-container">
-            <h3 class="checkin-title"><i class="fa-solid fa-users-viewfinder"></i> FLIGHT JX-2026 ACTIVE PASSENGER MANIFEST</h3>
-            <div class="seat-cards-grid">
-                <div class="seat-card boarded" id="seat-1a">
-                    <div class="seat-num">1A</div>
-                    <div class="passenger-name">MOLLY</div>
-                    <div class="seat-status">BOARDED</div>
-                </div>
-                <div class="seat-card boarded" id="seat-1b">
-                    <div class="seat-num">1B</div>
-                    <div class="passenger-name">DAVID</div>
-                    <div class="seat-status">BOARDED</div>
-                </div>
-                <div class="seat-card boarded" id="seat-1c">
-                    <div class="seat-num">1C</div>
-                    <div class="passenger-name">CINDY</div>
-                    <div class="seat-status">BOARDED</div>
-                </div>
-                <div class="seat-card pending user-seat" id="seat-1d">
-                    <div class="seat-num">1D</div>
-                    <div class="passenger-name" id="seat-user-name">GUEST</div>
-                    <div class="seat-status" id="seat-user-status">CHECKING IN</div>
-                </div>
-                <div class="seat-card waiting" id="seat-1e">
-                    <div class="seat-num">1E</div>
-                    <div class="passenger-name">ALEX</div>
-                    <div class="seat-status">STANDBY</div>
-                </div>
-                <div class="seat-card waiting" id="seat-1f">
-                    <div class="seat-num">1F</div>
-                    <div class="passenger-name">REUBN</div>
-                    <div class="seat-status">STANDBY</div>
-                </div>
-                <div class="seat-card waiting" id="seat-1g">
-                    <div class="seat-num">1G</div>
-                    <div class="passenger-name">ALYSSA</div>
-                    <div class="seat-status">STANDBY</div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <main class="container hidden" id="main-content">
@@ -381,8 +280,8 @@
                     <!-- Step 1: Past 行李準備 -->
                     <div id="step-1-container">
                         <div class="section-header">
-                            <h2>Baggage Check-In Counter</h2>
-                            <p class="section-subtitle">UNBOX YOUR PAST LESSONS & ADVENTURES</p>
+                            <h2>翻開你的故事</h2>
+                            <p class="section-subtitle">Past Journey</p>
                         </div>
                         <div class="form-grid">
                         <!-- 1. 暱稱 -->
@@ -456,8 +355,8 @@
                     <!-- Step 2: Future 海關檢查 -->
                     <div id="step-2-container" class="hidden">
                         <div class="section-header">
-                            <h2>Immigration Control</h2>
-                            <p class="section-subtitle">LOCK IN YOUR FUTURE DESTINATIONS & VISION</p>
+                            <h2>抵達未來彼岸</h2>
+                            <p class="section-subtitle">Future Destinations</p>
                         </div>
                         <div class="form-grid">
                         <!-- 11. 硬實力解鎖 -->
@@ -530,8 +429,8 @@
                     <!-- Step 3: Present 登機手續 -->
                     <div id="step-3-container" class="hidden">
                         <div class="section-header">
-                            <h2>Security & Boarding Gate</h2>
-                            <p class="section-subtitle">PREPARE YOUR CURRENT ASSETS & TEAM SUPPORT</p>
+                            <h2>與我們一同前行</h2>
+                            <p class="section-subtitle">Cabin Assets & Support</p>
                         </div>
                         <div class="form-grid">
                         <!-- 1. 早上開機必備儀式 -->
@@ -602,48 +501,6 @@
                 </div>
             </form>
             </section>
-
-            <!-- 右側：Flight Info Panel (航班資訊看板 - 高級機場塔台風格) -->
-            <aside class="flight-info-panel-sidebar">
-                <div class="panel-header">
-                    <span class="panel-title"><i class="fa-solid fa-tower-observation"></i> COCKPIT FLIGHT PANEL</span>
-                    <span class="panel-subtitle">REALTIME TELEMETRY</span>
-                </div>
-                <div class="panel-body">
-                    <div class="panel-row">
-                        <span class="panel-lbl">FLIGHT NO.</span>
-                        <span class="panel-val highlight-gold">JX-2026</span>
-                    </div>
-                    <div class="panel-row">
-                        <span class="panel-lbl">GATE</span>
-                        <span class="panel-val">小樹屋</span>
-                    </div>
-                    <div class="panel-row">
-                        <span class="panel-lbl">BOARDING TIME</span>
-                        <span class="panel-val">18:30 // ON TIME</span>
-                    </div>
-                    <div class="panel-row">
-                        <span class="panel-lbl">AIRPORT TIME</span>
-                        <span class="panel-val text-cyan" id="sidebar-clock">00:00:00</span>
-                    </div>
-                    <div class="panel-row">
-                        <span class="panel-lbl">METAR WEATHER</span>
-                        <span class="panel-val text-green"><i class="fa-solid fa-cloud-sun"></i> TPE // CAVOK 22°C</span>
-                    </div>
-                    <div class="panel-row">
-                        <span class="panel-lbl">DESTINATION</span>
-                        <span class="panel-val highlight-cyan">FUTURE & GROWTH</span>
-                    </div>
-                    <div class="panel-row">
-                        <span class="panel-lbl">MANIFEST STATUS</span>
-                        <span class="panel-val badge-fids-status" id="sidebar-status">BOARDING</span>
-                    </div>
-                </div>
-                <div class="panel-footer-radar">
-                    <div class="radar-ping"></div>
-                    <span class="radar-text">SCANNING AIRSPACE...</span>
-                </div>
-            </aside>
         </div>
 
         <!-- 新增：Passenger Check-in 區塊 (航班資訊板風格) -->
@@ -712,6 +569,191 @@
             </div>
         </section>
 
+        <!-- 新增：Final Passport Ending Screen -->
+        <div id="passport-ending-screen" class="hidden">
+            <div class="passport-ending-container">
+                
+                <!-- Passport Container with Animations -->
+                <div class="passport-view-box">
+                    
+                    <!-- This is the element we screenshot -->
+                    <div class="passport-screenshot-wrapper" id="passport-to-export">
+                        
+                        <div class="passport-book state-open" id="my-passport-book">
+                            
+                            <!-- Cover Page (Front) -->
+                            <div class="passport-cover" id="passport-cover-element">
+                                <div class="passport-cover-inner">
+                                    <div class="passport-crest">
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <h1 class="passport-title">PM FLIGHT PASSPORT</h1>
+                                    <div class="passport-divider-line"></div>
+                                    <p class="passport-subtitle">Journey Complete</p>
+                                    <p class="passport-flight">Flight JX-2026</p>
+                                    <div class="passport-destination">
+                                        <span class="dest-label">DESTINATION</span>
+                                        <span class="dest-val">Future & Growth</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Left Page (Inside Page) -->
+                            <div class="passport-page page-left hidden" id="passport-page-left-element">
+                                <div class="watermark-stamp stamp-watermark-1">TAIPEI // JX-2026</div>
+                                <div class="watermark-stamp stamp-watermark-2">PASSPORT CLEARED</div>
+                                <div class="passport-page-header">
+                                    <span class="passport-header-title">PASSPORT / 護照</span>
+                                </div>
+                                <div class="passport-page-body">
+                                    <div class="passport-identity">
+                                        <div class="passport-photo">
+                                            <div class="photo-placeholder">
+                                                <i class="fa-solid fa-user-astronaut"></i>
+                                                <span class="photo-text">PASSENGER</span>
+                                            </div>
+                                        </div>
+                                        <div class="passport-details-column">
+                                            <div class="passport-field">
+                                                <span class="field-lbl">NAME / 姓名</span>
+                                                <span class="field-val" id="pass-name">ALEX</span>
+                                            </div>
+                                            <div class="passport-field-row">
+                                                <div class="passport-field">
+                                                    <span class="field-lbl">SEAT / 座位</span>
+                                                    <span class="field-val" id="pass-seat">12D</span>
+                                                </div>
+                                                <div class="passport-field">
+                                                    <span class="field-lbl">FLIGHT / 航班</span>
+                                                    <span class="field-val">JX-2026</span>
+                                                </div>
+                                            </div>
+                                            <div class="passport-field-row">
+                                                <div class="passport-field">
+                                                    <span class="field-lbl">GATE / 登機門</span>
+                                                    <span class="field-val" id="pass-gate">小樹屋</span>
+                                                </div>
+                                                <div class="passport-field">
+                                                    <span class="field-lbl">DATE / 日期</span>
+                                                    <span class="field-val" id="pass-date">21 JUL 2026</span>
+                                                </div>
+                                            </div>
+                                            <div class="passport-field">
+                                                <span class="field-lbl">PASSPORT ID</span>
+                                                <span class="field-val" id="pass-id">TWN-2026PM-8291</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="passport-footer-row">
+                                        <div class="passport-qrcode">
+                                            <svg viewBox="0 0 100 100">
+                                                <rect x="0" y="0" width="25" height="25" fill="#3a2e1d"/>
+                                                <rect x="5" y="5" width="15" height="15" fill="#fdfcf9"/>
+                                                <rect x="8" y="8" width="9" height="9" fill="#3a2e1d"/>
+                                                <rect x="75" y="0" width="25" height="25" fill="#3a2e1d"/>
+                                                <rect x="80" y="5" width="15" height="15" fill="#fdfcf9"/>
+                                                <rect x="83" y="8" width="9" height="9" fill="#3a2e1d"/>
+                                                <rect x="0" y="75" width="25" height="25" fill="#3a2e1d"/>
+                                                <rect x="5" y="80" width="15" height="15" fill="#fdfcf9"/>
+                                                <rect x="8" y="83" width="9" height="9" fill="#3a2e1d"/>
+                                                <rect x="40" y="10" width="10" height="10" fill="#3a2e1d"/>
+                                                <rect x="55" y="15" width="10" height="10" fill="#3a2e1d"/>
+                                                <rect x="35" y="30" width="20" height="10" fill="#3a2e1d"/>
+                                                <rect x="65" y="40" width="15" height="15" fill="#3a2e1d"/>
+                                                <rect x="15" y="45" width="15" height="15" fill="#3a2e1d"/>
+                                                <rect x="45" y="60" width="15" height="15" fill="#3a2e1d"/>
+                                                <rect x="75" y="60" width="15" height="15" fill="#3a2e1d"/>
+                                                <rect x="60" y="75" width="25" height="20" fill="#3a2e1d"/>
+                                            </svg>
+                                        </div>
+                                        <div class="passport-stamps-area">
+                                            <div class="ink-stamp stamp-past" id="stamp-past">
+                                                <span class="stamp-check">✓</span>
+                                                <span class="stamp-lbl">PAST</span>
+                                            </div>
+                                            <div class="ink-stamp stamp-future" id="stamp-future">
+                                                <span class="stamp-check">✓</span>
+                                                <span class="stamp-lbl">FUTURE</span>
+                                            </div>
+                                            <div class="ink-stamp stamp-present" id="stamp-present">
+                                                <span class="stamp-check">✓</span>
+                                                <span class="stamp-lbl">PRESENT</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Page (Inside Page) -->
+                            <div class="passport-page page-right hidden" id="passport-page-right-element">
+                                <div class="watermark-stamp stamp-watermark-1">DEPARTED // JX-2026</div>
+                                <div class="watermark-stamp stamp-watermark-2">BIZ CLASS</div>
+                                <div class="passport-page-header text-right">
+                                    <span class="passport-header-title">JOURNEY SUMMARY / 旅程摘要</span>
+                                </div>
+                                <div class="passport-page-body">
+                                    <div class="summary-section">
+                                        <h3 class="summary-sec-title">🧳 PAST</h3>
+                                        <ul class="summary-list">
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">我的 Pivot Point:</strong> <span class="summary-text" id="sum-pivot">--</span></li>
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">我最驕傲的一件事:</strong> <span class="summary-text" id="sum-proud">--</span></li>
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">Hidden Talent:</strong> <span class="summary-text" id="sum-talent">--</span></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="summary-section">
+                                        <h3 class="summary-sec-title">✈ FUTURE</h3>
+                                        <ul class="summary-list">
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">My Northern Star:</strong> <span class="summary-text" id="sum-future-star">--</span></li>
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">Work Goal:</strong> <span class="summary-text" id="sum-future-proj">--</span></li>
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">Life Goal:</strong> <span class="summary-text" id="sum-future-life">--</span></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="summary-section">
+                                        <h3 class="summary-sec-title">🤝 PRESENT</h3>
+                                        <ul class="summary-list">
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">我希望帶給團隊的價值:</strong> <span class="summary-text" id="sum-present-val">--</span></li>
+                                            <li><span class="bullet">•</span> <strong class="summary-lbl">我需要大家的 Support:</strong> <span class="summary-text" id="sum-present-support">--</span></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="passport-elegant-quote">
+                                        "Every Journey Begins With A Story."
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Buttons (Hidden initially) -->
+                <div class="passport-actions-panel opacity-0" id="passport-actions-panel">
+                    <button type="button" class="btn btn-primary" id="btn-copy-passport">
+                        <i class="fa-solid fa-copy"></i> Copy as Image
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="btn-download-passport">
+                        <i class="fa-solid fa-download"></i> Download PNG
+                    </button>
+                </div>
+
+                <!-- Team Building Footer Section (Hidden initially) -->
+                <div class="team-flight-completed-section opacity-0" id="team-flight-completed-section">
+                    <div class="completed-badge">
+                        <i class="fa-solid fa-plane-circle-check"></i>
+                        <span>FLIGHT COMPLETED</span>
+                    </div>
+                    <h2 class="passenger-boarded-count">7 / 7 Passengers Boarded</h2>
+                    <p class="thanks-message">Thanks for flying together.</p>
+                    <button type="button" class="btn btn-view-passengers" id="btn-view-all-passports">
+                        <i class="fa-solid fa-users"></i> 查看所有旅客護照
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+
         <!-- 新增：PM 團隊畫像藝廊區塊 -->
         <section class="gallery-section">
             <div class="gallery-header">
@@ -747,7 +789,19 @@
         </div>
     </div>
 
+    <!-- 同事護照彈出視窗 (Colleague Passport Modal) -->
+    <div class="passport-modal hidden" id="colleague-passport-modal">
+        <div class="passport-modal-overlay" id="passport-modal-overlay-element"></div>
+        <div class="passport-modal-content">
+            <button class="passport-modal-close" id="btn-close-modal">&times;</button>
+            <div class="passport-book state-open" id="modal-passport-book">
+                <!-- 這裡會動態填入同事的護照左右頁資訊 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="starfield.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=2026"></script>
 </body>
 </html>

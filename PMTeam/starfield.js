@@ -242,39 +242,8 @@
         // 4. Draw Parked Airplane Silhouette
         drawAirplaneSilhouette(width * 0.18, height * 0.65, width > 768 ? 1.15 : 0.7);
 
-        // 5. Draw Floor-to-ceiling Glass Window Frames (落地窗)
+        // 5. Draw Floor-to-ceiling Glass Window Frames (落地窗) - 已移除網格線
         ctx.save();
-        ctx.strokeStyle = 'rgba(188, 164, 106, 0.08)'; // Golden window frame, very subtle
-        ctx.lineWidth = 3;
-        const spacing = width > 768 ? 320 : 160;
-        const offset = (width % spacing) / 2;
-        for (let x = offset; x < width; x += spacing) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-
-            // Structural detail lines
-            ctx.strokeStyle = 'rgba(188, 164, 106, 0.03)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(x - 5, 0);
-            ctx.lineTo(x - 5, height);
-            ctx.moveTo(x + 5, 0);
-            ctx.lineTo(x + 5, height);
-            ctx.stroke();
-            ctx.strokeStyle = 'rgba(188, 164, 106, 0.08)';
-            ctx.lineWidth = 3;
-        }
-        // Horizontal mullion dividers
-        ctx.strokeStyle = 'rgba(188, 164, 106, 0.08)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(0, height * 0.22);
-        ctx.lineTo(width, height * 0.22);
-        ctx.moveTo(0, height * 0.65);
-        ctx.lineTo(width, height * 0.65);
-        ctx.stroke();
         ctx.restore();
     }
 
