@@ -3230,3 +3230,345 @@ body {
     border-color: var(--primary-color) !important;
     transform: translateY(-2px) !important;
 }
+
+/* ==========================================================================
+   Redesigned Visa Stamps & Ink Stamps (Premium Authentic Passport Aesthetics)
+   ========================================================================== */
+.visa-stamp {
+    position: absolute;
+    border: 2px solid currentColor;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    font-weight: 700;
+    pointer-events: none;
+    opacity: 0.15;
+    transition: opacity 0.5s ease;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+/* Overlapping Circular Arrival Stamp */
+.arrival-stamp {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border-style: double;
+    border-width: 3px;
+    color: #27ae60;
+    top: 55px;
+    right: 25px;
+    transform: rotate(15deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+}
+
+.arrival-stamp .stamp-meta {
+    font-size: 6px;
+    letter-spacing: 0.5px;
+}
+
+.arrival-stamp .stamp-date {
+    font-size: 8px;
+    font-weight: 900;
+}
+
+.arrival-stamp .stamp-loc {
+    font-size: 6px;
+}
+
+/* Overlapping Rectangular Departure Stamp */
+.departure-stamp {
+    border-width: 1.5px;
+    border-style: dashed;
+    border-radius: 4px;
+    color: #c0392b;
+    bottom: 55px;
+    left: 20px;
+    transform: rotate(-10deg);
+    padding: 3px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+}
+
+.departure-stamp .stamp-meta {
+    font-size: 5px;
+    letter-spacing: 1px;
+}
+
+.departure-stamp .stamp-date {
+    font-size: 8px;
+    font-weight: 800;
+}
+
+.departure-stamp .stamp-loc {
+    font-size: 6px;
+}
+
+/* Flight Details Stamp on the Right Page */
+.flight-details-stamp {
+    position: absolute;
+    top: 55px;
+    left: 25px;
+    border: 1px solid #d4af37;
+    border-radius: 3px;
+    padding: 4px 8px;
+    color: #d4af37;
+    transform: rotate(6deg);
+    opacity: 0.18;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 6.5px;
+    line-height: 1.2;
+}
+
+.flight-details-stamp .stamp-col {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.flight-details-stamp .stamp-col span {
+    font-weight: 900;
+}
+
+.text-green {
+    color: #27ae60 !important;
+}
+
+/* ==========================================================================
+   1080x1350 Share Card Layout (Hidden on Screen, Perfect for Export)
+   ========================================================================== */
+.share-card-export-wrapper {
+    position: absolute !important;
+    top: -9999px !important; /* Move far off-screen so it does not render on UI */
+    left: -9999px !important;
+    width: 1080px !important; /* Exact requested width */
+    height: 1350px !important; /* Exact requested height */
+    background: #080a0c !important;
+    background-image: radial-gradient(circle at 50% 50%, #15191d 0%, #080a0c 100%) !important;
+    box-sizing: border-box !important;
+    padding: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.share-card-inner {
+    width: 100% !important;
+    height: 100% !important;
+    border: 2px dashed rgba(188, 164, 106, 0.4) !important;
+    border-radius: 24px !important;
+    padding: 60px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background: #111417 !important;
+    position: relative !important;
+}
+
+.share-card-inner::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 22px !important;
+    border: 1px solid rgba(188, 164, 106, 0.15) !important;
+    pointer-events: none !important;
+}
+
+.share-card-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.share-card-header .logo-area {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.share-card-header .logo-area .gold-star {
+    color: var(--primary-color) !important;
+    font-size: 24px !important;
+}
+
+.share-card-header .logo-area .airline-text {
+    font-family: var(--font-display) !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    color: #ffffff !important;
+}
+
+.share-card-header .flight-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 16px !important;
+    color: var(--primary-color) !important;
+    border: 1px solid rgba(188, 164, 106, 0.3) !important;
+    padding: 6px 14px !important;
+    border-radius: 6px !important;
+    letter-spacing: 1px !important;
+    font-weight: 700 !important;
+}
+
+.share-card-badge-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 16px !important;
+}
+
+.badge-icon-box {
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 50% !important;
+    border: 3px solid var(--primary-color) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(188, 164, 106, 0.08) !important;
+    box-shadow: 0 0 25px rgba(188, 164, 106, 0.25) !important;
+}
+
+.badge-icon-box i {
+    font-size: 42px !important;
+    color: var(--primary-color) !important;
+}
+
+.share-passenger-name {
+    font-family: var(--font-display) !important;
+    font-size: 48px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+}
+
+.share-passenger-badge {
+    font-family: var(--font-display) !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #111518 !important;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #8b7443 100%) !important;
+    padding: 6px 20px !important;
+    border-radius: 30px !important;
+    letter-spacing: 2px !important;
+    box-shadow: 0 4px 15px rgba(188, 164, 106, 0.2) !important;
+}
+
+.share-card-details {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 30px !important;
+    border-radius: 16px !important;
+}
+
+.share-detail-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    padding-bottom: 12px !important;
+}
+
+.share-detail-row:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+}
+
+.share-lbl {
+    font-family: var(--font-display) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: var(--primary-color) !important;
+    letter-spacing: 2.5px !important;
+}
+
+.share-val {
+    font-family: var(--font-body) !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    max-width: 60% !important;
+    text-align: right !important;
+    word-break: break-all !important;
+}
+
+.share-card-ai-summary {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0 20px !important;
+}
+
+.summary-quote {
+    font-family: 'Georgia', serif !important;
+    font-style: italic !important;
+    font-size: 20px !important;
+    line-height: 1.6 !important;
+    color: #dfceaa !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.summary-quote .quote-icon {
+    font-size: 16px !important;
+    color: var(--primary-color) !important;
+    opacity: 0.6 !important;
+}
+
+.share-card-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding-top: 24px !important;
+}
+
+.share-card-footer .footer-left {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.share-card-footer .footer-date {
+    font-family: var(--font-mono) !important;
+    font-size: 14px !important;
+    color: var(--text-muted) !important;
+    margin: 0 !important;
+}
+
+.share-card-footer .footer-passport-no {
+    font-family: var(--font-mono) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: var(--primary-color) !important;
+    margin: 0 !important;
+}
+
+.share-card-footer .footer-right-qrcode {
+    width: 60px !important;
+    height: 60px !important;
+    background: #ffffff !important;
+    padding: 4px !important;
+    border-radius: 4px !important;
+}
+
+.share-card-footer .footer-right-qrcode svg {
+    width: 100% !important;
+    height: 100% !important;
+}
+
