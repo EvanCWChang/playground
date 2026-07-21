@@ -639,42 +639,43 @@ nav a.active, nav a:hover {
     display: none !important;
 }
 
-/* 頂奢星空左側垂直極簡進度導航列 */
+/* 頂奢星空置頂水平極簡進度導航列 */
 .steps-progress {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 20px !important;
-    padding: 0.5rem 0 !important; /* 移除容器底色，保持純淨留白與呼吸感 */
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin-bottom: 0 !important;
-    width: 240px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 0.75rem 1.5rem !important;
+    background: rgba(188, 164, 106, 0.05) !important; /* 極其柔和金色光澤底色 */
+    border: 1px solid rgba(188, 164, 106, 0.15) !important;
+    border-radius: 30px !important; /* 膠囊高質感外框 */
+    box-shadow: var(--shadow-sm) !important;
+    margin: 0 auto 2.5rem auto !important; /* 置中，與表單留白 */
+    width: fit-content !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
 }
 
 .step {
     display: flex !important;
     align-items: center !important;
-    gap: 0.75rem !important;
-    padding: 10px 14px !important;
-    border-radius: 8px !important;
-    color: rgba(255, 255, 255, 0.4) !important; /* 預設未完成灰色文字 */
+    gap: 0.6rem !important;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    color: rgba(255, 255, 255, 0.45) !important; /* 預設未完成灰色文字 */
     transition: var(--transition-base) !important;
 }
 
 .step:hover {
-    background-color: rgba(188, 164, 106, 0.05) !important;
+    background-color: rgba(188, 164, 106, 0.08) !important;
     color: var(--primary-color) !important;
 }
 
 .step.active {
-    background-color: rgba(188, 164, 106, 0.08) !important;
+    background-color: rgba(188, 164, 106, 0.12) !important;
     color: var(--primary-color) !important; /* 金色文字 */
     font-weight: 700 !important;
-    border-left: 2px solid var(--primary-color) !important;
-    padding-left: 12px !important;
 }
 
 .step.active .step-number {
@@ -688,7 +689,7 @@ nav a.active, nav a:hover {
     height: 22px !important;
     border-radius: 50% !important;
     background-color: #0c0f12 !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important; /* 預設灰色圓圈 */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* 預設灰色圓圈 */
     color: inherit !important;
     display: flex !important;
     align-items: center !important;
@@ -702,20 +703,21 @@ nav a.active, nav a:hover {
 }
 
 .step-line {
-    width: 1px !important; /* 極細金屬連結線 */
-    height: 18px !important;
-    background-color: rgba(255, 255, 255, 0.1) !important; /* 預設細線 */
-    margin: -12px 0 -12px 24px !important;
+    width: 60px !important; /* 水平連結線 */
+    height: 1px !important;
+    background-color: rgba(188, 164, 106, 0.2) !important; /* 預設細線 */
+    margin: 0 10px !important;
 }
 
 /* ==========================================================================
    主工作區 Grid (Workspace Grid)
    ========================================================================== */
 .workspace-grid {
-    display: grid !important;
-    grid-template-columns: 240px 1fr !important; /* 左側導航，右側主頁面 */
-    gap: 2rem !important;
-    align-items: start !important;
+    display: flex !important;
+    flex-direction: column !important; /* 上下堆疊，進度條在上方 */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0 !important;
     max-width: 1200px !important;
     margin: 0 auto !important;
     width: 100% !important;

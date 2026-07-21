@@ -122,30 +122,30 @@
     </div>
 
     <main class="container hidden" id="main-content">
-        <div class="workspace-grid">
-            <!-- 左側：階段進度條 (極簡高雅航程時間軸) -->
-            <aside class="steps-progress">
-                <div class="step active" id="progress-step-1" style="cursor: pointer;">
-                    <span class="step-number">1</span>
-                    <span class="step-label">Past Journey</span>
-                </div>
-                <div class="step-line" id="progress-line-1"></div>
-                <div class="step" id="progress-step-2" style="cursor: pointer;">
-                    <span class="step-number">2</span>
-                    <span class="step-label">Future Journey</span>
-                </div>
-                <div class="step-line" id="progress-line-2"></div>
-                <div class="step" id="progress-step-3" style="cursor: pointer;">
-                    <span class="step-number">3</span>
-                    <span class="step-label">Present Journey</span>
-                </div>
-                <div class="step-line" id="progress-line-3" class="hidden"></div>
-                <div class="step hidden" id="progress-step-4" style="cursor: pointer;">
-                    <span class="step-number">4</span>
-                    <span class="step-label">My Passport</span>
-                </div>
-            </aside>
+        <!-- 階段進度條 (高質感、簡潔高雅的水平進度導航列) -->
+        <div class="steps-progress">
+            <div class="step active" id="progress-step-1" style="cursor: pointer;">
+                <span class="step-number">1</span>
+                <span class="step-label">Past Journey</span>
+            </div>
+            <div class="step-line" id="progress-line-1"></div>
+            <div class="step" id="progress-step-2" style="cursor: pointer;">
+                <span class="step-number">2</span>
+                <span class="step-label">Future Journey</span>
+            </div>
+            <div class="step-line" id="progress-line-2"></div>
+            <div class="step" id="progress-step-3" style="cursor: pointer;">
+                <span class="step-number">3</span>
+                <span class="step-label">Present Journey</span>
+            </div>
+            <div class="step-line" id="progress-line-3" class="hidden"></div>
+            <div class="step hidden" id="progress-step-4" style="cursor: pointer;">
+                <span class="step-number">4</span>
+                <span class="step-label">My Passport</span>
+            </div>
+        </div>
 
+        <div class="workspace-grid">
             <!-- 中間：輸入表單 -->
             <section class="form-section">
                 <form id="past-form" onsubmit="return false;">
