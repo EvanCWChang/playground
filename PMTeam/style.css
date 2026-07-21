@@ -2880,14 +2880,12 @@ body {
     background: none !important;
 }
 
-/* 4. Main Cabin Layout Redesign (2-Column Workspace) */
+/* 4. Main Cabin Layout Redesign (Centered Full Width Workspace) */
 .workspace-grid {
-    display: grid !important;
-    grid-template-columns: 220px 1fr !important; /* Elegant 2-column layout */
-    gap: 2.5rem !important; /* Generous breathing room */
-    align-items: start !important;
-    max-width: 1280px !important;
+    display: block !important; /* Stacked layout for centered wide look */
+    max-width: 1000px !important; /* Center the form beautifully with high readability */
     margin: 0 auto !important;
+    width: 100% !important;
 }
 
 @media (max-width: 1024px) {
