@@ -836,6 +836,10 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('click', (e) => {
         e.preventDefault();
 
+        // 立即生成並顯示使用者的卡片在藝廊中，不再遮住
+        renderToGallery();
+        unlockGallery();
+
         // 先切到 Step 2，讓使用者完成 Step 2 / Step 3 後再生成卡片
         setTimeout(() => {
             goToStep(2);

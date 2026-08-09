@@ -1715,38 +1715,18 @@ nav a.active, nav a:hover {
    海關查驗鎖定與解鎖機制 (Customs Lock & Unlock Mechanism)
    ========================================================================== */
 
-/* 1. 鎖定狀態卡片內容模糊與半透明 */
+/* 1. 鎖定狀態卡片內容模糊與半透明 - 移除模糊效果，讓內容可見 */
 .profile-card.is-locked .card-body,
 .profile-card.is-locked .card-footer {
-    filter: blur(6px);
-    opacity: 0.5;
+    filter: none; /* 移除藍色模糊 */
+    opacity: 1; /* 保持不透明 */
     pointer-events: none;
-    transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.profile-card:not(.is-locked) .card-body,
-.profile-card:not(.is-locked) .card-footer {
-    filter: blur(0);
-    opacity: 1;
-    transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* 2. 鎖定蓋章提示 Overlay */
+/* 2. 鎖定蓋章提示 Overlay - 移除遮罩 */
 .card-lock-overlay {
-    position: absolute;
-    top: 90px; /* 從 header 以下開始遮罩，確保暱稱與大頭照不被蓋住且清晰可見 */
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(244, 239, 230, 0.9); /* 與卡片背景色相近的半透明遮罩 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    text-align: center;
-    z-index: 10;
-    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    display: none !important; /* 直接隱藏鎖定遮罩 */
 }
 
 .profile-card.is-locked .card-lock-overlay {
