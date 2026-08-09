@@ -816,6 +816,7 @@ nav a.active, nav a:hover {
 }
 
 .form-actions {
+    grid-column: span 2;
     margin-top: 1.5rem;
     border-top: 1px solid rgba(188, 164, 106, 0.15);
     padding-top: 1rem;
@@ -893,9 +894,21 @@ nav a.active, nav a:hover {
     margin-top: 0 !important;
 }
 
-.option-other-wrapper .other-input {
-    flex-grow: 1;
-    margin-top: 0 !important;
+.other-input {
+    border: none !important;
+    border-bottom: 1px solid rgba(139, 116, 67, 0.4) !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 4px 8px !important;
+    font-size: 0.9rem !important;
+    color: #111518 !important;
+    outline: none !important;
+    transition: border-color 0.3s ease !important;
+}
+
+.other-input:focus {
+    border-bottom-color: #8b7443 !important;
+    box-shadow: none !important;
 }
 
 .option-chip:hover {
