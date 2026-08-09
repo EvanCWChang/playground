@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 同步旅客姓名到 Step 1 表單中的第一欄「暱稱」
-            inputs.name.value = nameVal;
+            if (inputs && inputs.name) {
+                inputs.name.value = nameVal;
+            }
             updateCardField('name');
 
             // 1. 隱藏按鈕避免重複點擊
@@ -142,18 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         influence: document.getElementById('input-influence'),
         quote: document.getElementById('input-quote'),
         
-        // Future 10 題
-        futureHard: document.getElementById('input-future-hard'),
-        futureSoft: document.getElementById('input-future-soft'),
-        futureProj: document.getElementById('input-future-proj'),
-        futureLife: document.getElementById('input-future-life'),
-        futureTravel: document.getElementById('input-future-travel'),
-        futureHabit: document.getElementById('input-future-habit'),
-        futureBad: document.getElementById('input-future-bad'),
-        futureStar: document.getElementById('input-future-star'),
-        futureBio: document.getElementById('input-future-bio'),
-        futureGift: document.getElementById('input-future-gift'),
-        
         // Present 10 題
         presentMorning: document.getElementById('input-present-morning'),
         presentComm: document.getElementById('input-present-comm'),
@@ -167,6 +157,112 @@ document.addEventListener('DOMContentLoaded', () => {
         presentMessage: document.getElementById('input-present-message')
     };
 
+    const step2Questions = [
+        { key: 'q1', label: 'Q1. 現況與優勢' },
+        { key: 'q2', label: 'Q2. 痛點與卡點' },
+        { key: 'q3', label: 'Q3. 軟實力' },
+        { key: 'q4', label: 'Q4. 重點專案' },
+        { key: 'q5', label: 'Q5. 壞習慣' },
+        { key: 'q6', label: 'Q6. 新習慣' },
+        { key: 'q7', label: 'Q7. 私下目標' },
+        { key: 'q8', label: 'Q8. 旅遊充電' },
+        { key: 'q9', label: 'Q9. 遠期願景' },
+        { key: 'q10', label: 'Q10. 社群期待' }
+    ];
+
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/\"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function collectStep2Answers() {
+        return step2Questions.reduce((acc, question) => {
+            const group = document.querySelector(`.multi-choice-group[data-question="${question.key}"]`);
+            const selectedChoices = Array.from(group ? group.querySelectorAll('.multi-choice-option.active') : [])
+                .map((button) => button.dataset.label || button.textContent.trim());
+            const otherInput = document.getElementById(`${question.key}-other`);
+            acc[question.key] = {
+                choices: selectedChoices,
+                other: otherInput ? otherInput.value.trim() : ''
+            };
+            return acc;
+        }, {});
+    }
+
+    function formatStep2Answer(answer) {
+        if (!answer) return '';
+        const selected = Array.isArray(answer.choices) ? answer.choices : [];
+        const other = answer.other ? `其他：${answer.other}` : '';
+        return [...selected, other].filter(Boolean).join(' / ');
+    }
+
+    function buildStep2List(step2Answers) {
+        return step2Questions
+            .map((question) => ({
+                label: question.label,
+                value: formatStep2Answer(step2Answers[question.key])
+            }))
+            .filter((item) => item.value);
+    }
+
+    function collectStep3Answers() {
+        return [
+            { label: '☕ 早上開機必備儀式', value: inputs.presentMorning ? inputs.presentMorning.value.trim() : '' },
+            { label: '⚡ 跟你溝通最順暢的小撇步', value: inputs.presentComm ? inputs.presentComm.value.trim() : '' },
+            { label: '🪫 你的地雷 / 能量歸零開關', value: inputs.presentMine ? inputs.presentMine.value.trim() : '' },
+            { label: '🔋 你的充電方式 / 快樂源泉', value: inputs.presentCharge ? inputs.presentCharge.value.trim() : '' },
+            { label: '💡 你可以給團隊的硬核支援', value: inputs.presentSupportHard ? inputs.presentSupportHard.value.trim() : '' },
+            { label: '🍔 你可以給團隊的私房支援', value: inputs.presentSupportSoft ? inputs.presentSupportSoft.value.trim() : '' },
+            { label: '🆘 你現在最需要的「工作應援」', value: inputs.presentNeedWork ? inputs.presentNeedWork.value.trim() : '' },
+            { label: '🏃‍♂️ 你現在最需要的「生活應援」', value: inputs.presentNeedLife ? inputs.presentNeedLife.value.trim() : '' },
+            { label: '❤️ 你最欣賞 PM 團隊的一個優點', value: inputs.presentAdmire ? inputs.presentAdmire.value.trim() : '' },
+            { label: '💌 想給現在的 PM 團隊大家的一句話', value: inputs.presentMessage ? inputs.presentMessage.value.trim() : '' }
+        ].filter((item) => item.value);
+    }
+
+    function buildStep2PanelHtml(step2Answers) {
+        const step2Items = buildStep2List(step2Answers);
+        return step2Items.length
+            ? `<ul class="card-answer-list">${step2Items.map((item) => `<li class="answer-item"><span class="answer-label">${escapeHtml(item.label)}</span><span class="answer-value">${escapeHtml(item.value)}</span></li>`).join('')}</ul>`
+            : '<p class="card-empty-state">尚未填寫 Step 2</p>';
+    }
+
+    function buildStep3PanelHtml(step3Answers) {
+        const step3Items = step3Answers;
+        return step3Items.length
+            ? `<ul class="card-answer-list">${step3Items.map((item) => `<li class="answer-item"><span class="answer-label">${escapeHtml(item.label)}</span><span class="answer-value">${escapeHtml(item.value)}</span></li>`).join('')}</ul>`
+            : '<p class="card-empty-state">尚未填寫 Step 3</p>';
+    }
+
+    function attachCardTabHandlers(cardElement) {
+        const tabs = cardElement ? cardElement.querySelectorAll('.card-tab') : [];
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                const card = tab.closest('.profile-card');
+                if (!card) return;
+                card.querySelectorAll('.card-tab').forEach((item) => item.classList.remove('active'));
+                card.querySelectorAll('.card-tab-panel').forEach((panel) => panel.classList.remove('active'));
+                tab.classList.add('active');
+                const targetPanel = card.querySelector(`.card-tab-panel[data-panel="${tab.dataset.tab}"]`);
+                if (targetPanel) targetPanel.classList.add('active');
+            });
+        });
+    }
+
+    function updateStep2Selections() {
+        const answers = collectStep2Answers();
+        window.currentStep2Answers = answers;
+        return answers;
+    }
+
+    if (inputs.name && boardingNameInput && boardingNameInput.value.trim()) {
+        inputs.name.value = boardingNameInput.value.trim();
+    }
+
     const defaults = {
         name: 'Alex',
         background: '以前是工程師 / 企管系',
@@ -179,6 +275,65 @@ document.addEventListener('DOMContentLoaded', () => {
         influence: '《原子習慣》',
         quote: '沒有完美的決策，只有承擔結果'
     };
+
+    const talentOptions = Array.from(document.querySelectorAll('#talent-options .option-chip'));
+    function syncTalentSelection() {
+        const selectedValues = talentOptions
+            .filter((button) => button.classList.contains('active'))
+            .map((button) => button.dataset.value);
+
+        if (inputs.talent) {
+            inputs.talent.value = selectedValues.join('、');
+        }
+    }
+
+    talentOptions.forEach((button) => {
+        button.addEventListener('click', () => {
+            button.classList.toggle('active');
+            button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
+            syncTalentSelection();
+        });
+    });
+
+    const multiChoiceOptions = Array.from(document.querySelectorAll('.multi-choice-option'));
+    function syncMultiChoiceButtonLabels() {
+        multiChoiceOptions.forEach((button) => {
+            const choicePrefix = button.dataset.choice ? `${button.dataset.choice}. ` : '';
+            const labelText = button.dataset.label || button.textContent.trim();
+            button.textContent = `${choicePrefix}${labelText}`;
+            button.setAttribute('aria-label', `${choicePrefix}${labelText}`);
+        });
+    }
+
+    syncMultiChoiceButtonLabels();
+
+    multiChoiceOptions.forEach((button) => {
+        button.addEventListener('click', () => {
+            const group = button.closest('.multi-choice-group');
+            const questionKey = group ? group.dataset.question : null;
+            const otherInput = questionKey ? document.getElementById(`${questionKey}-other`) : null;
+
+            if (button.dataset.choice === 'E') {
+                button.classList.toggle('active');
+                if (otherInput) {
+                    if (button.classList.contains('active')) {
+                        otherInput.classList.remove('hidden');
+                        otherInput.focus();
+                    } else {
+                        otherInput.value = '';
+                        otherInput.classList.add('hidden');
+                    }
+                }
+            } else {
+                button.classList.toggle('active');
+            }
+
+            button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
+            updateStep2Selections();
+        });
+    });
+
+    updateStep2Selections();
 
     const submitBtn = document.getElementById('submit-btn');
     const galleryEmpty = document.getElementById('gallery-empty');
@@ -293,11 +448,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // AI Badge 判斷引擎 (根據使用者的回答特徵分配角色徽章)
             let badge = "Builder"; // 預設
+            const currentStep2Answers = updateStep2Selections();
             const allAnswersText = (
                 (inputs.exp ? inputs.exp.value : '') + 
                 (inputs.background ? inputs.background.value : '') +
                 (inputs.talent ? inputs.talent.value : '') +
-                (inputs.futureHard ? inputs.futureHard.value : '')
+                (formatStep2Answer(currentStep2Answers.q1) + ' ' + formatStep2Answer(currentStep2Answers.q2) + ' ' + formatStep2Answer(currentStep2Answers.q3))
             ).toLowerCase();
 
             if (allAnswersText.includes('figma') || allAnswersText.includes('設計') || allAnswersText.includes('介面') || allAnswersText.includes('體驗')) {
@@ -362,11 +518,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const sumPresentSupport = document.getElementById('sum-present-support');
 
             if (sumPivot) sumPivot.textContent = shortenText(inputs.pivot.value) || '決定轉行 PM 的那天';
-            if (sumProud) sumProud.textContent = shortenText(inputs.proud.value) || '獨立完成一個新產品';
-            if (sumTalent) sumTalent.textContent = shortenText(inputs.talent.value) || '精通調酒 / 咖啡拉花';
-            if (sumFutureStar) sumFutureStar.textContent = shortenText(inputs.futureStar.value) || '游刃有餘的 Senior PM';
-            if (sumFutureProj) sumFutureProj.textContent = shortenText(inputs.futureProj.value) || '優化結帳流程 / 系統重構';
-            if (sumFutureLife) sumFutureLife.textContent = shortenText(inputs.futureLife.value) || '考取潛水執照 / 跑半馬';
+            if (sumProud) sumProud.textContent = shortenText((inputs.proud && inputs.proud.value.trim()) || '') || '獨立完成一個新產品';
+            if (sumTalent) sumTalent.textContent = shortenText((inputs.talent && inputs.talent.value.trim()) || '') || '精通調酒 / 咖啡拉花';
+
+            const futureStarSummary = [formatStep2Answer(currentStep2Answers.q1), formatStep2Answer(currentStep2Answers.q2)].filter(Boolean).join(' / ');
+            const futureProjSummary = [formatStep2Answer(currentStep2Answers.q4), formatStep2Answer(currentStep2Answers.q10)].filter(Boolean).join(' / ');
+            const futureLifeSummary = [formatStep2Answer(currentStep2Answers.q7), formatStep2Answer(currentStep2Answers.q8)].filter(Boolean).join(' / ');
+            if (sumFutureStar) sumFutureStar.textContent = shortenText(futureStarSummary, 40) || '游刃有餘的 Senior PM';
+            if (sumFutureProj) sumFutureProj.textContent = shortenText(futureProjSummary, 40) || '優化結帳流程 / 系統重構';
+            if (sumFutureLife) sumFutureLife.textContent = shortenText(futureLifeSummary, 40) || '考取潛水執照 / 跑半馬';
             
             const pSupportHard = inputs.presentSupportHard.value.trim();
             const pSupportSoft = inputs.presentSupportSoft.value.trim();
@@ -390,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (shareName) shareName.textContent = nameVal;
             if (shareBadge) shareBadge.textContent = badge.toUpperCase();
-            if (shareDest) shareDest.textContent = (inputs.futureTravel.value.trim() || 'Future & Growth').toUpperCase();
+            if (shareDest) shareDest.textContent = (formatStep2Answer(currentStep2Answers.q8) || 'Future & Growth').toUpperCase();
             if (shareHelp) shareHelp.textContent = pSupportHard || 'Figma / SQL Analysis';
             if (shareNeed) shareNeed.textContent = pNeedWork || 'Technical Architecture';
             if (shareAiSummary) shareAiSummary.textContent = aiSummary;
@@ -460,6 +620,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 閃爍金光
                 const actionsBtn = document.getElementById('btn-copy-passport');
                 if (actionsBtn) actionsBtn.classList.add('btn-gold-pulse');
+
+                // 生成並插入最新的個人畫像卡
+                renderToGallery();
 
                 // 解鎖隊員藝廊
                 unlockGallery();
@@ -673,18 +836,10 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('click', (e) => {
         e.preventDefault();
 
-        // ----------------- 將卡片 Append 渲染進 Gallery 藝廊 -----------------
-        renderToGallery();
-
-        // 觸發解鎖機制
-        setTimeout(() => {
-            unlockGallery();
-        }, 300);
-
-        // 順利跳轉到 Step 2 (Future) 填寫頁面！
+        // 先切到 Step 2，讓使用者完成 Step 2 / Step 3 後再生成卡片
         setTimeout(() => {
             goToStep(2);
-        }, 1200);
+        }, 300);
     });
 
     // ==========================================================================
@@ -703,7 +858,23 @@ document.addEventListener('DOMContentLoaded', () => {
             funfact: "🦖 一天可以喝完 2 大瓶 1000ml 的無糖綠茶",
             influence: "📚 《關鍵少數》",
             quote: "擁抱混亂，這才是 PM 的真實日常",
-            avatarBg: "linear-gradient(135deg, #bca46a 0%, #8b7443 100%)"
+            avatarBg: "linear-gradient(135deg, #bca46a 0%, #8b7443 100%)",
+            step2: {
+                q1: { choices: ['A. 專案推手'], other: '' },
+                q2: { choices: ['C. 溝通與影響力'], other: '' },
+                q3: { choices: ['C. 故事力與簡報說服力'], other: '' },
+                q4: { choices: ['B. AI / 自動化落地專案'], other: '' },
+                q5: { choices: ['A. 太晚說不'], other: '' },
+                q6: { choices: ['B. 知識輸出'], other: '' },
+                q7: { choices: ['B. 技能與興趣'], other: '' },
+                q8: { choices: ['A. 日韓近郊放鬆'], other: '' },
+                q9: { choices: ['A. 垂直升遷'], other: '' },
+                q10: { choices: ['B. 實戰技能'], other: '' }
+            },
+            step3: [
+                { label: '☕ 早上開機必備儀式', value: '一杯拿鐵 + 走 10 分鐘' },
+                { label: '⚡ 跟你溝通最順暢的小撇步', value: '直接說重點，不要來回拉扯' }
+            ]
         },
         {
             name: "David",
@@ -717,7 +888,23 @@ document.addEventListener('DOMContentLoaded', () => {
             funfact: "🦖 其實是不折不扣的香菜狂熱者，連吃皮蛋豆腐都要灑滿香菜",
             influence: "📚 《原子習慣》",
             quote: "不追求完美的產品，只追求每天都在前進的團隊",
-            avatarBg: "linear-gradient(135deg, #e0a96d 0%, #b87d4b 100%)"
+            avatarBg: "linear-gradient(135deg, #e0a96d 0%, #b87d4b 100%)",
+            step2: {
+                q1: { choices: ['B. 產品大腦'], other: '' },
+                q2: { choices: ['A. 技術與數據'], other: '' },
+                q3: { choices: ['A. 向上管理與期待控制'], other: '' },
+                q4: { choices: ['C. 系統重構 / 技術債清理'], other: '' },
+                q5: { choices: ['C. 憑直覺決策'], other: '' },
+                q6: { choices: ['A. 工作自動化'], other: '' },
+                q7: { choices: ['C. 深度閱讀 / 考照'], other: '' },
+                q8: { choices: ['B. 東南亞海島度假'], other: '' },
+                q9: { choices: ['B. 橫向跳槽'], other: '' },
+                q10: { choices: ['C. 職涯解答'], other: '' }
+            },
+            step3: [
+                { label: '☕ 早上開機必備儀式', value: '先看 Jira 看板，再整理待辦' },
+                { label: '💡 你可以給團隊的硬核支援', value: '擅長把技術與需求一起翻譯成可執行方案' }
+            ]
         },
         {
             name: "Cindy",
@@ -731,7 +918,23 @@ document.addEventListener('DOMContentLoaded', () => {
             funfact: "🦖 曾經在冰島獨旅時被一群羊瘋狂追趕了 200 公尺才脫險",
             influence: "📚 《設計思考改造世界》",
             quote: "溫柔地堅持原則，是 PM 最強大的超能力",
-            avatarBg: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)"
+            avatarBg: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
+            step2: {
+                q1: { choices: ['D. 團隊導師'], other: '' },
+                q2: { choices: ['B. 產品與商業感'], other: '' },
+                q3: { choices: ['B. 衝突化解與談判力'], other: '' },
+                q4: { choices: ['A. 0 到 1 破局專案'], other: '' },
+                q5: { choices: ['B. 拖延關鍵溝通'], other: '' },
+                q6: { choices: ['C. 定期高質量復盤'], other: '' },
+                q7: { choices: ['A. 身體解鎖'], other: '' },
+                q8: { choices: ['C. 歐美深度探索'], other: '' },
+                q9: { choices: ['C. 跨國 / 遠端'], other: '' },
+                q10: { choices: ['D. 抱團取暖'], other: '' }
+            },
+            step3: [
+                { label: '☕ 早上開機必備儀式', value: '先整理待辦卡，再做一杯手沖咖啡' },
+                { label: '🍔 你可以給團隊的私房支援', value: '很會替大家安排團購和暖心小禮物' }
+            ]
         }
     ];
 
@@ -815,6 +1018,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
 
+                        <div class="card-tabs">
+                            <button type="button" class="card-tab active" data-tab="step2">Step 2</button>
+                            <button type="button" class="card-tab" data-tab="step3">Step 3</button>
+                        </div>
+                        <div class="card-tab-panels">
+                            <div class="card-tab-panel active" data-panel="step2">${buildStep2PanelHtml(member.step2 || {})}</div>
+                            <div class="card-tab-panel" data-panel="step3">${buildStep3PanelHtml(member.step3 || [])}</div>
+                        </div>
+
                         <div class="card-footer">
                             <div class="quote-container">
                                 <i class="fa-solid fa-quote-left quote-icon-left"></i>
@@ -833,6 +1045,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = cardHtml.trim();
                 const node = tempDiv.firstChild;
+                attachCardTabHandlers(node);
                 galleryGrid.appendChild(node);
             });
         }
@@ -856,6 +1069,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentInfluence = (inputs.influence && inputs.influence.value.trim()) || defaults.influence;
         const currentQuote = (inputs.quote && inputs.quote.value.trim()) || defaults.quote;
         const currentAvatar = currentName.substring(0, 2).toUpperCase();
+        const currentStep2Answers = updateStep2Selections();
+        const currentStep3Answers = collectStep3Answers();
 
         // 生成一個不重複的隨機背景顏色，讓藝廊更繽紛
         const hue = Math.floor(Math.random() * 360);
@@ -935,6 +1150,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
+                <div class="card-tabs">
+                    <button type="button" class="card-tab active" data-tab="step2">Step 2</button>
+                    <button type="button" class="card-tab" data-tab="step3">Step 3</button>
+                </div>
+                <div class="card-tab-panels">
+                    <div class="card-tab-panel active" data-panel="step2">${buildStep2PanelHtml(currentStep2Answers)}</div>
+                    <div class="card-tab-panel" data-panel="step3">${buildStep3PanelHtml(currentStep3Answers)}</div>
+                </div>
+
                 <div class="card-footer">
                     <div class="quote-container">
                         <i class="fa-solid fa-quote-left quote-icon-left"></i>
@@ -954,6 +1178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = cardHtml.trim();
         const newCard = tempDiv.firstChild;
+        attachCardTabHandlers(newCard);
 
         // 隱藏空狀態，顯示藝廊
         if (galleryEmpty) {

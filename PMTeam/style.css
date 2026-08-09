@@ -639,88 +639,70 @@ nav a.active, nav a:hover {
     display: none !important;
 }
 
-/* 頂奢星空置頂水平極簡進度導航列 */
 .steps-progress {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 0 !important;
-    padding: 0.75rem 1.5rem !important;
-    background: rgba(188, 164, 106, 0.05) !important; /* 極其柔和金色光澤底色 */
-    border: 1px solid rgba(188, 164, 106, 0.15) !important;
-    border-radius: 30px !important; /* 膠囊高質感外框 */
-    box-shadow: var(--shadow-sm) !important;
-    margin: 0 auto 2.5rem auto !important; /* 置中，與表單留白 */
-    width: fit-content !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem auto;
+    max-width: 680px;
+    background: rgba(30, 35, 40, 0.95); /* 半透明深航藍灰 */
+    border: 1px solid rgba(188, 164, 106, 0.35); /* 耀金邊框 */
+    padding: 0.8rem 2rem;
+    border-radius: 50px; /* 完美膠囊藥丸型 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(188, 164, 106, 0.15);
 }
 
 .step {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.6rem !important;
-    padding: 6px 12px !important;
-    border-radius: 20px !important;
-    color: rgba(255, 255, 255, 0.45) !important; /* 預設未完成灰色文字 */
-    transition: var(--transition-base) !important;
-}
-
-.step:hover {
-    background-color: rgba(188, 164, 106, 0.08) !important;
-    color: var(--primary-color) !important;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
 }
 
 .step.active {
-    background-color: rgba(188, 164, 106, 0.12) !important;
-    color: var(--primary-color) !important; /* 金色文字 */
-    font-weight: 700 !important;
+    color: var(--primary-color);
+    font-weight: 700;
 }
 
 .step.active .step-number {
-    background-color: var(--primary-color) !important;
-    color: #111518 !important; /* 金底黑字 */
-    border-color: var(--primary-color) !important;
+    background-color: var(--primary-color);
+    color: #111518; /* 金底黑字 */
 }
 
 .step-number {
-    width: 22px !important;
-    height: 22px !important;
-    border-radius: 50% !important;
-    background-color: #0c0f12 !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* 預設灰色圓圈 */
-    color: inherit !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #1a202c;
+    border: 1px solid rgba(188, 164, 106, 0.3);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
 .step-label {
-    font-size: 0.8rem !important;
+    font-size: 0.8rem;
 }
 
 .step-line {
-    width: 60px !important; /* 水平連結線 */
-    height: 1px !important;
-    background-color: rgba(188, 164, 106, 0.2) !important; /* 預設細線 */
-    margin: 0 10px !important;
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background-color: rgba(188, 164, 106, 0.2);
+    margin: 0 0.75rem;
 }
 
 /* ==========================================================================
    主工作區 Grid (Workspace Grid)
    ========================================================================== */
 .workspace-grid {
-    display: flex !important;
-    flex-direction: column !important; /* 上下堆疊，進度條在上方 */
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 0 !important;
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
 }
 
 /* ==========================================================================
@@ -838,7 +820,12 @@ nav a.active, nav a:hover {
     border-top: 1px solid rgba(188, 164, 106, 0.15);
     padding-top: 1rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-actions-center {
+    justify-content: center;
 }
 
 .btn {
@@ -866,9 +853,61 @@ nav a.active, nav a:hover {
     box-shadow: 0 6px 15px rgba(188, 164, 106, 0.3);
 }
 
-.btn-generate:hover {
-    transform: translateY(-1.5px);
-    box-shadow: 0 6px 12px rgba(74, 111, 165, 0.2);
+.option-chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+#step-2-container .form-group .question-note {
+    color: #7a7a7a !important;
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 500 !important;
+}
+
+.option-chip {
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.04);
+    color: #111111;
+    padding: 0.6rem 0.9rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.option-other-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 0 0 100%;
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
+.option-other-wrapper .multi-choice-option[data-choice="E"] {
+    flex-shrink: 0;
+    width: auto !important;
+    margin-top: 0 !important;
+}
+
+.option-other-wrapper .other-input {
+    flex-grow: 1;
+    margin-top: 0 !important;
+}
+
+.option-chip:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.option-chip.active {
+    background: linear-gradient(135deg, rgba(188, 164, 106, 0.2), rgba(188, 164, 106, 0.35));
+    border-color: var(--primary-color);
+    color: #111111;
+    box-shadow: inset 0 0 0 1px rgba(188, 164, 106, 0.2);
 }
 
 /* ==========================================================================
@@ -1340,6 +1379,76 @@ nav a.active, nav a:hover {
 
 .gallery-grid .card-grid-2 {
     gap: 0.5rem;
+}
+
+.gallery-grid .card-tabs {
+    display: flex;
+    gap: 0.45rem;
+    padding: 0 1rem 0.55rem;
+}
+
+.gallery-grid .card-tab {
+    flex: 1;
+    border: 1px solid rgba(139, 116, 67, 0.2);
+    background: rgba(255, 255, 255, 0.45);
+    color: #111518;
+    border-radius: 999px;
+    padding: 0.35rem 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gallery-grid .card-tab.active {
+    background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%);
+    color: #fff;
+}
+
+.gallery-grid .card-tab-panels {
+    padding: 0 1rem 0.55rem;
+}
+
+.gallery-grid .card-tab-panel {
+    display: none;
+}
+
+.gallery-grid .card-tab-panel.active {
+    display: block;
+}
+
+.gallery-grid .card-answer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    list-style: none;
+}
+
+.gallery-grid .answer-item {
+    padding: 0.45rem 0.55rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(139, 116, 67, 0.12);
+}
+
+.gallery-grid .answer-label {
+    display: block;
+    font-size: 0.62rem;
+    color: #8b7443;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.gallery-grid .answer-value {
+    display: block;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: #111518;
+}
+
+.gallery-grid .card-empty-state {
+    font-size: 0.72rem;
+    color: #8b7443;
+    padding: 0.35rem 0;
 }
 
 .gallery-grid .card-footer {
@@ -2880,17 +2989,19 @@ body {
     background: none !important;
 }
 
-/* 4. Main Cabin Layout Redesign (Centered Full Width Workspace) */
+/* 4. Main Cabin Layout Redesign (Centered Workspace) */
 .workspace-grid {
-    display: block !important; /* Stacked layout for centered wide look */
-    max-width: 1000px !important; /* Center the form beautifully with high readability */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2.5rem !important; /* Generous breathing room */
+    max-width: 1280px !important;
     margin: 0 auto !important;
     width: 100% !important;
 }
 
 @media (max-width: 1024px) {
     .workspace-grid {
-        grid-template-columns: 1fr !important;
         gap: 1.5rem !important;
     }
 }
@@ -3005,7 +3116,8 @@ body {
     padding: 3rem !important; /* Generous padding for luxury feel */
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25) !important;
     position: relative;
-    max-width: none !important; /* Let structure guide it */
+    max-width: 800px !important; /* Limit maximum width for premium centered reading */
+    width: 100% !important;
 }
 
 .form-section::before, .form-section::after {

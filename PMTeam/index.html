@@ -122,26 +122,26 @@
     </div>
 
     <main class="container hidden" id="main-content">
-        <!-- 階段進度條 (高質感、簡潔高雅的水平進度導航列) -->
+        <!-- 階段進度條 (置頂置中) -->
         <div class="steps-progress">
             <div class="step active" id="progress-step-1" style="cursor: pointer;">
                 <span class="step-number">1</span>
-                <span class="step-label">Past Journey</span>
+                <span class="step-label">🛂 Step 1: 海關查驗 (Past)</span>
             </div>
             <div class="step-line" id="progress-line-1"></div>
             <div class="step" id="progress-step-2" style="cursor: pointer;">
                 <span class="step-number">2</span>
-                <span class="step-label">Future Journey</span>
+                <span class="step-label">🛫 Step 2: 登機起飛 (Future)</span>
             </div>
             <div class="step-line" id="progress-line-2"></div>
             <div class="step" id="progress-step-3" style="cursor: pointer;">
                 <span class="step-number">3</span>
-                <span class="step-label">Present Journey</span>
+                <span class="step-label">🧳 Step 3: 行李整備 (Present)</span>
             </div>
-            <div class="step-line" id="progress-line-3" class="hidden"></div>
+            <div class="step-line hidden" id="progress-line-3"></div>
             <div class="step hidden" id="progress-step-4" style="cursor: pointer;">
                 <span class="step-number">4</span>
-                <span class="step-label">My Passport</span>
+                <span class="step-label">🗺️ Step 4: 個人護照 (Passport)</span>
             </div>
         </div>
 
@@ -180,122 +180,206 @@
                             <input type="text" id="input-pivot" placeholder="安排轉行 PM 的那天">
                         </div>
 
-                        <!-- 5. 踩過最大的坑 / 挫折 -->
-                        <div class="form-group full-width">
-                            <label for="input-pit"><span class="badge badge-primary">5</span> 過去踩過最大的坑 / 挫折</label>
-                            <input type="text" id="input-pit" placeholder="例如：專案爆炸延期 / 需求沒留紀錄">
-                        </div>
-
-                        <!-- 6. 最引以為傲的一件事 -->
-                        <div class="form-group full-width">
-                            <label for="input-proud"><span class="badge badge-primary">6</span> 至今最引以為傲的一件事</label>
-                            <input type="text" id="input-proud" placeholder="例如：獨立完成一個新產品">
-                        </div>
-
                         <!-- 7. 隱藏才藝 / 特殊專長 -->
-                        <div class="form-group">
+                        <div class="form-group full-width">
                             <label for="input-talent"><span class="badge badge-primary">7</span> 隱藏才藝 / 特殊專長</label>
-                            <input type="text" id="input-talent" placeholder="例如：拉花冠軍 / 精通調酒">
+                            <input type="hidden" id="input-talent" value="">
+                            <p style="margin: 0.45rem 0 0.8rem; color: var(--text-muted); font-size: 0.94rem;">選 1～3 個你想分享的能力或愛好</p>
+                            <div class="option-chip-group" id="talent-options">
+                                <button type="button" class="option-chip" data-value="繪畫">🎨 繪畫</button>
+                                <button type="button" class="option-chip" data-value="滑板">🛹 滑板</button>
+                                <button type="button" class="option-chip" data-value="滑雪">🎿 滑雪</button>
+                                <button type="button" class="option-chip" data-value="樂器">🎵 樂器</button>
+                                <button type="button" class="option-chip" data-value="路跑">🏃 路跑</button>
+                                <button type="button" class="option-chip" data-value="烹飪">🍳 烹飪</button>
+                                <button type="button" class="option-chip" data-value="攝影">📷 攝影</button>
+                                <button type="button" class="option-chip" data-value="健身">💪 健身</button>
+                                <button type="button" class="option-chip" data-value="書法">✍️ 書法</button>
+                                <button type="button" class="option-chip" data-value="烘焙">🥐 烘焙</button>
+                                <button type="button" class="option-chip" data-value="園藝">🌱 園藝</button>
+                                <button type="button" class="option-chip" data-value="旅行">🧳 旅行</button>
+                                <button type="button" class="option-chip" data-value="打球">🏀 打球</button>
+                                <button type="button" class="option-chip" data-value="桌遊">🎲 桌遊</button>
+                                <button type="button" class="option-chip" data-value="編程">💻 編程</button>
+                                <button type="button" class="option-chip" data-value="手作">🧵 手作</button>
+                                <button type="button" class="option-chip" data-value="潛水">🤿 潛水</button>
+                                <button type="button" class="option-chip" data-value="跳舞">💃 跳舞</button>
+                                <button type="button" class="option-chip" data-value="吉他">🎸 吉他</button>
+                                <button type="button" class="option-chip" data-value="電影">🎬 電影</button>
+                            </div>
                         </div>
-
-                        <!-- 8. 大家不知道的 Fun Fact -->
-                        <div class="form-group">
-                            <label for="input-funfact"><span class="badge badge-primary">8</span> 大家不知道的 Fun Fact</label>
-                            <input type="text" id="input-funfact" placeholder="例如：在冰島被羊追 / 一天喝 5 杯咖啡">
-                        </div>
-
-                        <!-- 9. 影響最深的一本書或電影 -->
-                        <div class="form-group full-width">
-                            <label for="input-influence"><span class="badge badge-primary">9</span> 對你影響最深的一本書或電影</label>
-                            <input type="text" id="input-influence" placeholder="例如：《原子習慣》">
-                        </div>
-
-                        <!-- 10. 過去學到最重要的一句話 -->
-                        <div class="form-group full-width">
-                            <label for="input-quote"><span class="badge badge-primary">10</span> 過去學到最重要的一句話</label>
-                            <input type="text" id="input-quote" placeholder="例如：沒有完美的決策，只有承擔結果">
-                        </div>
-                        </div> <!-- CLOSE Step 1 .form-grid -->
-                        
-                        <div class="form-actions">
+                        <div class="form-actions form-actions-center">
                             <button type="button" id="submit-btn" class="btn btn-generate">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> ✨ 生成客製化機票 (下一步)
                             </button>
                         </div>
+                    </div>
                     </div>
 
                     <!-- Step 2: Future 登機起飛 -->
                     <div id="step-2-container" class="hidden">
                         <div class="section-header" style="margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
                             <h2>Step 2: 登機起飛 - 鎖定未來的航向與目的地</h2>
-                            <p class="section-subtitle">設定下半年最想去的地方，準備與團隊一同降落新成就</p>
+                            <p class="section-subtitle">每題都可複選；若選擇 E：其他，請在下方自由填寫</p>
                         </div>
                         <div class="form-grid">
-                        <!-- 1. 下半年最想解鎖的 PM 硬實力 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-hard"><span class="badge badge-primary">11</span> 🎯 下半年最想解鎖的 PM 硬實力</label>
-                            <input type="text" id="input-future-hard" placeholder="例如：數據分析 SQL / 需求模組化">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">11</span> Q1. 【現況與優勢】你目前在團隊中最常扮演哪種角色？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q1">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="專案推手：著重在交付、盯時程、跨部門溝通與排除阻礙">A. 專案推手：著重在交付、盯時程、跨部門溝通與排除阻礙</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品大腦：著重在需求分析、用戶體驗、流程繪製與數據指標">B. 產品大腦：著重在需求分析、用戶體驗、流程繪製與數據指標</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="商業大師：著重在商業模式、市場競品研究、背營收或流量">C. 商業大師：著重在商業模式、市場競品研究、背營收或流量</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="團隊導師：著重在資源整合、PM 流程制定與帶領團隊">D. 團隊導師：著重在資源整合、PM 流程制定與帶領團隊</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q1-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 2. 下半年最想提升的軟實力 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-soft"><span class="badge badge-primary">12</span> 🗣️ 下半年最想提升的軟實力</label>
-                            <input type="text" id="input-future-soft" placeholder="例如：向上管理 / 跨部門衝突溝通">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">12</span> Q2. 【痛點與卡點】你覺得自己目前最想克服的瓶頸是什麼？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q2">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="技術與數據：看不懂系統架構，或無法自己拉數據做決策">A. 技術與數據：看不懂系統架構，或無法自己拉數據做決策</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品與商業感：缺乏從 0 到 1 定位產品或找 PMF 的經驗">B. 產品與商業感：缺乏從 0 到 1 定位產品或找 PMF 的經驗</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="溝通與影響力：難以說服強勢 Stakeholder，需求順序總是亂掉">C. 溝通與影響力：難以說服強勢 Stakeholder，需求順序總是亂掉</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="視野與趨勢：待在同一領域太久，想了解大廠或 AI 等新趨勢">D. 視野與趨勢：待在同一領域太久，想了解大廠或 AI 等新趨勢</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q2-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 3. 下半年最想推動或上線的專案 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-proj"><span class="badge badge-primary">13</span> 🚀 下半年最想推動或上線的專案</label>
-                            <input type="text" id="input-future-proj" placeholder="例如：優化結帳流程 / 完成系統重構">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">13</span> Q3. 【軟實力】🚀 下半年你最想提升哪一項 PM 軟實力？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q3">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="向上管理與期待控制：掌握讓老闆/業主安心且不隨便加需求的藝術">A. 向上管理與期待控制：掌握讓老闆/業主安心且不隨便加需求的藝術</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="衝突化解與談判力：當工程與設計意見不合時，能高效收斂共識">B. 衝突化解與談判力：當工程與設計意見不合時，能高效收斂共識</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="故事力與簡報說服力：能把複雜的產品規劃講得精采、打動決策者">C. 故事力與簡報說服力：能把複雜的產品規劃講得精采、打動決策者</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="情緒韌性與抗壓力：面對突發狀況和修改需求時，能保持冷靜與條理">D. 情緒韌性與抗壓力：面對突發狀況和修改需求時，能保持冷靜與條理</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q3-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 4. 下半年私下最想完成的生活目標 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-life"><span class="badge badge-primary">14</span> 🌈 下半年私下最想完成的生活目標</label>
-                            <input type="text" id="input-future-life" placeholder="例如：考取潛水執照 / 跑一次半馬">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">14</span> Q4. 【重點專案】🚀 下半年你最想推動或上線的專案類型是什麼？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q4">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="0 到 1 破局專案：從無到有打造全新產品或全新功能模組">A. 0 到 1 破局專案：從無到有打造全新產品或全新功能模組</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="AI / 自動化落地專案：將 AI 技術或 No-code 工具導入現有產品流程">B. AI / 自動化落地專案：將 AI 技術或 No-code 工具導入現有產品流程</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="系統重構 / 技術債清理：改造舊系統，大幅提升效能或開發效率">C. 系統重構 / 技術債清理：改造舊系統，大幅提升效能或開發效率</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="數據精細化營運專案：透過 A/B Testing、留存率優化來提升核心指標">D. 數據精細化營運專案：透過 A/B Testing、留存率優化來提升核心指標</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q4-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 5. 下半年最想去旅遊的地方 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-travel"><span class="badge badge-primary">15</span> ✈️ 下半年最想去旅遊的地方</label>
-                            <input type="text" id="input-future-travel" placeholder="例如：去日本滑雪 / 泰國度假">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">15</span> Q5. 【壞習慣】🚫 下半年你最想徹底戒掉的職場壞習慣是什麼？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q5">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="太晚說不：不敢拒絕不合理需求，導致團隊跟自己一起加班">A. 太晚說不：不敢拒絕不合理需求，導致團隊跟自己一起加班</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="拖延關鍵溝通：棘手問題想太久才找人討論，最後演變成大火災">B. 拖延關鍵溝通：棘手問題想太久才找人討論，最後演變成大火災</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="憑直覺決策：缺乏數據或用戶驗證就憑感覺定規格，事後再補救">C. 憑直覺決策：缺乏數據或用戶驗證就憑感覺定規格，事後再補救</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="完美主義過頭：規格收得太細，導致產品上線太慢錯過市場時機">D. 完美主義過頭：規格收得太細，導致產品上線太慢錯過市場時機</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q5-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 6. 下半年想建立的新習慣 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-habit"><span class="badge badge-primary">16</span> 🧘 下半年想建立的新習慣</label>
-                            <input type="text" id="input-future-habit" placeholder="例如：每天冥想 10 分鐘 / 11點前睡覺">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">16</span> Q6. 【新習慣】🧘 下半年你想建立什麼個人新習慣？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q6">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="工作自動化：善用 AI / Notion 工具，將重複性行政工作縮短一半">A. 工作自動化：善用 AI / Notion 工具，將重複性行政工作縮短一半</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="知識輸出：建立每週/每個月寫 Product Blog 或學習筆記的習慣">B. 知識輸出：建立每週/每個月寫 Product Blog 或學習筆記的習慣</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="定期高質量復盤：專案結束後徹底做 Retrospective，不重蹈覆轍">C. 定期高質量復盤：專案結束後徹底做 Retrospective，不重蹈覆轍</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="準時關機下班：建立工作與生活的清晰界線，給自己完整的休息時間">D. 準時關機下班：建立工作與生活的清晰界線，給自己完整的休息時間</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q6-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 7. 下半年想徹底戒掉的壞習慣 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-bad"><span class="badge badge-primary">17</span> 🚫 下半年想徹底戒掉的壞習慣</label>
-                            <input type="text" id="input-future-bad" placeholder="例如：睡前滑手機 / 報復性熬夜">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">17</span> Q7. 【私下目標】🌈 下半年私下最想完成的生活目標是什麼？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q7">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="身體解鎖：養成固定運動習慣、解鎖一項新運動或達成體態目標">A. 身體解鎖：養成固定運動習慣、解鎖一項新運動或達成體態目標</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="技能與興趣：學會一項非工作相關的技能（如調酒、烹飪、樂器、語言）">B. 技能與興趣：學會一項非工作相關的技能（如調酒、烹飪、樂器、語言）</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="深度閱讀 / 考照：讀完 X 本經典好書，或考取一張專業證照">C. 深度閱讀 / 考照：讀完 X 本經典好書，或考取一張專業證照</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="體驗生活：安排一場告別工作手機的完全放空假期">D. 體驗生活：安排一場告別工作手機的完全放空假期</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q7-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 8. 理想中的 Northern Star -->
-                        <div class="form-group full-width">
-                            <label for="input-future-star"><span class="badge badge-primary">18</span> 🌟 理想中的 Northern Star（1-2年後的自己）</label>
-                            <input type="text" id="input-future-star" placeholder="例如：機能游刃有餘的 Senior PM">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">18</span> Q8. 【旅遊充電】✈️ 下半年最想去哪裡旅遊充電？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q8">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="日韓近郊放鬆：去日本/韓國滑雪、美食爆吃、逛街充電">A. 日韓近郊放鬆：去日本/韓國滑雪、美食爆吃、逛街充電</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="東南亞海島度假：去峇里島/泰國海灘躺平、按摩、享受陽光">B. 東南亞海島度假：去峇里島/泰國海灘躺平、按摩、享受陽光</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label=" 歐美深度探索：去歐洲/美洲體驗不同文化、建築與大自然">C. 歐美深度探索：去歐洲/美洲體驗不同文化、建築與大自然</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="國內微旅行：找個山林包棟民宿或露營，享受週末露營/小旅行">D. 國內微旅行：找個山林包棟民宿或露營，享受週末露營/小旅行</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q8-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 9. 如果未來出了一本你的自傳 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-bio"><span class="badge badge-primary">19</span> 🔮 如果未來出了一本你的自傳，書名會叫</label>
-                            <input type="text" id="input-future-bio" placeholder="例如：《在 Bug 中尋找哲學的 PM》">
-                        </div>
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">19</span> Q9. 【遠期願景】🌟 理想中的 Northern Star：1-2 年後的你希望在哪裡？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q9">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="垂直升遷：成為能帶領團隊、決定產品戰略的 Senior PM / Team Lead">A. 垂直升遷：成為能帶領團隊、決定產品戰略的 Senior PM / Team Lead</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="橫向跳槽：進入夢寐以求的國際大廠、爆發期新創，大幅提升薪資天花板">B. 橫向跳槽：進入夢寐以求的國際大廠、爆發期新創，大幅提升薪資天花板</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="跨國 / 遠端：解鎖 100% 遠端工作或跨國團隊，達成數位遊牧生活">C. 跨國 / 遠端：解鎖 100% 遠端工作或跨國團隊，達成數位遊牧生活</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="斜槓 / 創業：擁有自己的個人 brand、Side Project 或成為獨立顧問">D. 斜槓 / 創業：擁有自己的個人 brand、Side Project 或成為獨立顧問</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q9-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- 10. 達成目標後最想送給自己的禮物 -->
-                        <div class="form-group full-width">
-                            <label for="input-future-gift"><span class="badge badge-primary">20</span> 🎁 達成目標後最想送給自己的禮物</label>
-                            <input type="text" id="input-future-gift" placeholder="例如：PS5 / 去奢華 SPA 放鬆">
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">20</span> Q10. 【社群期待】如果接下來要參加 PM 社群交流，你最希望獲得什麼？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q10">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="拓展視野：Coffee Chat、產業特務分享、跨界對談">A. 拓展視野：Coffee Chat、產業特務分享、跨界對談</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作">B. 實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享">C. 職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="抱團取暖：PM 吐槽與療癒同樂會、同儕交流">D. 抱團取暖：PM 吐槽與療癒同樂會、同儕交流</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q10-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+                                <button type="button" id="step-2-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
+                                <button type="button" id="step-2-next" class="btn btn-generate">下一步 (行李整備) <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
                         </div>
-                        </div> <!-- CLOSE Step 2 .form-grid -->
-                        
-                        <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
-                            <button type="button" id="step-2-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
-                            <button type="button" id="step-2-next" class="btn btn-generate">下一步 (行李整備) <i class="fa-solid fa-arrow-right"></i></button>
-                        </div>
+                    </div>
+
                     </div>
 
                     <!-- Step 3: Present 行李整備 -->
@@ -381,7 +465,7 @@
                     <!-- Passport Container with Animations -->
                     <div class="passport-view-box">
                         
-                        <!-- This is the element we screenshot for full passport -->
+                        <!-- This is the element we screenshot -->
                         <div class="passport-screenshot-wrapper" id="passport-to-export">
                             
                             <div class="passport-book state-open" id="my-passport-book">
@@ -403,23 +487,10 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Left Page (Inside Page - Identity Page) -->
+                                <!-- Left Page (Inside Page) -->
                                 <div class="passport-page page-left hidden" id="passport-page-left-element">
-                                    <div class="watermark-stamp stamp-watermark-1">TPE // DEPARTED</div>
-                                    <div class="watermark-stamp stamp-watermark-2">PM CLASS</div>
-                                    
-                                    <!-- Visa/Arrival/Departure Stamps overlapping the page elegantly -->
-                                    <div class="visa-stamp arrival-stamp">
-                                        <span class="stamp-meta">ARRIVAL</span>
-                                        <span class="stamp-date">21 JUL 2026</span>
-                                        <span class="stamp-loc">TAIPEI - TPE</span>
-                                    </div>
-                                    <div class="visa-stamp departure-stamp">
-                                        <span class="stamp-meta">DEPARTURE</span>
-                                        <span class="stamp-date">FUTURE</span>
-                                        <span class="stamp-loc">GROWTH</span>
-                                    </div>
-
+                                    <div class="watermark-stamp stamp-watermark-1">TAIPEI // JX-2026</div>
+                                    <div class="watermark-stamp stamp-watermark-2">PASSPORT CLEARED</div>
                                     <div class="passport-page-header">
                                         <span class="passport-header-title">PASSPORT / 護照</span>
                                     </div>
@@ -428,17 +499,13 @@
                                             <div class="passport-photo">
                                                 <div class="photo-placeholder">
                                                     <i class="fa-solid fa-user-astronaut"></i>
-                                                    <span class="photo-text" id="badge-label-photo">CREATOR</span>
+                                                    <span class="photo-text">PASSENGER</span>
                                                 </div>
                                             </div>
                                             <div class="passport-details-column">
                                                 <div class="passport-field">
-                                                    <span class="field-lbl">NAME / 旅客姓名</span>
+                                                    <span class="field-lbl">NAME / 姓名</span>
                                                     <span class="field-val" id="pass-name">ALEX</span>
-                                                </div>
-                                                <div class="passport-field">
-                                                    <span class="field-lbl">ROLE BADGE / 旅程角色</span>
-                                                    <span class="field-val highlight-gold" id="pass-badge">CREATOR</span>
                                                 </div>
                                                 <div class="passport-field-row">
                                                     <div class="passport-field">
@@ -461,7 +528,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="passport-field">
-                                                    <span class="field-lbl">PASSPORT NO.</span>
+                                                    <span class="field-lbl">PASSPORT ID</span>
                                                     <span class="field-val" id="pass-id">TWN-2026PM-8291</span>
                                                 </div>
                                             </div>
@@ -507,45 +574,37 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Right Page (Inside Page - Summary & Highlights) -->
+                                <!-- Right Page (Inside Page) -->
                                 <div class="passport-page page-right hidden" id="passport-page-right-element">
-                                    <div class="watermark-stamp stamp-watermark-1">BOARDED // JX-2026</div>
+                                    <div class="watermark-stamp stamp-watermark-1">DEPARTED // JX-2026</div>
                                     <div class="watermark-stamp stamp-watermark-2">BIZ CLASS</div>
-                                    
-                                    <!-- Elegant Flight Info Stamp -->
-                                    <div class="visa-stamp flight-details-stamp">
-                                        <div class="stamp-col"><strong>ETA:</strong> <span>DEC 2026</span></div>
-                                        <div class="stamp-col"><strong>MISSION:</strong> <span>GROWTH</span></div>
-                                        <div class="stamp-col"><strong>STATUS:</strong> <span class="text-green">BOARDED</span></div>
-                                    </div>
-
                                     <div class="passport-page-header text-right">
-                                        <span class="passport-header-title">JOURNEY HIGHLIGHT / 旅程精華</span>
+                                        <span class="passport-header-title">JOURNEY SUMMARY / 旅程摘要</span>
                                     </div>
                                     <div class="passport-page-body">
                                         <div class="summary-section">
-                                            <h3 class="summary-sec-title">🧳 PAST HIGHLIGHT</h3>
+                                            <h3 class="summary-sec-title">🧳 PAST</h3>
                                             <ul class="summary-list">
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Pivot Point:</strong> <span class="summary-text" id="sum-pivot">--</span></li>
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Proud Moment:</strong> <span class="summary-text" id="sum-proud">--</span></li>
+                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我的 Pivot Point:</strong> <span class="summary-text" id="sum-pivot">--</span></li>
+                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我最驕傲的一件事:</strong> <span class="summary-text" id="sum-proud">--</span></li>
                                                 <li><span class="bullet">•</span> <strong class="summary-lbl">Hidden Talent:</strong> <span class="summary-text" id="sum-talent">--</span></li>
                                             </ul>
                                         </div>
                                         
                                         <div class="summary-section">
-                                            <h3 class="summary-sec-title">✈ FUTURE DESTINATION</h3>
+                                            <h3 class="summary-sec-title">✈ FUTURE</h3>
                                             <ul class="summary-list">
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Northern Star:</strong> <span class="summary-text" id="sum-future-star">--</span></li>
+                                                <li><span class="bullet">•</span> <strong class="summary-lbl">My Northern Star:</strong> <span class="summary-text" id="sum-future-star">--</span></li>
                                                 <li><span class="bullet">•</span> <strong class="summary-lbl">Work Goal:</strong> <span class="summary-text" id="sum-future-proj">--</span></li>
                                                 <li><span class="bullet">•</span> <strong class="summary-lbl">Life Goal:</strong> <span class="summary-text" id="sum-future-life">--</span></li>
                                             </ul>
                                         </div>
                                         
                                         <div class="summary-section">
-                                            <h3 class="summary-sec-title">🤝 PRESENT ASSETS</h3>
+                                            <h3 class="summary-sec-title">🤝 PRESENT</h3>
                                             <ul class="summary-list">
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Can Help:</strong> <span class="summary-text" id="sum-present-val">--</span></li>
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Need Support:</strong> <span class="summary-text" id="sum-present-support">--</span></li>
+                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我希望帶給團隊的價值:</strong> <span class="summary-text" id="sum-present-val">--</span></li>
+                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我需要大家的 Support:</strong> <span class="summary-text" id="sum-present-support">--</span></li>
                                             </ul>
                                         </div>
                                         
@@ -556,71 +615,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- 另外生成一張 1080x1350 的 Share Card (用於匯出，不在前端常駐顯示) -->
-                        <div class="share-card-export-wrapper" id="share-card-to-export">
-                            <div class="share-card-inner">
-                                <div class="share-card-header">
-                                    <div class="logo-area">
-                                        <i class="fa-solid fa-star gold-star"></i>
-                                        <span class="airline-text">STARLUX ╳ XC PM</span>
-                                    </div>
-                                    <div class="flight-tag">FLIGHT JX-2026</div>
-                                </div>
-
-                                <div class="share-card-badge-container">
-                                    <div class="badge-icon-box">
-                                        <i class="fa-solid fa-user-astronaut"></i>
-                                    </div>
-                                    <h2 class="share-passenger-name" id="share-name">Alex</h2>
-                                    <div class="share-passenger-badge" id="share-badge">CREATOR</div>
-                                </div>
-
-                                <div class="share-card-details">
-                                    <div class="share-detail-row">
-                                        <div class="share-lbl">DESTINATION</div>
-                                        <div class="share-val" id="share-dest">FUTURE & GROWTH</div>
-                                    </div>
-                                    <div class="share-detail-row">
-                                        <div class="share-lbl">CAN HELP</div>
-                                        <div class="share-val" id="share-help">Figma / SQL Analysis</div>
-                                    </div>
-                                    <div class="share-detail-row">
-                                        <div class="share-lbl">LOOKING FOR</div>
-                                        <div class="share-val" id="share-need">Technical Architecture</div>
-                                    </div>
-                                </div>
-
-                                <div class="share-card-ai-summary">
-                                    <div class="summary-quote">
-                                        <i class="fa-solid fa-quote-left quote-icon"></i>
-                                        <span id="share-ai-summary">一個熱愛探索未知並勇於動手打造全新產品的創作者。</span>
-                                        <i class="fa-solid fa-quote-right quote-icon"></i>
-                                    </div>
-                                </div>
-
-                                <div class="share-card-footer">
-                                    <div class="footer-left">
-                                        <p class="footer-date" id="share-date">21 JUL 2026</p>
-                                        <p class="footer-passport-no" id="share-id">TWN-2026PM-8291</p>
-                                    </div>
-                                    <div class="footer-right-qrcode">
-                                        <svg viewBox="0 0 100 100">
-                                            <rect x="0" y="0" width="25" height="25" fill="#111518"/>
-                                            <rect x="5" y="5" width="15" height="15" fill="#f4efe6"/>
-                                            <rect x="8" y="8" width="9" height="9" fill="#111518"/>
-                                            <rect x="75" y="0" width="25" height="25" fill="#111518"/>
-                                            <rect x="80" y="5" width="15" height="15" fill="#f4efe6"/>
-                                            <rect x="83" y="8" width="9" height="9" fill="#111518"/>
-                                            <rect x="0" y="75" width="25" height="25" fill="#111518"/>
-                                            <rect x="5" y="80" width="15" height="15" fill="#f4efe6"/>
-                                            <rect x="8" y="83" width="9" height="9" fill="#111518"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
                     <!-- Export Buttons (Hidden initially) -->
@@ -630,9 +624,6 @@
                         </button>
                         <button type="button" class="btn btn-secondary" id="btn-download-passport">
                             <i class="fa-solid fa-download"></i> Download PNG
-                        </button>
-                        <button type="button" class="btn btn-generate" id="btn-download-sharecard" style="background: linear-gradient(135deg, #bca46a 0%, #8b7443 100%); color: #111518;">
-                            <i class="fa-solid fa-share-nodes"></i> Download Share Card
                         </button>
                     </div>
 
@@ -651,7 +642,9 @@
                     
                 </div>
             </div>
-        </div><!-- 新增：PM 團隊畫像藝廊區塊 -->
+        </div>
+
+        <!-- 新增：PM 團隊畫像藝廊區塊 -->
         <section class="gallery-section">
             <div class="gallery-header">
                 <h2><i class="fa-solid fa-palette"></i> 本日行程</h2>
@@ -672,7 +665,6 @@
         </section>
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="starfield.js"></script>
     <script src="app.js"></script>
 </body>
