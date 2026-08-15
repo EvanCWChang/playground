@@ -333,6 +333,16 @@ header{
 }
 .gallery-header h2{font-family:var(--serif);font-size:1.05rem;letter-spacing:2px;color:var(--gold);font-weight:700}
 .gallery-count{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:1.5px}
+.gallery-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.sync-status{font-family:var(--mono);font-size:.66rem;letter-spacing:1px}
+.sync-status.loading{color:var(--muted)}
+.sync-status.ok{color:var(--cyan)}
+.sync-status.error{color:#e8875f}
+.me-tag{
+  display:inline-block;margin-left:.4rem;padding:.05rem .35rem;border-radius:4px;
+  background:var(--gold);color:var(--ink);font-size:.6rem;font-weight:800;vertical-align:middle;
+}
+.profile-card.mine{border-color:var(--gold);box-shadow:0 18px 40px rgba(0,0,0,.5),0 0 0 1px rgba(188,164,106,.5)}
 .gallery-empty{
   text-align:center;color:var(--muted);padding:2.5rem 1rem;border:1px dashed var(--line-strong);
   border-radius:var(--r-md);font-size:.85rem;
@@ -667,7 +677,11 @@ header{
   <section class="gallery-section">
     <div class="gallery-header">
       <h2>✦ 同行組員 · PASSENGER MANIFEST</h2>
-      <span class="gallery-count" id="gallery-count">0 PAX ON BOARD</span>
+      <div class="gallery-meta">
+        <span class="sync-status loading" id="sync-status">讀取中…</span>
+        <span class="gallery-count" id="gallery-count">0 PAX ON BOARD</span>
+        <button class="nav-pill ghost" id="btn-refresh" title="重新讀取共用名單">↻ 更新</button>
+      </div>
     </div>
     <div class="gallery-empty" id="gallery-empty">目前藝廊還空空如也…完成 Step 1 就會生出你的旅客卡片。</div>
     <div class="gallery-grid hidden" id="gallery-grid"></div>
@@ -767,18 +781,31 @@ const ELEMENTS_QUESTION = {
 /* ==========================================================================
    狀態
    ========================================================================== */
-/* v2：Step 3 改題後舊資料結構已不相容，換 key 讓舊草稿自然失效 */
-const STORE_KEY = 'pmflight.proto.v2';
+/* 共用名單存在 Google 試算表，透過 Apps Script 讀寫。
+   自己填到一半的內容仍留在本機，重新整理不會不見。 */
+const SHEET_API = 'https://script.google.com/macros/s/AKfycbwTr05qmx9XwjTI3Lg1WkcJEUUYzmNYJi-KNenm_o_-tJ_rlxYiLyTtNTBSshFQE_QUZg/exec';
+
+/* v3：名單改成共用之後，本機只留自己那份草稿 */
+const STORE_KEY = 'pmflight.proto.v3';
+const newId = () => 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
 const blankDraft = () => ({
-  id:null, name:'', destination:'', background:'', exp:'', pivot:'',
-  choices:{}, others:{}, seat:'', done:false
+  id:newId(), name:'', destination:'', background:'', exp:'', pivot:'',
+  choices:{}, others:{}, seat:'', submitted:false
 });
 
-let state = {passengers:[], draft:blankDraft()};
+let state = {draft:blankDraft()};
 try{
   const raw = localStorage.getItem(STORE_KEY);
-  if(raw){ const p = JSON.parse(raw); state = {passengers:p.passengers||[], draft:p.draft||blankDraft()}; }
+  if(raw){
+    const p = JSON.parse(raw);
+    if(p.draft) state.draft = Object.assign(blankDraft(), p.draft);
+  }
 }catch(e){ /* 壞掉的舊資料就當作全新開始 */ }
+if(!state.draft.id) state.draft.id = newId();
+
+/* 試算表回來的所有旅客 */
+let roster = [];
+let rosterStatus = 'loading';   // loading | ok | error
 
 /* 題目改版後，舊存檔可能留著已不存在的選項；它們在畫面上點不到、也取消不掉，載入時先清掉 */
 const VALID_CHOICES = new Map(
@@ -795,7 +822,6 @@ function pruneChoices(p){
   return p;
 }
 pruneChoices(state.draft);
-state.passengers.forEach(pruneChoices);
 
 const save = () => { try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} };
 const $  = s => document.querySelector(s);
@@ -847,8 +873,10 @@ function avatarGradient(name){
 }
 const initials = n => (n||'PM').trim().slice(0,2).toUpperCase();
 
-/* 已選答案（含「其他」自填） */
+/* 已選答案（含「其他」自填）。
+   本機草稿存的是 choices/others；試算表回來的已經是攤平的陣列，兩種都要能讀。 */
 function answersOf(p, key){
+  if(Array.isArray(p[key])) return p[key].slice();
   const picked = (p.choices?.[key] || []).slice();
   const other = (p.others?.[key] || '').trim();
   if(other) picked.push(other);
@@ -972,14 +1000,18 @@ function goToStep(n){
   });
   $$('.step-line').forEach((l,i) => l.classList.toggle('filled', i+1 < n));
 
-  if(n === 4) renderPassport();
+  if(n === 4){
+    renderPassport();
+    /* 走到護照就等於填完了，直接送進共用名單 */
+    submitPassenger().then(ok => { if(ok) toast('已送出，大家都看得到了 ✈︎'); });
+  }
   $('#main-content').scrollIntoView({block:'start'});
 }
 
 /* ==========================================================================
    卡片藝廊
    ========================================================================== */
-function cardHTML(p, isDraft){
+function cardHTML(p, isMine){
   const chipRow = (label, items) => items.length
     ? `<div class="mini-label">${esc(label)}</div>
        <div class="mini-chips">${items.map(x=>`<span class="mini-chip">${esc(x)}</span>`).join('')}</div>`
@@ -994,18 +1026,21 @@ function cardHTML(p, isDraft){
   const step3 = chipRow('想參加的活動', acts) + chipRow(ELEMENTS_QUESTION.title, els);
 
   const uid = p.id || 'draft';
+  const stampText = isMine
+    ? (p.submitted ? 'YOU · CLEARED' : 'IN PROGRESS')
+    : 'APPROVED / CLEARED';
 
   return `
-  <article class="profile-card" data-card="${uid}">
+  <article class="profile-card${isMine ? ' mine' : ''}" data-card="${uid}">
     <div class="card-status-bar"></div>
     <div class="card-header">
       <div class="card-avatar" style="background:${avatarGradient(p.name)}">${esc(initials(p.name))}</div>
       <div class="card-header-info">
-        <h3>${esc(p.name || 'Passenger')}</h3>
+        <h3>${esc(p.name || 'Passenger')}${isMine ? '<span class="me-tag">你</span>' : ''}</h3>
         <p class="card-sub">🎓 ${esc(p.background || '—')} ${p.destination?'· ✈︎ '+esc(p.destination):''}</p>
       </div>
     </div>
-    <div class="customs-stamp">${isDraft ? 'IN PROGRESS' : 'APPROVED / CLEARED'}</div>
+    <div class="customs-stamp">${stampText}</div>
     <div class="card-body">
       <div class="card-item">
         <span class="card-icon">🛫</span>
@@ -1028,28 +1063,84 @@ function cardHTML(p, isDraft){
         ${step3 || '<p class="card-empty-state">尚未完成 Step 3</p>'}
       </div>
     </div>
-    ${isDraft ? '' : `<div class="card-footer">
+    ${isMine && p.submitted ? `<div class="card-footer">
       <div class="card-actions">
-        <button class="card-mini-btn" data-edit="${uid}">編輯</button>
-        <button class="card-mini-btn" data-remove="${uid}">移除</button>
+        <button class="card-mini-btn" data-edit="1">編輯我的資料</button>
       </div>
-    </div>`}
+    </div>` : ''}
   </article>`;
 }
 
 function renderGallery(){
   const d = state.draft;
-  const draftVisible = !!(d.name || '').trim();
-  const list = state.passengers.slice().reverse();
-  const total = state.passengers.length + (draftVisible ? 1 : 0);
+  const mineVisible = !!(d.name || '').trim();
+  /* 自己已送出的話，試算表裡也有一份，要濾掉才不會出現兩張 */
+  const others = roster.filter(p => p.id !== d.id).reverse();
+  const total = others.length + (mineVisible ? 1 : 0);
 
   $('#gallery-count').textContent = `${total} PAX ON BOARD`;
   $('#gallery-empty').classList.toggle('hidden', total > 0);
   $('#gallery-grid').classList.toggle('hidden', total === 0);
   $('#gallery-grid').innerHTML =
-    (draftVisible ? cardHTML(d, true) : '') + list.map(p => cardHTML(p, false)).join('');
+    (mineVisible ? cardHTML(d, true) : '') + others.map(p => cardHTML(p, false)).join('');
+
+  const status = $('#sync-status');
+  if(status){
+    status.textContent = rosterStatus === 'loading' ? '讀取中…'
+      : rosterStatus === 'error' ? '⚠ 連不上共用名單'
+      : '● 已同步';
+    status.className = 'sync-status ' + rosterStatus;
+  }
 
   requestAnimationFrame(() => $$('.profile-card').forEach(c => c.classList.add('in')));
+}
+
+/* ==========================================================================
+   與 Google 試算表同步
+   ========================================================================== */
+function toPayload(d){
+  const out = {
+    id:d.id, name:d.name, destination:d.destination, seat:d.seat || seatCode(d.name),
+    background:d.background, exp:d.exp, pivot:d.pivot,
+  };
+  [...CHOICE_QUESTIONS, ...ACTIVITY_QUESTIONS, ELEMENTS_QUESTION]
+    .forEach(q => { out[q.key] = answersOf(d, q.key); });
+  return out;
+}
+
+async function loadRoster(){
+  rosterStatus = 'loading';
+  renderGallery();
+  try{
+    const res = await fetch(SHEET_API, {cache:'no-store'});
+    const data = await res.json();
+    if(!data.ok) throw new Error(data.error || '讀取失敗');
+    roster = data.passengers || [];
+    rosterStatus = 'ok';
+  }catch(err){
+    rosterStatus = 'error';
+  }
+  renderGallery();
+}
+
+async function submitPassenger(){
+  const d = state.draft;
+  if(!(d.name || '').trim()) return false;
+
+  /* 不設 Content-Type，讓瀏覽器用 text/plain 送出。
+     設成 application/json 會觸發 CORS 預檢，而 Apps Script 不處理預檢。 */
+  try{
+    const res = await fetch(SHEET_API, {method:'POST', body: JSON.stringify(toPayload(d))});
+    const data = await res.json();
+    if(!data.ok) throw new Error(data.error || '寫入失敗');
+    d.submitted = true;
+    save();
+    await loadRoster();
+    return true;
+  }catch(err){
+    toast('送不出去，資料先留在這台裝置上，稍後可再送一次');
+    return false;
+  }
 }
 
 /* ==========================================================================
@@ -1437,6 +1528,7 @@ function passportText(){
 buildQuestions();
 hydrateForm();
 renderGallery();
+loadRoster();          // 一進來就把共用名單抓下來
 
 /* 登機 */
 $('#boarding-name').addEventListener('input', e => {
@@ -1480,7 +1572,7 @@ $('#brand-logo').addEventListener('click', () => {
 });
 
 $('#nav-reset').addEventListener('click', async () => {
-  if(!await askConfirm('這會清掉這台裝置上的所有旅客資料，確定重新開始？', '清除重來')) return;
+  if(!await askConfirm('這只會清掉你在這台裝置上填的內容，共用名單上的資料不受影響。確定重新開始？', '清除重來')) return;
   try{ localStorage.removeItem(STORE_KEY); }catch(e){}
   location.reload();
 });
@@ -1540,24 +1632,10 @@ $('#gallery-grid').addEventListener('click', async e => {
       pnl.classList.toggle('active', pnl.dataset.panel === tab.dataset.tab));
     return;
   }
-  const edit = e.target.closest('[data-edit]');
-  if(edit){
-    const p = state.passengers.find(x => x.id === edit.dataset.edit);
-    if(!p) return;
-    if((state.draft.name||'').trim() &&
-       !await askConfirm(`目前有一份「${state.draft.name}」還沒送出，載入 ${p.name} 會蓋掉它。要繼續嗎？`, '載入')) return;
-    state.passengers = state.passengers.filter(x => x.id !== p.id);
-    state.draft = {...p, done:false};
-    save(); hydrateForm(); renderGallery(); goToStep(1);
-    toast(`已載入 ${p.name} 的資料`);
-    return;
-  }
-  const rm = e.target.closest('[data-remove]');
-  if(rm){
-    const target = state.passengers.find(x => x.id === rm.dataset.remove);
-    if(!await askConfirm(`要把 ${target ? target.name : '這位旅客'} 從名單移除嗎？`, '移除')) return;
-    state.passengers = state.passengers.filter(x => x.id !== rm.dataset.remove);
-    save(); renderGallery();
+  /* 只能編輯自己那張，改完走到護照會覆蓋掉試算表上同一列 */
+  if(e.target.closest('[data-edit]')){
+    goToStep(1);
+    toast('改完再走到護照，就會更新你在名單上的資料');
   }
 });
 
@@ -1579,11 +1657,13 @@ $('#btn-copy').addEventListener('click', async () => {
   ta.select();
   const ok = (()=>{ try{ return document.execCommand('copy'); }catch(e){ return false; } })();
   ta.remove();
-  toast(ok ? '已複製文字版護照 📋' : '複製被瀏覽器擋下，請改用「列印 / 存 PDF」');
+  toast(ok ? '已複製文字版護照 📋' : '複製被瀏覽器擋下，請改用「下載圖片」');
 });
-$('#btn-new-passenger').addEventListener('click', () => {
-  const p = {...state.draft, id:'p_'+Date.now().toString(36), done:true};
-  state.passengers.push(p);
+/* 同一台裝置換人填：先確定自己那份進了名單，再開一份全新的草稿 */
+$('#btn-new-passenger').addEventListener('click', async () => {
+  const who = state.draft.name;
+  if(!state.draft.submitted) await submitPassenger();
+
   state.draft = blankDraft();
   save();
   hydrateForm(); renderGallery();
@@ -1593,7 +1673,12 @@ $('#btn-new-passenger').addEventListener('click', () => {
   $('#main-content-wrap').classList.add('hidden');
   $('#onboarding-screen').classList.remove('hidden','fly-out');
   window.scrollTo({top:0});
-  toast(`${p.name} 已登機，換下一位 ✈︎`);
+  toast(`${who} 已登機，換下一位 ✈︎`);
+});
+
+$('#btn-refresh').addEventListener('click', async () => {
+  await loadRoster();
+  toast(rosterStatus === 'ok' ? '名單已更新' : '連不上共用名單');
 });
 
 /* ==========================================================================
