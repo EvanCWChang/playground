@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const submitBtn = document.getElementById("submit-btn");
-    const multiChoiceOptions = Array.from(document.querySelectorAll(".multi-choice-option"));
     const galleryEmpty = document.getElementById("gallery-empty");
     const galleryGrid = document.getElementById("gallery-grid");
 
@@ -34,16 +33,25 @@ document.addEventListener("DOMContentLoaded", () => {
     function goToStep(stepNum) {
         const formSection = document.querySelector(".form-section");
         const endingScreen = document.getElementById("passport-ending-screen");
+        console.log("Navigating to step:", stepNum);
+        
         if (stepNum <= 3) {
             if (formSection) formSection.classList.remove("hidden");
             if (endingScreen) endingScreen.classList.add("hidden");
-            steps.forEach((s, i) => s && (i === stepNum - 1 ? s.classList.remove("hidden") : s.classList.add("hidden")));
+            steps.forEach((s, i) => {
+                if (s) {
+                    if (i === stepNum - 1) s.classList.remove("hidden");
+                    else s.classList.add("hidden");
+                }
+            });
         } else {
             if (formSection) formSection.classList.add("hidden");
             if (endingScreen) endingScreen.classList.remove("hidden");
         }
+        
         progressSteps.forEach((ps, i) => ps && (i < stepNum ? ps.classList.add("active") : ps.classList.remove("active")));
         progressLines.forEach((pl, i) => pl && (pl.style.backgroundColor = i < stepNum - 1 ? "#bca46a" : "rgba(188, 164, 106, 0.2)"));
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     if (boardingBtn) {
@@ -58,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 onboardingScreen.classList.add("hidden");
                 mainContent.classList.remove("hidden");
                 mainContent.style.opacity = "1";
+                goToStep(1);
             }, 800);
         });
     }
@@ -68,8 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
         onboardingScreen.classList.add("hidden");
         mainContent.classList.remove("hidden");
         mainContent.style.opacity = "1";
+        goToStep(1);
     });
 
+    const multiChoiceOptions = Array.from(document.querySelectorAll(".multi-choice-option"));
     multiChoiceOptions.forEach(btn => {
         btn.addEventListener("click", () => {
             btn.classList.toggle("active");
@@ -85,6 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            renderToGallery();
+            goToStep(2);
+        });
+    }
+
     const s2prev = document.getElementById("step-2-prev");
     const s2next = document.getElementById("step-2-next");
     const s3prev = document.getElementById("step-3-prev");
@@ -94,12 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (s2next) s2next.addEventListener("click", () => goToStep(3));
     if (s3prev) s3prev.addEventListener("click", () => goToStep(2));
     if (s3finish) s3finish.addEventListener("click", () => goToStep(4));
-
-        submitBtn.addEventListener("click", () => {
-            renderToGallery();
-            goToStep(2);
-        });
-    }
 
     function renderToGallery() {
         const name = inputs.name.value.trim() || "Passenger";
