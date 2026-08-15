@@ -5,551 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM Team 專案管理 - 建立個人畫像</title>
     <link rel="stylesheet" href="style.css">
-    <!-- 引入 FontAwesome 圖示 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
-    <!-- 星空背景畫布 -->
     <canvas id="starfield"></canvas>
-
     <header>
         <div class="header-container">
             <h1 id="brand-logo"><i class="fa-solid fa-plane"></i> PM Flight</h1>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active" id="nav-cabin">進到機艙</a></li>
-                </ul>
-            </nav>
+            <nav><ul><li><a href="#" class="active" id="nav-cabin">進到機艙</a></li></ul></nav>
         </div>
     </header>
 
-    <!-- 1. 開場 Onboarding 登機證畫面 -->
     <div class="onboarding-overlay" id="onboarding-screen">
-        <!-- 3D 轉場紙飛機容器 (預設隱藏) -->
-        <div class="transition-plane-container hidden" id="transition-plane-container">
-            <svg class="paper-plane-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 2L2 8.66667L11.5 12.5L22 2Z" fill="#bca46a"/>
-                <path d="M22 2L11.5 12.5L15.3333 22L22 2Z" fill="#9c844f"/>
-                <path d="M11.5 12.5L9 17L11.5 12.5Z" fill="#8b7443"/>
-            </svg>
-        </div>
-
         <div class="hero-section-terminal">
-            <!-- 機場狀態標籤 -->
             <div class="terminal-status-bar">
                 <span class="status-dot"></span>
                 <span class="status-text">FLIGHT JX-2026 // GATE OPEN</span>
                 <span class="status-tag">BOARDING</span>
             </div>
-
-            <!-- 主標題與副標題 -->
             <h1 class="hero-title">從過去到未來，至現在的我們</h1>
-
-            <!-- 導覽敘述內文 -->
-            <p class="hero-description">
-                職涯這趟長途飛行裡，能坐在相鄰位置成為旅伴，是一期一會的幸運。<br>
-                期待你分享過去踩過的坑、隱藏的特殊才藝等精彩的人生故事。<br>
-                在下一次航程起飛之前，讓我們先在這裡停靠。
-            </p>
+            <p class="hero-description">職涯這趟長途飛行裡，能坐在相鄰位置成為旅伴，是一期一會的幸運。</p>
         </div>
-
         <div class="boarding-pass" id="boarding-pass-card">
-            <!-- 登機票左半部：主機票 -->
             <div class="ticket-left">
-                <div class="ticket-header">
-                    <span class="airline"><i class="fa-solid fa-star"></i> XC ╳ PM</span>
-                    <span class="flight-no">FLIGHT JX-2026</span>
-                </div>
-                <div class="ticket-body">
-                    <div class="airport-codes">
-                        <div class="code-block">
-                            <span class="code">PAST</span>
-                        </div>
-                        <div class="plane-animation">
-                            <i class="fa-solid fa-plane plane-icon"></i>
-                        </div>
-                        <div class="code-block text-right">
-                            <span class="code">FUTR</span>
-                        </div>
-                    </div>
-                    <div class="ticket-details">
-                        <div class="detail-group">
-                            <label>PASSENGER NAME / 旅客姓名</label>
-                            <input type="text" id="boarding-name" placeholder="請輸入名字" required autocomplete="off">
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-group">
-                                <label>DESTINATION / 目的地</label>
-                                <input type="text" id="boarding-destination" placeholder="請輸入此時最想去的國家" required autocomplete="off">
-                            </div>
-                            <div class="detail-group" style="min-width: 100px;">
-                                <label>GATE / 登機門</label>
-                                <span class="detail-value" style="display: block; margin-top: 5px;">小樹屋</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="ticket-header"><span class="airline">XC ╳ PM</span><span class="flight-no">JX-2026</span></div>
+                <div class="ticket-details">
+                    <div class="detail-group"><label>PASSENGER NAME</label><input type="text" id="boarding-name" placeholder="請輸入名字"></div>
+                    <div class="detail-group"><label>DESTINATION</label><input type="text" id="boarding-destination" placeholder="目的地"></div>
                 </div>
             </div>
-            
-            <!-- 登機票切撕線與圓形凹孔 -->
-            <div class="ticket-divider">
-                <div class="notch top"></div>
-                <div class="dashed-line"></div>
-                <div class="notch bottom"></div>
-            </div>
-            
-            <!-- 登機票右半部：存根聯 -->
-            <div class="ticket-right">
-                <div class="stub-body">
-                    <div class="detail-group">
-                        <label>FLIGHT / 航班</label>
-                        <span class="detail-value" style="font-size: 0.85rem; color: #bca46a;">JX-2026</span>
-                    </div>
-                    <div class="detail-group">
-                        <label>DESTINATION / 目的地</label>
-                        <span class="detail-value" id="stub-destination" style="font-size: 0.8rem;">Future & Growth</span>
-                    </div>
-                    <div class="detail-group">
-                        <label>GATE / 登機門</label>
-                        <span class="detail-value" style="font-size: 0.8rem;">小樹屋</span>
-                    </div>
-                </div>
-            </div>
+            <div class="ticket-divider"><div class="notch top"></div><div class="dashed-line"></div><div class="notch bottom"></div></div>
+            <div class="ticket-right"><div class="stub-body"><div class="detail-group"><label>GATE</label><span class="detail-value">小樹屋</span></div></div></div>
         </div>
-        <button type="button" id="boarding-btn" class="btn btn-boarding">
-            🎫 領取機票 <i class="fa-solid fa-arrow-right"></i>
-        </button>
+        <button type="button" id="boarding-btn" class="btn btn-boarding">🎫 領取機票</button>
     </div>
 
     <main class="container hidden" id="main-content">
-        <!-- 階段進度條 (置頂置中) -->
         <div class="steps-progress">
-            <div class="step active" id="progress-step-1" style="cursor: pointer;">
-                <span class="step-number">1</span>
-                <span class="step-label">🛂 Step 1: 海關查驗 (Past)</span>
-            </div>
+            <div class="step active" id="progress-step-1" style="cursor:pointer"><span class="step-number">1</span><span class="step-label">Past</span></div>
             <div class="step-line" id="progress-line-1"></div>
-            <div class="step" id="progress-step-2" style="cursor: pointer;">
-                <span class="step-number">2</span>
-                <span class="step-label">🛫 Step 2: 登機起飛 (Future)</span>
-            </div>
+            <div class="step" id="progress-step-2" style="cursor:pointer"><span class="step-number">2</span><span class="step-label">Future</span></div>
             <div class="step-line" id="progress-line-2"></div>
-            <div class="step" id="progress-step-3" style="cursor: pointer;">
-                <span class="step-number">3</span>
-                <span class="step-label">🧳 Step 3: 行李整備 (Present)</span>
-            </div>
-            <div class="step-line hidden" id="progress-line-3"></div>
-            <div class="step hidden" id="progress-step-4" style="cursor: pointer;">
-                <span class="step-number">4</span>
-                <span class="step-label">🗺️ Step 4: 個人護照 (Passport)</span>
-            </div>
+            <div class="step" id="progress-step-3" style="cursor:pointer"><span class="step-number">3</span><span class="step-label">Present</span></div>
         </div>
 
         <div class="workspace-grid">
-            <!-- 中間：輸入表單 -->
             <section class="form-section">
                 <form id="past-form" onsubmit="return false;">
-                    <!-- Step 1: Past 海關查驗 -->
                     <div id="step-1-container">
-                        <div class="section-header" style="margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
-                            <h2>Step 1: 海關查驗 - 翻開你的護照與經歷</h2>
-                            <p class="section-subtitle">你是誰？你從哪裡來？你要去哪裡？你身上的冒險勳章是哪來的</p>
-                        </div>
+                        <div class="section-header"><h2>Step 1: 海關查驗</h2></div>
                         <div class="form-grid">
-                        <!-- 1. 暱稱 -->
-                        <div class="form-group">
-                            <label for="input-name"><span class="badge badge-primary">1</span> 暱稱 / 名字</label>
-                            <input type="text" id="input-name" placeholder="例如：Alex" required>
-                        </div>
-
-                        <!-- 2. 非 PM 背景 / 主修 -->
-                        <div class="form-group">
-                            <label for="input-background"><span class="badge badge-primary">2</span> 非 PM 本業背景 / 主修</label>
-                            <input type="text" id="input-background" placeholder="例如：企管系 / 以前是工程師">
-                        </div>
-
-                        <!-- 3. 最酷海外/異地經歷 -->
-                        <div class="form-group full-width">
-                            <label for="input-exp"><span class="badge badge-primary">3</span> 這幾年的有趣故事</label>
-                            <textarea id="input-exp" rows="3" style="width:100%; padding:12px; border-radius:8px; border:1px solid rgba(139,116,67,0.3); background:#fdfbf7; resize:vertical;" placeholder="例如：去過 OO 交換 / 遊學 / 獨旅 / GapYear / 特殊技能 / 會滑雪"></textarea>
-                        </div>
-
-                        <!-- 4. 重要 Pivot 轉折點 -->
-                        <div class="form-group full-width">
-                            <label for="input-pivot"><span class="badge badge-primary">4</span> 職涯最重要的 Pivot 轉折點</label>
-                            <textarea id="input-pivot" rows="3" style="width:100%; padding:12px; border-radius:8px; border:1px solid rgba(139,116,67,0.3); background:#fdfbf7; resize:vertical;" placeholder="安排轉行 PM 的那天"></textarea>
-                        </div>
-
-                        <div class="form-group full-width">
-                        <div class="form-actions form-actions-center">
-                            <button type="button" id="submit-btn" class="btn btn-generate">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> ✨ 生成客製化機票 (下一步)
-                            </button>
+                            <div class="form-group"><label><span class="badge badge-primary">1</span> 暱稱 / 名字</label><input type="text" id="input-name" required></div>
+                            <div class="form-group"><label><span class="badge badge-primary">2</span> 非 PM 背景 / 主修</label><input type="text" id="input-background"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">3</span> 這幾年的有趣故事</label><textarea id="input-exp" rows="3" placeholder="例如：去過 OO 交換 / 遊學 / 獨旅 / GapYear / 特殊技能 / 會滑雪"></textarea></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">4</span> 職涯最重要的 Pivot 轉折點</label><textarea id="input-pivot" rows="3" placeholder="安排轉行 PM 的那天"></textarea></div>
+                            <div class="form-actions"><button type="button" id="submit-btn" class="btn btn-generate">生成卡片 (下一步)</button></div>
                         </div>
                     </div>
-                    </div>
 
-                    <!-- Step 2: Future 登機起飛 -->
                     <div id="step-2-container" class="hidden">
-                        <div class="section-header" style="margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
-                            <h2>Step 2: 登機起飛 - 鎖定未來的航向與目的地</h2>
-                            <p class="section-subtitle">每題都可複選；若選擇 E：其他，請在下方自由填寫</p>
-                        </div>
+                        <div class="section-header"><h2>Step 2: 登機起飛</h2></div>
                         <div class="form-grid">
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">11</span> Q1. 【現況與優勢】你目前在團隊中最常扮演哪種角色？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">11</span> Q1. 扮演角色</label>
                                 <div class="option-chip-group multi-choice-group" data-question="q1">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="專案推手：著重在交付、盯時程、跨部門溝通與排除阻礙">A. 專案推手：著重在交付、盯時程、跨部門溝通與排除阻礙</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品大腦：著重在需求分析、用戶體驗、流程繪製與數據指標">B. 產品大腦：著重在需求分析、用戶體驗、流程繪製與數據指標</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="商業大師：著重在商業模式、市場競品研究、背營收或流量">C. 商業大師：著重在商業模式、市場競品研究、背營收或流量</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="團隊導師：著重在資源整合、PM 流程制定與帶領團隊">D. 團隊導師：著重在資源整合、PM 流程制定與帶領團隊</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q1-other" placeholder="請填寫其他選項">
-                                    </div>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="專案推手">A. 專案推手</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品大腦">B. 產品大腦</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="商業大師">C. 商業大師</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="團隊導師">D. 團隊導師</button>
+                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q1-other"></div>
                                 </div>
                             </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">12</span> Q2. 【痛點與卡點】你覺得自己目前最想克服的瓶頸是什麼？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">12</span> Q2. 想克服的瓶頸</label>
                                 <div class="option-chip-group multi-choice-group" data-question="q2">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="技術與數據：看不懂系統架構，或無法自己拉數據做決策">A. 技術與數據：看不懂系統架構，或無法自己拉數據做決策</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品與商業感：缺乏從 0 到 1 定位產品或找 PMF 的經驗">B. 產品與商業感：缺乏從 0 到 1 定位產品或找 PMF 的經驗</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="溝通與影響力：難以說服強勢 Stakeholder，需求順序總是亂掉">C. 溝通與影響力：難以說服強勢 Stakeholder，需求順序總是亂掉</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="視野與趨勢：待在同一領域太久，想了解大廠或 AI 等新趨勢">D. 視野與趨勢：待在同一領域太久，想了解大廠或 AI 等新趨勢</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q2-other" placeholder="請填寫其他選項">
-                                    </div>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="技術與數據">A. 技術與數據</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品與商業感">B. 產品與商業感</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="溝通與影響力">C. 溝通與影響力</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="視野與趨勢">D. 視野與趨勢</button>
+                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q2-other"></div>
                                 </div>
                             </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">13</span> Q3. 【軟實力】🚀 下半年你最想提升哪一項 PM 軟實力？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">13</span> Q3. 想提升的軟實力</label>
                                 <div class="option-chip-group multi-choice-group" data-question="q3">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="向上管理與期待控制：掌握讓老闆/業主安心且不隨便加需求的藝術">A. 向上管理與期待控制：掌握讓老闆/業主安心且不隨便加需求的藝術</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="衝突化解與談判力：當工程與設計意見不合時，能高效收斂共識">B. 衝突化解與談判力：當工程與設計意見不合時，能高效收斂共識</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="故事力與簡報說服力：能把複雜的產品規劃講得精采、打動決策者">C. 故事力與簡報說服力：能把複雜的產品規劃講得精采、打動決策者</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="情緒韌性與抗壓力：面對突發狀況和修改需求時，能保持冷靜與條理">D. 情緒韌性與抗壓力：面對突發狀況和修改需求時，能保持冷靜與條理</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q3-other" placeholder="請填寫其他選項">
-                                    </div>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="向上管理">A. 向上管理</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="衝突化解">B. 衝突化解</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="故事力">C. 故事力</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="情緒韌性">D. 情緒韌性</button>
+                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q3-other"></div>
                                 </div>
                             </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">14</span> Q4. 【重點專案】🚀 下半年你最想推動或上線的專案類型是什麼？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">14</span> Q4. 想推動的專案</label>
                                 <div class="option-chip-group multi-choice-group" data-question="q4">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="0 到 1 破局專案：從無到有打造全新產品或全新功能模組">A. 0 到 1 破局專案：從無到有打造全新產品或全新功能模組</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="AI / 自動化落地專案：將 AI 技術或 No-code 工具導入現有產品流程">B. AI / 自動化落地專案：將 AI 技術或 No-code 工具導入現有產品流程</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="系統重構 / 技術債清理：改造舊系統，大幅提升效能或開發效率">C. 系統重構 / 技術債清理：改造舊系統，大幅提升效能或開發效率</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="數據精細化營運專案：透過 A/B Testing、留存率優化來提升核心指標">D. 數據精細化營運專案：透過 A/B Testing、留存率優化來提升核心指標</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q4-other" placeholder="請填寫其他選項">
-                                    </div>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="0到1破局">A. 0到1破局</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="AI落地">B. AI落地</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="系統重構">C. 系統重構</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="數據優化">D. 數據優化</button>
+                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q4-other"></div>
                                 </div>
                             </div>
-
-                            <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
-                                <button type="button" id="step-2-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
-                                <button type="button" id="step-2-next" class="btn btn-generate">下一步 (行李整備) <i class="fa-solid fa-arrow-right"></i></button>
-                            </div>
+                            <div class="form-actions" style="gap:1rem"><button type="button" id="step-2-prev" class="btn btn-secondary">上一步</button><button type="button" id="step-2-next" class="btn btn-generate">下一步</button></div>
                         </div>
                     </div>
 
-                    <!-- Step 3: Present 行李整備 -->
                     <div id="step-3-container" class="hidden">
-                        <div class="section-header" style="margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
-                            <h2>Step 3: 行李整備 - 帶上現在的工具與裝備</h2>
-                            <p class="section-subtitle">檢查你擁有的專業技能，以及旅途中需要的夥伴支援</p>
-                        </div>
+                        <div class="section-header"><h2>Step 3: 行李整備</h2></div>
                         <div class="form-grid">
-                            <!-- Q5. 社群期待 (從 Step 2 搬移) -->
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">15</span> Q5. 【社群期待】如果接下來要參加 PM 社群交流，你最希望獲得什麼？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">15</span> Q5. 社群期待</label>
                                 <div class="option-chip-group multi-choice-group" data-question="q10">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="拓展視野：Coffee Chat、產業特務分享、跨界對談">A. 拓展視野：Coffee Chat、產業特務分享、跨界對談</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作">B. 實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享">C. 職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="抱團取暖：PM 吐槽與療癒同樂會、同儕交流">D. 抱團取暖：PM 吐槽與療癒同樂會、同儕交流</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q10-other" placeholder="請填寫其他選項">
-                                    </div>
+                                    <button type="button" class="option-chip multi-choice-option" data-label="拓展視野">A. 拓展視野</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-label="實戰技能">B. 實戰技能</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-label="職涯解答">C. 職涯解答</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-label="抱團取暖">D. 抱團取暖</button>
+                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q10-other"></div>
                                 </div>
                             </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-morning"><span class="badge badge-primary">16</span> ☕ 早上開機必備儀式</label>
-                                <input type="text" id="input-present-morning" placeholder="例如：美式咖啡 / 聽音樂 15 分鐘 / 漂浮發呆">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-comm"><span class="badge badge-primary">17</span> ⚡ 跟你溝通最順暢的小撇步</label>
-                                <input type="text" id="input-present-comm" placeholder="例如：比起打字更喜歡面聊 / 請直接講重點">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-mine"><span class="badge badge-primary">18</span> 🪫 你的地雷 / 能量歸零開關</label>
-                                <input type="text" id="input-present-mine" placeholder="例如：臨時插急件 / 沒目的的會議">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-charge"><span class="badge badge-primary">19</span> 🔋 你的充電方式 / 快樂源泉</label>
-                                <input type="text" id="input-present-charge" placeholder="例如：吃甜點 / 聽 Podcast / 狂揍手作貓咪">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-support-hard"><span class="badge badge-primary">20</span> 💡 你可以給團隊的硬核支援</label>
-                                <input type="text" id="input-present-support-hard" placeholder="例如：熟練 Figma / 幫忙除錯 SQL / 擅長寫文件">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-support-soft"><span class="badge badge-primary">21</span> 🍔 你可以給團隊的私房支援</label>
-                                <input type="text" id="input-present-support-soft" placeholder="例如：知道全公司最讚便當 / 團購食物大師">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-need-work"><span class="badge badge-primary">22</span> 🆘 你現在最需要的「工作應援」</label>
-                                <input type="text" id="input-present-need-work" placeholder="例如：求 Code Review / 需要數據工具教學">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-need-life"><span class="badge badge-primary">23</span> 🏃‍♂️ 你現在最需要的「生活應援」</label>
-                                <input type="text" id="input-present-need-life" placeholder="例如：求運動揪團夥伴 / 求推薦好看美劇">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-admire"><span class="badge badge-primary">24</span> ❤️ 你最欣賞 PM 團隊的一個優點</label>
-                                <input type="text" id="input-present-admire" placeholder="例如：大家反應很快 / 包容度很高">
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="input-present-message"><span class="badge badge-primary">25</span> 💌 想給現在 the PM 團隊大家的一句話</label>
-                                <input type="text" id="input-present-message" placeholder="例如：下半年大家一起加油，準時下班！">
-                            </div>
-                        </div>
-
-                        <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
-                            <button type="button" id="step-3-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
-                            <button type="button" id="step-3-finish" class="btn btn-generate">完成冒險 / 登入行程 <i class="fa-solid fa-check"></i></button>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">16</span> ☕ 早上開機必備儀式</label><input type="text" id="input-present-morning"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">17</span> ⚡ 跟你溝通最順暢的小撇步</label><input type="text" id="input-present-comm"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">18</span> 🪫 你的地雷 / 能量歸零開關</label><input type="text" id="input-present-mine"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">19</span> 🔋 你的充電方式 / 快樂源泉</label><input type="text" id="input-present-charge"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">20</span> 💡 你可以給團隊的硬核支援</label><input type="text" id="input-present-support-hard"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">21</span> 🍔 你可以給團隊的私房支援</label><input type="text" id="input-present-support-soft"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">22</span> 🆘 你現在最需要的「工作應援」</label><input type="text" id="input-present-need-work"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">23</span> 🏃‍♂️ 你現在最需要的「生活應援」</label><input type="text" id="input-present-need-life"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">24</span> ❤️ 你最欣賞 PM 團隊的一個優點</label><input type="text" id="input-present-admire"></div>
+                            <div class="form-group full-width"><label><span class="badge badge-primary">25</span> 💌 想給現在 the PM 團隊大家的一句話</label><input type="text" id="input-present-message"></div>
+                            <div class="form-actions" style="gap:1rem"><button type="button" id="step-3-prev" class="btn btn-secondary">上一步</button><button type="button" id="step-3-finish" class="btn btn-generate">完成冒險</button></div>
                         </div>
                     </div>
-            </form>
+                </form>
             </section>
-
-            <!-- 新增：Final Passport Ending Screen (放置於 .workspace-grid 內，確保左側進度條完美保留與點擊切換) -->
-            <div id="passport-ending-screen" class="hidden" style="flex: 1; min-width: 0;">
-                <div class="passport-ending-container">
-                    
-                    <!-- Passport Container with Animations -->
-                    <div class="passport-view-box">
-                        
-                        <!-- This is the element we screenshot -->
-                        <div class="passport-screenshot-wrapper" id="passport-to-export">
-                            
-                            <div class="passport-book state-open" id="my-passport-book">
-                                
-                                <!-- Cover Page (Front) -->
-                                <div class="passport-cover" id="passport-cover-element">
-                                    <div class="passport-cover-inner">
-                                        <div class="passport-crest">
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                        <h1 class="passport-title">PM FLIGHT PASSPORT</h1>
-                                        <div class="passport-divider-line"></div>
-                                        <p class="passport-subtitle">Journey Complete</p>
-                                        <p class="passport-flight">Flight JX-2026</p>
-                                        <div class="passport-destination">
-                                            <span class="dest-label">DESTINATION</span>
-                                            <span class="dest-val">Future & Growth</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Left Page (Inside Page) -->
-                                <div class="passport-page page-left hidden" id="passport-page-left-element">
-                                    <div class="watermark-stamp stamp-watermark-1">TAIPEI // JX-2026</div>
-                                    <div class="watermark-stamp stamp-watermark-2">PASSPORT CLEARED</div>
-                                    <div class="passport-page-header">
-                                        <span class="passport-header-title">PASSPORT / 護照</span>
-                                    </div>
-                                    <div class="passport-page-body">
-                                        <div class="passport-identity">
-                                            <div class="passport-photo">
-                                                <div class="photo-placeholder">
-                                                    <i class="fa-solid fa-user-astronaut"></i>
-                                                    <span class="photo-text">PASSENGER</span>
-                                                </div>
-                                            </div>
-                                            <div class="passport-details-column">
-                                                <div class="passport-field">
-                                                    <span class="field-lbl">NAME / 姓名</span>
-                                                    <span class="field-val" id="pass-name">ALEX</span>
-                                                </div>
-                                                <div class="passport-field-row">
-                                                    <div class="passport-field">
-                                                        <span class="field-lbl">SEAT / 座位</span>
-                                                        <span class="field-val" id="pass-seat">12D</span>
-                                                    </div>
-                                                    <div class="passport-field">
-                                                        <span class="field-lbl">FLIGHT / 航班</span>
-                                                        <span class="field-val">JX-2026</span>
-                                                    </div>
-                                                </div>
-                                                <div class="passport-field-row">
-                                                    <div class="passport-field">
-                                                        <span class="field-lbl">GATE / 登機門</span>
-                                                        <span class="field-val" id="pass-gate">小樹屋</span>
-                                                    </div>
-                                                    <div class="passport-field">
-                                                        <span class="field-lbl">DATE / 日期</span>
-                                                        <span class="field-val" id="pass-date">21 JUL 2026</span>
-                                                    </div>
-                                                </div>
-                                                <div class="passport-field">
-                                                    <span class="field-lbl">PASSPORT ID</span>
-                                                    <span class="field-val" id="pass-id">TWN-2026PM-8291</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="passport-footer-row">
-                                            <div class="passport-qrcode">
-                                                <svg viewBox="0 0 100 100">
-                                                    <rect x="0" y="0" width="25" height="25" fill="#3a2e1d"/>
-                                                    <rect x="5" y="5" width="15" height="15" fill="#fdfcf9"/>
-                                                    <rect x="8" y="8" width="9" height="9" fill="#3a2e1d"/>
-                                                    <rect x="75" y="0" width="25" height="25" fill="#3a2e1d"/>
-                                                    <rect x="80" y="5" width="15" height="15" fill="#fdfcf9"/>
-                                                    <rect x="83" y="8" width="9" height="9" fill="#3a2e1d"/>
-                                                    <rect x="0" y="75" width="25" height="25" fill="#3a2e1d"/>
-                                                    <rect x="5" y="80" width="15" height="15" fill="#fdfcf9"/>
-                                                    <rect x="8" y="83" width="9" height="9" fill="#3a2e1d"/>
-                                                    <rect x="40" y="10" width="10" height="10" fill="#3a2e1d"/>
-                                                    <rect x="55" y="15" width="10" height="10" fill="#3a2e1d"/>
-                                                    <rect x="35" y="30" width="20" height="10" fill="#3a2e1d"/>
-                                                    <rect x="65" y="40" width="15" height="15" fill="#3a2e1d"/>
-                                                    <rect x="15" y="45" width="15" height="15" fill="#3a2e1d"/>
-                                                    <rect x="45" y="60" width="15" height="15" fill="#3a2e1d"/>
-                                                    <rect x="75" y="60" width="15" height="15" fill="#3a2e1d"/>
-                                                    <rect x="60" y="75" width="25" height="20" fill="#3a2e1d"/>
-                                                </svg>
-                                            </div>
-                                            <div class="passport-stamps-area">
-                                                <div class="ink-stamp stamp-past" id="stamp-past">
-                                                    <span class="stamp-check">✓</span>
-                                                    <span class="stamp-lbl">PAST</span>
-                                                </div>
-                                                <div class="ink-stamp stamp-future" id="stamp-future">
-                                                    <span class="stamp-check">✓</span>
-                                                    <span class="stamp-lbl">FUTURE</span>
-                                                </div>
-                                                <div class="ink-stamp stamp-present" id="stamp-present">
-                                                    <span class="stamp-check">✓</span>
-                                                    <span class="stamp-lbl">PRESENT</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Right Page (Inside Page) -->
-                                <div class="passport-page page-right hidden" id="passport-page-right-element">
-                                    <div class="watermark-stamp stamp-watermark-1">DEPARTED // JX-2026</div>
-                                    <div class="watermark-stamp stamp-watermark-2">BIZ CLASS</div>
-                                    <div class="passport-page-header text-right">
-                                        <span class="passport-header-title">JOURNEY SUMMARY / 旅程摘要</span>
-                                    </div>
-                                    <div class="passport-page-body">
-                                        <div class="summary-section">
-                                            <h3 class="summary-sec-title">🧳 PAST</h3>
-                                            <ul class="summary-list">
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我的 Pivot Point:</strong> <span class="summary-text" id="sum-pivot">--</span></li>
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我最驕傲的一件事:</strong> <span class="summary-text" id="sum-proud">--</span></li>
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Hidden Talent:</strong> <span class="summary-text" id="sum-talent">--</span></li>
-                                            </ul>
-                                        </div>
-                                        
-                                        <div class="summary-section">
-                                            <h3 class="summary-sec-title">✈ FUTURE</h3>
-                                            <ul class="summary-list">
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">My Northern Star:</strong> <span class="summary-text" id="sum-future-star">--</span></li>
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Work Goal:</strong> <span class="summary-text" id="sum-future-proj">--</span></li>
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">Life Goal:</strong> <span class="summary-text" id="sum-future-life">--</span></li>
-                                            </ul>
-                                        </div>
-                                        
-                                        <div class="summary-section">
-                                            <h3 class="summary-sec-title">🤝 PRESENT</h3>
-                                            <ul class="summary-list">
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我希望帶給團隊的價值:</strong> <span class="summary-text" id="sum-present-val">--</span></li>
-                                                <li><span class="bullet">•</span> <strong class="summary-lbl">我需要大家的 Support:</strong> <span class="summary-text" id="sum-present-support">--</span></li>
-                                            </ul>
-                                        </div>
-                                        
-                                        <div class="passport-elegant-quote">
-                                            "Every Journey Begins With A Story."
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Export Buttons (Hidden initially) -->
-                    <div class="passport-actions-panel opacity-0" id="passport-actions-panel" style="margin-top: 1.5rem;">
-                        <button type="button" class="btn btn-primary" id="btn-copy-passport">
-                            <i class="fa-solid fa-copy"></i> Copy as Image
-                        </button>
-                        <button type="button" class="btn btn-secondary" id="btn-download-passport">
-                            <i class="fa-solid fa-download"></i> Download PNG
-                        </button>
-                    </div>
-
-                    <!-- Team Building Footer Section (Hidden initially) -->
-                    <div class="team-flight-completed-section opacity-0" id="team-flight-completed-section" style="margin-top: 1.5rem; width: 100%; max-width: 600px;">
-                        <div class="completed-badge">
-                            <i class="fa-solid fa-plane-circle-check"></i>
-                            <span>FLIGHT COMPLETED</span>
-                        </div>
-                        <h2 class="passenger-boarded-count">7 / 7 Passengers Boarded</h2>
-                        <p class="thanks-message">Thanks for flying together.</p>
-                        <button type="button" class="btn btn-view-passengers" id="btn-view-all-passports">
-                            <i class="fa-solid fa-users"></i> 查看所有旅客護照
-                        </button>
-                    </div>
-                    
-                </div>
-            </div>
         </div>
 
-        <!-- 新增：PM 團隊畫像藝廊區塊 -->
         <section class="gallery-section">
-            <div class="gallery-header">
-                <h2><i class="fa-solid fa-palette"></i> 本日行程</h2>
-                <p>已點亮的團隊成員畫像，攜手見證過往的成長與未來的力量</p>
-            </div>
-            
-            <!-- 預設無卡片時的空狀態 -->
-            <div class="gallery-empty" id="gallery-empty">
-                <i class="fa-regular fa-folder-open empty-icon"></i>
-                <p>目前藝廊還空空如也，快去上面填寫表單，產生你的第一張個人畫像卡吧！</p>
-            </div>
+            <div class="gallery-header"><h2><i class="fa-solid fa-palette"></i> 本日行程</h2></div>
+            <div class="gallery-empty" id="gallery-empty"><p>目前藝廊還空空如也...</p></div>
+            <div class="gallery-grid hidden" id="gallery-grid"></div>
+        </section>
 
-            <!-- 卡片藝廊網格 -->
-            <div class="gallery-grid hidden" id="gallery-grid">
-                <!-- 動態產生的卡片會被 Append 到這裡 -->
-            </div>
-        </section>
-        </section>
+        <!-- Final Passport Hidden by default -->
+        <div id="passport-ending-screen" class="hidden" style="text-align:center; padding: 2rem;">
+             <div id="passport-to-export" style="background:#f4f3ef; padding:40px; border-radius:20px; display:inline-block; border:1px solid #ccc;">
+                <h1 style="color:#8b7443">PM FLIGHT PASSPORT</h1>
+                <p id="pass-name">NAME: </p>
+                <p>Status: Journey Complete</p>
+             </div>
+             <div style="margin-top:20px">
+                <button id="btn-copy-passport" class="btn btn-primary">Copy Image</button>
+             </div>
+        </div>
     </main>
 
     <script src="starfield.js"></script>
