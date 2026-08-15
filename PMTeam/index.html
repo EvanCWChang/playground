@@ -1,213 +1,1658 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PM Team 專案管理 - 建立個人畫像</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Flight ｜ 從過去到未來，至現在的我們</title>
+<style>
+/* ==========================================================================
+   Design tokens — STARLUX 黑金 (Obsidian & Gold)
+   ========================================================================== */
+:root{
+  --gold:#bca46a;
+  --gold-deep:#9c844f;
+  --gold-dark:#8b7443;
+  --cyan:#13c2c2;
+  --bg:#12161a;
+  --ink:#111518;
+  --panel:#24292e;
+  --text:#f0f2f5;
+  --muted:#8c9ba5;
+  --line:rgba(188,164,106,.22);
+  --line-strong:rgba(188,164,106,.4);
+  --paper:#f4f2ec;
+  --paper-2:#fbfaf7;
+  --slate:#1e293b;
+  --slate-2:#475569;
+  --r-sm:8px; --r-md:12px; --r-lg:20px;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --serif:"Times New Roman",Times,"Noto Serif TC","Songti TC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Noto Sans TC","Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--sans)}
+html{scrollbar-gutter:stable;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);line-height:1.55;font-size:.92rem;-webkit-font-smoothing:antialiased}
+.hidden{display:none!important}
+button{font:inherit}
+::selection{background:rgba(188,164,106,.35)}
+
+#starfield{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.page{position:relative;z-index:1}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(17,21,24,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.header-container{
+  max-width:1140px;margin:0 auto;padding:.7rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+#brand-logo{
+  font-size:1rem;font-weight:800;letter-spacing:1.5px;color:var(--gold);
+  display:flex;align-items:center;gap:.5rem;cursor:pointer;font-family:var(--serif);
+}
+#brand-logo svg{width:18px;height:18px;fill:currentColor}
+.header-actions{display:flex;align-items:center;gap:.6rem}
+.nav-pill{
+  font-size:.72rem;font-weight:700;letter-spacing:1px;padding:.35rem .8rem;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--ink);
+  border:none;cursor:pointer;transition:var(--ease) .25s;
+}
+.nav-pill.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.nav-pill.ghost:hover{color:var(--gold);border-color:var(--line-strong)}
+.nav-pill:hover{transform:translateY(-1px)}
+
+/* ==========================================================================
+   Onboarding — 登機證
+   ========================================================================== */
+.onboarding{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:calc(100vh - 56px);padding:2rem 1.25rem;max-width:720px;margin:0 auto;
+  transition:opacity .6s var(--ease),transform .6s var(--ease);
+}
+.onboarding.fly-out{opacity:0;transform:scale(.88) translateY(-90px) rotate(-5deg);pointer-events:none}
+.terminal-bar{
+  display:inline-flex;align-items:center;gap:.6rem;padding:.35rem .9rem;border-radius:999px;
+  border:1px solid var(--line-strong);background:rgba(17,21,24,.7);
+  font-size:.68rem;letter-spacing:2px;font-weight:700;color:var(--gold);font-family:var(--mono);
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.status-tag{background:var(--gold);color:var(--ink);padding:.05rem .4rem;border-radius:3px;font-size:.62rem}
+.hero-title{
+  font-family:var(--serif);font-size:clamp(1.8rem,5vw,2.9rem);font-weight:700;letter-spacing:2px;
+  margin:1.4rem 0 2rem;text-align:center;
+  background:linear-gradient(180deg,#fff 20%,var(--gold) 130%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+.boarding-pass{
+  display:flex;width:100%;background:var(--ink);border-radius:var(--r-lg);
+  border:1px solid rgba(188,164,106,.28);overflow:hidden;
+  box-shadow:0 30px 60px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.ticket-left{flex:1.8;padding:1.4rem}
+.ticket-header{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  border-bottom:1px solid var(--line);padding-bottom:.7rem;margin-bottom:1rem;
+}
+.airline{font-family:var(--serif);font-size:.75rem;font-weight:800;letter-spacing:2px;color:var(--gold)}
+.flight-no{font-size:.66rem;font-weight:800;background:var(--gold);color:var(--ink);padding:.15rem .45rem;border-radius:4px;letter-spacing:.5px;white-space:nowrap}
+.airport-codes{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:1.1rem}
+.code{font-family:var(--serif);font-size:clamp(1.4rem,5vw,2rem);font-weight:700;letter-spacing:3px;color:var(--text)}
+.plane-track{flex:1;position:relative;height:20px}
+.plane-track::before{
+  content:"";position:absolute;top:50%;left:0;right:0;height:1px;
+  background:repeating-linear-gradient(90deg,var(--line-strong) 0 5px,transparent 5px 10px);
+}
+.plane-track svg{
+  position:absolute;top:50%;width:16px;height:16px;fill:var(--gold);
+  transform:translateY(-50%);animation:taxi 4.5s var(--ease) infinite;
+}
+@keyframes taxi{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:calc(100% - 16px);opacity:0}}
+.detail-row{display:flex;gap:1rem;flex-wrap:wrap}
+.detail-group{flex:1;min-width:130px;margin-bottom:.7rem}
+.detail-group label{
+  display:block;font-size:.6rem;letter-spacing:1.4px;font-weight:700;
+  color:var(--muted);text-transform:uppercase;margin-bottom:.25rem;font-family:var(--mono);
+}
+.detail-group input{
+  width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-strong);
+  color:var(--text);font-size:1rem;padding:.25rem 0;outline:none;transition:var(--ease) .2s;
+}
+.detail-group input:focus{border-bottom-color:var(--gold)}
+.detail-group input::placeholder{color:#5b656d;font-size:.85rem}
+.detail-value{display:block;font-size:.9rem;color:var(--gold);font-weight:600;padding-top:.25rem}
+
+.ticket-divider{position:relative;width:2px;background:transparent;flex-shrink:0}
+.ticket-divider .dashed{position:absolute;inset:10px 0;width:1px;left:50%;background:repeating-linear-gradient(180deg,var(--line-strong) 0 6px,transparent 6px 12px)}
+.notch{position:absolute;left:50%;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;background:var(--bg)}
+.notch.top{top:-9px}
+.notch.bottom{bottom:-9px}
+.ticket-right{flex:1;padding:1.4rem 1.2rem;background:linear-gradient(160deg,rgba(188,164,106,.07),transparent)}
+.ticket-right .detail-group{min-width:0}
+
+/* 手機：登機證改為上下堆疊，撕線轉為橫向 */
+@media(max-width:640px){
+  .boarding-pass{flex-direction:column}
+  .ticket-left,.ticket-right{padding:1.15rem}
+  .ticket-divider{width:auto;height:2px}
+  .ticket-divider .dashed{
+    inset:0 10px;width:auto;height:1px;left:auto;top:50%;
+    background:repeating-linear-gradient(90deg,var(--line-strong) 0 6px,transparent 6px 12px);
+  }
+  .notch{left:auto;top:50%;transform:translateY(-50%)}
+  .notch.top{left:-9px}
+  .notch.bottom{right:-9px;bottom:auto}
+  .ticket-right{display:flex;flex-wrap:wrap;gap:0 1rem;background:linear-gradient(180deg,rgba(188,164,106,.07),transparent)}
+  .ticket-right .detail-group{flex:1 1 40%}
+  .airline{white-space:nowrap}
+}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+  padding:.7rem 1.5rem;font-size:.9rem;font-weight:700;border:none;border-radius:var(--r-sm);
+  cursor:pointer;transition:var(--ease) .25s;
+}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--ink);box-shadow:0 6px 18px rgba(188,164,106,.22)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(188,164,106,.32)}
+.btn-ghost{background:transparent;border:1px solid #cbd5e1;color:var(--slate-2)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-dark)}
+.btn-dark-ghost{background:transparent;border:1px solid var(--line-strong);color:var(--muted)}
+.btn-dark-ghost:hover{color:var(--gold);border-color:var(--gold)}
+.btn-boarding{margin-top:1.6rem;letter-spacing:1px}
+
+/* ==========================================================================
+   主機艙 Main
+   ========================================================================== */
+.container{max-width:1140px;margin:0 auto;padding:1.5rem}
+#main-content{
+  background:radial-gradient(circle at 50% 30%,#0f172a 0%,#070a12 100%);
+  border-radius:var(--r-lg);border:1px solid var(--line);
+  box-shadow:0 40px 80px rgba(0,0,0,.7),inset 0 0 150px rgba(188,164,106,.07);
+  padding:2.25rem 1.5rem;margin-top:1rem;
+}
+.steps-progress{
+  display:flex;align-items:center;justify-content:center;gap:.25rem;
+  margin:0 auto 2rem;max-width:600px;padding:.7rem 1.5rem;border-radius:999px;
+  background:rgba(30,35,40,.95);border:1px solid rgba(188,164,106,.35);
+  box-shadow:0 10px 30px rgba(0,0,0,.4),inset 0 0 15px rgba(188,164,106,.12);
+}
+.step{display:flex;align-items:center;gap:.4rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:.15rem .3rem;border-radius:999px;transition:var(--ease) .2s}
+.step:hover{color:var(--text)}
+.step.active{color:var(--gold);font-weight:700}
+.step-number{
+  width:22px;height:22px;border-radius:50%;background:#1a202c;border:1px solid rgba(188,164,106,.3);
+  color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;
+  transition:var(--ease) .2s;flex-shrink:0;
+}
+.step.active .step-number{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.step.done .step-number{background:rgba(188,164,106,.25);color:var(--gold)}
+.step-label{font-size:.78rem;letter-spacing:.5px}
+.step-line{flex:1;max-width:70px;height:1px;background:rgba(188,164,106,.22);margin:0 .5rem}
+.step-line.filled{background:var(--gold)}
+@media(max-width:520px){.step-label{display:none}.step-line{max-width:40px}}
+
+/* ---------- 表單（淺色紙感） ---------- */
+.workspace{display:flex;justify-content:center}
+.form-section{
+  background:var(--paper-2);border:1px solid rgba(188,164,106,.25);
+  padding:1.6rem;border-radius:var(--r-md);box-shadow:0 20px 45px rgba(0,0,0,.45);
+  max-width:660px;width:100%;
+}
+.section-header{margin-bottom:1.25rem;border-bottom:1px solid rgba(188,164,106,.18);padding-bottom:.75rem}
+/* eyebrow 與標題同一行、同字級：字級只定義在 .section-heading，兩個子元素都繼承 */
+/* 兩段文字同字級又不能換行，窄螢幕只能整組等比縮小 */
+.section-heading{
+  display:flex;align-items:baseline;gap:.55rem;min-width:0;
+  font-size:clamp(.62rem,2.4vw,1rem);
+}
+.section-heading h2{font-size:inherit;font-weight:800;color:var(--slate);white-space:nowrap}
+.section-heading .eyebrow{
+  font-family:var(--mono);font-size:inherit;letter-spacing:1px;color:var(--gold-dark);
+  font-weight:700;text-transform:uppercase;white-space:nowrap;flex-shrink:0;
+}
+.section-heading .eyebrow::after{
+  content:"";display:inline-block;width:1px;height:.9em;margin-left:.55rem;
+  vertical-align:-.12em;background:rgba(188,164,106,.5);
+}
+@media(max-width:560px){
+  .section-heading{gap:.35rem}
+  .section-heading .eyebrow{letter-spacing:.2px}
+  .section-heading .eyebrow::after{margin-left:.35rem}
+}
+.section-subtitle{font-size:.8rem;color:var(--slate-2);margin-top:.35rem}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-group.full-width{grid-column:span 2}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}.form-group.full-width{grid-column:span 1}}
+.form-group label{font-size:.84rem;font-weight:700;color:#334155;display:flex;align-items:center;gap:.45rem}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;min-width:20px;padding:.05rem .3rem;
+  font-size:.68rem;font-weight:800;border-radius:5px;
+  background:rgba(188,164,106,.12);color:var(--gold-dark);border:1px solid rgba(188,164,106,.28);
+}
+.form-group input,.form-group textarea{
+  width:100%;padding:.55rem .75rem;border:1px solid rgba(188,164,106,.32);border-radius:8px;
+  font-size:.9rem;color:var(--slate);background:#fff;transition:var(--ease) .2s;resize:vertical;
+}
+.form-group input:focus,.form-group textarea:focus{
+  outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(188,164,106,.16);
+}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#a0aec0;font-size:.82rem}
+.hint{font-size:.72rem;color:#94a3b8}
+
+.option-chip-group{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.35rem}
+.option-chip-group.stack{display:block}
+.element-grid{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
+.option-chip{
+  border:1px solid rgba(188,164,106,.35);background:#fff;color:#1f2937;
+  padding:.5rem .9rem;border-radius:999px;cursor:pointer;transition:var(--ease) .18s;font-size:.86rem;
+}
+.option-chip:hover{border-color:var(--gold);transform:translateY(-1px)}
+.option-chip.active{
+  background:linear-gradient(135deg,rgba(188,164,106,.22),rgba(188,164,106,.4));
+  border-color:var(--gold);color:#3b2f12;font-weight:700;
+}
+/* 標題與說明並排，說明緊接在標題右邊 */
+.q-head{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.q-hint{font-size:.75rem;color:#94a3b8}
+.pick-count{font-family:var(--mono);font-size:.65rem;letter-spacing:1.2px;color:#a8b0bb;margin-top:.55rem}
+.pick-count.has{color:var(--gold-dark)}
+
+/* Step 2：帶說明文字的選項卡 */
+.rich-options{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:.5rem}
+@media(max-width:640px){.rich-options{grid-template-columns:1fr}}
+.rich-option{
+  display:flex;flex-direction:column;gap:.22rem;text-align:left;cursor:pointer;
+  padding:.7rem .85rem;border:1px solid rgba(188,164,106,.32);border-radius:10px;
+  background:#fff;transition:var(--ease) .18s;
+}
+.rich-option:hover{border-color:var(--gold);transform:translateY(-1px)}
+.rich-option b{font-size:.88rem;font-weight:800;color:#1f2937}
+.rich-option span{font-size:.76rem;line-height:1.5;color:#64748b}
+.rich-option.active{
+  background:linear-gradient(135deg,rgba(188,164,106,.16),rgba(188,164,106,.3));
+  border-color:var(--gold);box-shadow:inset 0 0 0 1px rgba(188,164,106,.3);
+}
+.rich-option.active b{color:#3b2f12}
+.rich-option.active span{color:#6b5a30}
+
+/* Step 3 活動題：沿用選項卡，但保留活動企劃圖的兩種分類配色 */
+.q-icon{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:rgba(188,164,106,.15);font-size:.85rem;flex-shrink:0;
+}
+.q-en{font-size:.72rem;font-style:italic;font-weight:500;color:#a0aec0;letter-spacing:.3px}
+
+.form-group[data-tone="pm"]{--tone:#dd6a58;--tone-soft:#fbe7e4;--tone-ink:#8c3529}
+.form-group[data-tone="ai"]{--tone:#3a9e9e;--tone-soft:#ddf0ef;--tone-ink:#1f5f5f}
+.form-group[data-tone="fun"]{--tone:#d9a13c;--tone-soft:#fbf1d8;--tone-ink:#77551a}
+.form-group[data-tone="expect"]{--tone:#8b7443;--tone-soft:#f3ecdb;--tone-ink:#5c4a22}
+.form-group[data-tone] label{font-size:1rem;font-weight:800;color:var(--tone)}
+.form-group[data-tone] .q-icon{background:var(--tone-soft)}
+.form-group[data-tone] .rich-option:hover{border-color:var(--tone)}
+.form-group[data-tone] .rich-option.active{
+  background:var(--tone-soft);border-color:var(--tone);
+  box-shadow:inset 0 0 0 1px var(--tone);
+}
+.form-group[data-tone] .rich-option.active b{color:var(--tone-ink)}
+.form-group[data-tone] .rich-option.active span{color:var(--tone-ink);opacity:.72}
+.form-group[data-tone] .option-chip[data-other].active{
+  background:var(--tone);border-color:var(--tone);color:#fff;
+}
+
+.option-other-wrapper{display:flex;align-items:center;gap:.7rem;flex:0 0 100%;margin-top:.15rem}
+/* 選項卡題型：「其他」的圓角要跟上方選項一致，不用藥丸型 */
+.option-other-wrapper.card{margin-top:.6rem}
+.option-other-wrapper.card .option-chip{border-radius:10px;padding:.7rem .85rem;font-weight:700;color:#1f2937}
+.other-input{
+  flex:1;border:none;border-bottom:1px solid rgba(139,116,67,.4);background:transparent;
+  border-radius:0;padding:4px 6px;font-size:.88rem;color:var(--slate);outline:none;
+}
+.other-input:focus{border-bottom-color:var(--gold-dark)}
+
+.form-actions{
+  grid-column:span 2;margin-top:1.4rem;border-top:1px solid rgba(188,164,106,.18);
+  padding-top:1rem;display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap;
+}
+@media(max-width:600px){.form-actions{grid-column:span 1}}
+
+/* ==========================================================================
+   藝廊卡片
+   ========================================================================== */
+.gallery-section{margin-top:2.5rem}
+.gallery-header{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-bottom:1px solid var(--line);padding-bottom:.75rem;margin-bottom:1.25rem;
+}
+.gallery-header h2{font-family:var(--serif);font-size:1.05rem;letter-spacing:2px;color:var(--gold);font-weight:700}
+.gallery-count{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:1.5px}
+.gallery-empty{
+  text-align:center;color:var(--muted);padding:2.5rem 1rem;border:1px dashed var(--line-strong);
+  border-radius:var(--r-md);font-size:.85rem;
+}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+
+.profile-card{
+  background:var(--paper-2);border-radius:var(--r-lg);overflow:hidden;position:relative;
+  border:1px solid rgba(188,164,106,.3);box-shadow:0 18px 40px rgba(0,0,0,.5);
+  display:flex;flex-direction:column;
+  opacity:0;transform:scale(.94);
+  transition:opacity .5s var(--ease),transform .5s cubic-bezier(.175,.885,.32,1.275);
+}
+.profile-card.in{opacity:1;transform:scale(1)}
+.card-status-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--cyan),var(--gold))}
+.card-header{display:flex;align-items:center;gap:.8rem;padding:1rem 1.1rem .6rem}
+.card-avatar{
+  width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;font-size:1rem;letter-spacing:1px;flex-shrink:0;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+}
+.card-header-info h3{font-size:1.02rem;color:var(--slate);font-weight:800;line-height:1.25}
+.card-sub{font-size:.75rem;color:var(--slate-2)}
+.customs-stamp{
+  position:absolute;top:14px;right:10px;transform:rotate(-14deg);
+  border:2px solid rgba(19,194,194,.5);color:rgba(19,194,194,.75);
+  font-family:var(--mono);font-size:.55rem;font-weight:800;letter-spacing:1.2px;
+  padding:.2rem .4rem;border-radius:4px;pointer-events:none;
+}
+.card-body{padding:.4rem 1.1rem .8rem;display:flex;flex-direction:column;gap:.7rem}
+.card-item{display:flex;gap:.6rem}
+.card-icon{font-size:.9rem;line-height:1.4;flex-shrink:0}
+.card-item label{display:block;font-size:.62rem;letter-spacing:1.2px;font-weight:800;color:var(--gold-dark);text-transform:uppercase;font-family:var(--mono)}
+.card-item p{font-size:.84rem;color:#334155;word-break:break-word}
+.card-tabs{display:flex;border-top:1px solid rgba(188,164,106,.2);background:rgba(188,164,106,.06)}
+.card-tab{
+  flex:1;padding:.5rem;background:none;border:none;cursor:pointer;
+  font-size:.75rem;font-weight:700;color:#94a3b8;border-bottom:2px solid transparent;transition:var(--ease) .2s;
+}
+.card-tab.active{color:var(--gold-dark);border-bottom-color:var(--gold)}
+.card-tab-panels{padding:.85rem 1.1rem;min-height:96px;flex:1;background:#fff}
+.card-tab-panel{display:none}
+.card-tab-panel.active{display:block}
+.card-empty-state{font-size:.78rem;color:#a0aec0;text-align:center;padding:1.5rem 0}
+.mini-label{font-size:.6rem;letter-spacing:1.2px;font-weight:800;color:#94a3b8;font-family:var(--mono);margin-bottom:.2rem}
+.mini-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.55rem}
+.mini-chip{font-size:.68rem;padding:.12rem .45rem;border-radius:999px;background:rgba(188,164,106,.16);color:#3b2f12;border:1px solid rgba(188,164,106,.3)}
+.card-footer{padding:.6rem 1.1rem .7rem;background:rgba(188,164,106,.08);border-top:1px solid rgba(188,164,106,.2)}
+.card-actions{display:flex;gap:.4rem;justify-content:center}
+.card-mini-btn{font-size:.68rem;padding:.2rem .55rem;border-radius:999px;border:1px solid #d6d3ca;background:#fff;color:#64748b;cursor:pointer}
+.card-mini-btn:hover{border-color:var(--gold);color:var(--gold-dark)}
+
+/* ==========================================================================
+   結尾護照
+   ========================================================================== */
+.passport-wrap{display:flex;flex-direction:column;align-items:center;gap:1.25rem}
+.passport{
+  width:100%;max-width:620px;background:var(--paper);border-radius:18px;
+  border:1px solid #d8d2c0;box-shadow:0 30px 60px rgba(0,0,0,.55);
+  overflow:hidden;position:relative;
+}
+.passport::after{
+  content:"";position:absolute;inset:8px;border:1px solid rgba(139,116,67,.28);border-radius:12px;pointer-events:none;
+}
+.passport-head{
+  background:linear-gradient(135deg,#1a1e22,#111518);color:var(--gold);
+  padding:1.4rem 1.6rem;text-align:center;border-bottom:3px solid var(--gold);
+}
+.passport-head .crest{font-size:1.4rem;letter-spacing:4px}
+.passport-head h1{font-family:var(--serif);font-size:1.25rem;letter-spacing:5px;font-weight:700;margin-top:.35rem}
+.passport-body{padding:1.6rem;position:relative;z-index:1}
+.pp-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem 1rem}
+.pp-field label{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:1.4px;color:#8b7443;font-weight:700}
+.pp-field span{display:block;font-size:.88rem;color:#1f2937;font-weight:600;word-break:break-word}
+.pp-divider{height:1px;background:repeating-linear-gradient(90deg,rgba(139,116,67,.4) 0 6px,transparent 6px 12px);margin:1rem 0}
+.pp-section-title{font-family:var(--mono);font-size:.6rem;letter-spacing:2px;color:#8b7443;font-weight:800;margin-bottom:.5rem}
+.pp-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.9rem}
+.pp-chip{font-size:.72rem;padding:.2rem .6rem;border-radius:999px;background:rgba(139,116,67,.12);border:1px solid rgba(139,116,67,.3);color:#4b3d18}
+.pp-list{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem .9rem}
+
+/* 階段區塊：內容在左，該階段的章在右 */
+.pp-stage{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+.pp-stage-main{flex:1;min-width:0}
+.pp-stage .stamp{flex-shrink:0;margin-top:.2rem}
+
+@media(max-width:560px){
+  .pp-fields,.pp-list{grid-template-columns:1fr}
+  .pp-stage{gap:.6rem}
+}
+.pp-list div{font-size:.78rem;color:#334155}
+.pp-list b{color:#64748b;font-weight:600}
+.pp-quote{
+  margin-top:1rem;padding:.9rem 1rem;border-left:3px solid var(--gold);
+  background:rgba(139,116,67,.07);border-radius:0 8px 8px 0;
+  font-family:var(--serif);font-size:.95rem;color:#3b3226;font-style:italic;
+}
+.stamp{
+  border:2px solid;border-radius:50%;width:62px;height:62px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-family:var(--mono);font-weight:800;
+  font-size:.42rem;letter-spacing:.5px;text-align:center;line-height:1.35;opacity:.72;
+}
+.stamp.s1{border-color:#0f766e;color:#0f766e;transform:rotate(-11deg)}
+.stamp.s2{border-color:#b45309;color:#b45309;transform:rotate(7deg)}
+.stamp.s3{border-color:#9f1239;color:#9f1239;transform:rotate(-5deg)}
+.stamp em{font-size:.62rem;font-style:normal;display:block}
+.mrz{
+  background:#fff;border-top:1px solid #ddd6c4;padding:.7rem 1rem;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:1.5px;color:#4b5563;
+  word-break:break-all;line-height:1.7;
+}
+.passport-actions{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+/* 自製確認框：沙箱 iframe 會擋掉原生 confirm() */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:1.5rem;
+  background:rgba(5,8,11,.74);backdrop-filter:blur(5px);
+  opacity:0;pointer-events:none;transition:opacity .2s var(--ease);
+}
+.modal-backdrop.show{opacity:1;pointer-events:auto}
+.modal{
+  width:100%;max-width:360px;background:var(--ink);border:1px solid var(--line-strong);
+  border-radius:var(--r-md);padding:1.4rem;box-shadow:0 30px 60px rgba(0,0,0,.65);
+  transform:translateY(8px);transition:transform .2s var(--ease);
+}
+.modal-backdrop.show .modal{transform:translateY(0)}
+.modal p{font-size:.9rem;color:var(--text);margin-bottom:1.25rem}
+.modal-actions{display:flex;gap:.6rem;justify-content:flex-end;flex-wrap:wrap}
+.modal .btn{padding:.5rem 1rem;font-size:.84rem}
+
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+
+.toast{
+  position:fixed;left:50%;bottom:2rem;transform:translate(-50%,20px);z-index:200;
+  background:var(--ink);border:1px solid var(--gold);color:var(--gold);
+  padding:.6rem 1.1rem;border-radius:999px;font-size:.82rem;font-weight:600;
+  opacity:0;pointer-events:none;transition:var(--ease) .3s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media print{
+  body{background:#fff}
+  header,#starfield,.steps-progress,.gallery-section,.passport-actions,.form-section{display:none!important}
+  #main-content{background:#fff;box-shadow:none;border:none;padding:0}
+  .passport{box-shadow:none;max-width:100%}
+}
+</style>
 </head>
 <body>
-    <canvas id="starfield"></canvas>
-    <header>
-        <div class="header-container">
-            <h1 id="brand-logo"><i class="fa-solid fa-plane"></i> PM Flight</h1>
-            <nav><ul><li><a href="#" class="active" id="nav-cabin">進到機艙</a></li></ul></nav>
-        </div>
-    </header>
+<canvas id="starfield"></canvas>
 
-    <div class="onboarding-overlay" id="onboarding-screen">
-        <div class="hero-section-terminal">
-            <div class="terminal-status-bar">
-                <span class="status-dot"></span>
-                <span class="status-text">FLIGHT JX-2026 // GATE OPEN</span>
-                <span class="status-tag">BOARDING</span>
-            </div>
-            <h1 class="hero-title">從過去到未來，至現在的我們</h1>
-            <p class="hero-description">職涯這趟長途飛行裡，能坐在相鄰位置成為旅伴，是一期一會的幸運。</p>
+<div class="page">
+<header>
+  <div class="header-container">
+    <div id="brand-logo">
+      <svg viewBox="0 0 576 512"><path d="M482 128c34 0 62 28 62 62s-28 62-62 62l-96 0-82 146c-8 15-24 24-41 24l-33 0c-12 0-21-12-18-24l38-146-73 0-33 44c-4 5-10 8-16 8l-25 0c-9 0-16-9-13-18l19-64-19-64c-3-9 4-18 13-18l25 0c6 0 12 3 16 8l33 44 73 0-38-146c-3-12 6-24 18-24l33 0c17 0 33 9 41 24l82 146 96 0z"/></svg>
+      PM FLIGHT
+    </div>
+    <div class="header-actions">
+      <button class="nav-pill ghost" id="nav-reset" title="清除本機資料重新開始">重新登機</button>
+      <button class="nav-pill" id="nav-cabin">進到機艙</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ Onboarding ============================ -->
+<section class="onboarding" id="onboarding-screen">
+  <div class="terminal-bar">
+    <span class="status-dot"></span>
+    <span>FLIGHT JX-2026 // GATE OPEN</span>
+    <span class="status-tag">BOARDING</span>
+  </div>
+
+  <h1 class="hero-title">從過去到未來，至現在的我們</h1>
+
+  <div class="boarding-pass" id="boarding-pass-card">
+    <div class="ticket-left">
+      <div class="ticket-header">
+        <span class="airline">★ XC ╳ PM</span>
+        <span class="flight-no">FLIGHT JX-2026</span>
+      </div>
+      <div class="airport-codes">
+        <span class="code">PAST</span>
+        <span class="plane-track">
+          <svg viewBox="0 0 576 512"><path d="M482 128c34 0 62 28 62 62s-28 62-62 62l-96 0-82 146c-8 15-24 24-41 24l-33 0c-12 0-21-12-18-24l38-146-73 0-33 44c-4 5-10 8-16 8l-25 0c-9 0-16-9-13-18l19-64-19-64c-3-9 4-18 13-18l25 0c6 0 12 3 16 8l33 44 73 0-38-146c-3-12 6-24 18-24l33 0c17 0 33 9 41 24l82 146 96 0z"/></svg>
+        </span>
+        <span class="code">FUTR</span>
+      </div>
+      <div class="detail-group">
+        <label>Passenger Name / 旅客姓名</label>
+        <input type="text" id="boarding-name" placeholder="請輸入名字" autocomplete="off">
+      </div>
+      <div class="detail-row">
+        <div class="detail-group">
+          <label>Destination / 目的地</label>
+          <input type="text" id="boarding-destination" placeholder="此時最想去的國家" autocomplete="off">
         </div>
-        <div class="boarding-pass" id="boarding-pass-card">
-            <!-- 登機票左半部：主機票 -->
-            <div class="ticket-left">
-                <div class="ticket-header">
-                    <span class="airline"><i class="fa-solid fa-star"></i> XC ╳ PM</span>
-                    <span class="flight-no">FLIGHT JX-2026</span>
-                </div>
-                <div class="ticket-body">
-                    <div class="airport-codes">
-                        <div class="code-block">
-                            <span class="code">PAST</span>
-                        </div>
-                        <div class="plane-animation">
-                            <i class="fa-solid fa-plane plane-icon"></i>
-                        </div>
-                        <div class="code-block text-right">
-                            <span class="code">FUTR</span>
-                        </div>
-                    </div>
-                    <div class="ticket-details">
-                        <div class="detail-group">
-                            <label>PASSENGER NAME / 旅客姓名</label>
-                            <input type="text" id="boarding-name" placeholder="請輸入名字" required autocomplete="off">
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-group">
-                                <label>DESTINATION / 目的地</label>
-                                <input type="text" id="boarding-destination" placeholder="請輸入此時最想去的國家" required autocomplete="off">
-                            </div>
-                            <div class="detail-group" style="min-width: 100px;">
-                                <label>GATE / 登機門</label>
-                                <span class="detail-value" style="display: block; margin-top: 5px;">小樹屋</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 登機票切撕線與圓形凹孔 -->
-            <div class="ticket-divider">
-                <div class="notch top"></div>
-                <div class="dashed-line"></div>
-                <div class="notch bottom"></div>
-            </div>
-            
-            <!-- 登機票右半部：存根聯 -->
-            <div class="ticket-right">
-                <div class="stub-body">
-                    <div class="detail-group">
-                        <label>FLIGHT / 航班</label>
-                        <span class="detail-value" style="font-size: 0.85rem; color: #bca46a;">JX-2026</span>
-                    </div>
-                    <div class="detail-group">
-                        <label>DESTINATION / 目的地</label>
-                        <span class="detail-value" id="stub-destination" style="font-size: 0.8rem;">Future & Growth</span>
-                    </div>
-                    <div class="detail-group">
-                        <label>GATE / 登機門</label>
-                        <span class="detail-value" style="font-size: 0.8rem;">小樹屋</span>
-                    </div>
-                </div>
-            </div>
+        <div class="detail-group" style="max-width:110px">
+          <label>Gate / 登機門</label>
+          <span class="detail-value">Cafe</span>
         </div>
-        <button type="button" id="boarding-btn" class="btn btn-boarding">🎫 領取機票</button>
+      </div>
     </div>
 
-    <main class="container hidden" id="main-content">
-        <div class="steps-progress">
-            <div class="step active" id="progress-step-1" style="cursor:pointer"><span class="step-number">1</span><span class="step-label">Past</span></div>
-            <div class="step-line" id="progress-line-1"></div>
-            <div class="step" id="progress-step-2" style="cursor:pointer"><span class="step-number">2</span><span class="step-label">Future</span></div>
-            <div class="step-line" id="progress-line-2"></div>
-            <div class="step" id="progress-step-3" style="cursor:pointer"><span class="step-number">3</span><span class="step-label">Present</span></div>
+    <div class="ticket-divider">
+      <div class="notch top"></div>
+      <div class="dashed"></div>
+      <div class="notch bottom"></div>
+    </div>
+
+    <div class="ticket-right">
+      <div class="detail-group">
+        <label>Flight / 航班</label>
+        <span class="detail-value">JX-2026</span>
+      </div>
+      <div class="detail-group">
+        <label>Destination</label>
+        <span class="detail-value" id="stub-destination" style="font-size:.82rem">Future &amp; Growth</span>
+      </div>
+      <div class="detail-group">
+        <label>Seat / 座位</label>
+        <span class="detail-value" id="stub-seat" style="font-size:.82rem">—</span>
+      </div>
+      <div class="detail-group" style="margin-bottom:0">
+        <label>Gate</label>
+        <span class="detail-value" style="font-size:.82rem">Cafe</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-gold btn-boarding" id="boarding-btn">📘 填寫護照</button>
+</section>
+
+<!-- ============================ Main cabin ============================ -->
+<main class="container hidden" id="main-content-wrap">
+ <div id="main-content">
+  <div class="steps-progress">
+    <button class="step active" data-goto="1"><span class="step-number">1</span><span class="step-label">Past</span></button>
+    <span class="step-line" data-line="1"></span>
+    <button class="step" data-goto="2"><span class="step-number">2</span><span class="step-label">Future</span></button>
+    <span class="step-line" data-line="2"></span>
+    <button class="step" data-goto="3"><span class="step-number">3</span><span class="step-label">Present</span></button>
+  </div>
+
+  <div class="workspace">
+    <section class="form-section" id="form-section">
+
+      <!-- ---------------- Step 1 ---------------- -->
+      <div id="step-1" class="step-panel">
+        <div class="section-header">
+          <div class="section-heading">
+            <span class="eyebrow">Step 01 · Immigration</span>
+            <h2>🛂 海關查驗</h2>
+          </div>
+          <p class="section-subtitle">先說說你是誰、從哪裡飛來的。</p>
         </div>
-
-        <div class="workspace-grid">
-            <section class="form-section">
-                <form id="past-form" onsubmit="return false;">
-                    <div id="step-1-container">
-                        <div class="section-header"><h2>Step 1: 海關查驗</h2></div>
-                        <div class="form-grid">
-                            <div class="form-group"><label><span class="badge badge-primary">1</span> 暱稱 / 名字</label><input type="text" id="input-name" placeholder="例如：Tim" required></div>
-                            <div class="form-group"><label><span class="badge badge-primary">2</span> 非 PM 背景 / 主修</label><input type="text" id="input-background" placeholder="例如：企管系 / 以前是工程師"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">3</span> 這幾年的有趣故事</label><textarea id="input-exp" rows="3" placeholder="例如：去過 OO 交換 / 遊學 / 獨旅 / GapYear / 特殊技能 / 會滑雪"></textarea></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">4</span> 職涯最重要的 Pivot 轉折點</label><textarea id="input-pivot" rows="3" placeholder="安排轉行 PM 的那天"></textarea></div>
-                            <div class="form-actions"><button type="button" id="submit-btn" class="btn btn-generate">生成卡片 (下一步)</button></div>
-                        </div>
-                    </div>
-
-                    <div id="step-2-container" class="hidden">
-                        <div class="section-header"><h2>Step 2: 登機起飛</h2></div>
-                        <div class="form-grid">
-                            <div class="form-group full-width"><label><span class="badge badge-primary">11</span> Q1. 扮演角色</label>
-                                <div class="option-chip-group multi-choice-group" data-question="q1">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="專案推手">A. 專案推手</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品大腦">B. 產品大腦</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="商業大師">C. 商業大師</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="團隊導師">D. 團隊導師</button>
-                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q1-other"></div>
-                                </div>
-                            </div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">12</span> Q2. 想克服的瓶頸</label>
-                                <div class="option-chip-group multi-choice-group" data-question="q2">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="技術與數據">A. 技術與數據</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="產品與商業感">B. 產品與商業感</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="溝通與影響力">C. 溝通與影響力</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="視野與趨勢">D. 視野與趨勢</button>
-                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q2-other"></div>
-                                </div>
-                            </div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">13</span> Q3. 想提升的軟實力</label>
-                                <div class="option-chip-group multi-choice-group" data-question="q3">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="向上管理">A. 向上管理</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="衝突化解">B. 衝突化解</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="故事力">C. 故事力</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="情緒韌性">D. 情緒韌性</button>
-                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q3-other"></div>
-                                </div>
-                            </div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">14</span> Q4. 想推動的專案</label>
-                                <div class="option-chip-group multi-choice-group" data-question="q4">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="0到1破局">A. 0到1破局</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="AI落地">B. AI落地</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="系統重構">C. 系統重構</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="數據優化">D. 數據優化</button>
-                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q4-other"></div>
-                                </div>
-                            </div>
-                            <div class="form-actions" style="gap:1rem"><button type="button" id="step-2-prev" class="btn btn-secondary">上一步</button><button type="button" id="step-2-next" class="btn btn-generate">下一步</button></div>
-                        </div>
-                    </div>
-
-                    <div id="step-3-container" class="hidden">
-                        <div class="section-header"><h2>Step 3: 行李整備</h2></div>
-                        <div class="form-grid">
-                            <div class="form-group full-width"><label><span class="badge badge-primary">15</span> Q5. 社群期待</label>
-                                <div class="option-chip-group multi-choice-group" data-question="q10">
-                                    <button type="button" class="option-chip multi-choice-option" data-label="拓展視野">A. 拓展視野</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-label="實戰技能">B. 實戰技能</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-label="職涯解答">C. 職涯解答</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-label="抱團取暖">D. 抱團取暖</button>
-                                    <div class="option-other-wrapper"><button type="button" class="option-chip multi-choice-option" data-choice="E">E. 其他</button><input type="text" class="other-input hidden" id="q10-other"></div>
-                                </div>
-                            </div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">16</span> ☕ 早上開機必備儀式</label><input type="text" id="input-present-morning"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">17</span> ⚡ 跟你溝通最順暢的小撇步</label><input type="text" id="input-present-comm"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">18</span> 🪫 你的地雷 / 能量歸零開關</label><input type="text" id="input-present-mine"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">19</span> 🔋 你的充電方式 / 快樂源泉</label><input type="text" id="input-present-charge"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">20</span> 💡 你可以給團隊的硬核支援</label><input type="text" id="input-present-support-hard"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">21</span> 🍔 你可以給團隊的私房支援</label><input type="text" id="input-present-support-soft"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">22</span> 🆘 你現在最需要的「工作應援」</label><input type="text" id="input-present-need-work"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">23</span> 🏃‍♂️ 你現在最需要的「生活應援」</label><input type="text" id="input-present-need-life"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">24</span> ❤️ 你最欣賞 PM 團隊的一個優點</label><input type="text" id="input-present-admire"></div>
-                            <div class="form-group full-width"><label><span class="badge badge-primary">25</span> 💌 想給現在 the PM 團隊大家的一句話</label><input type="text" id="input-present-message"></div>
-                            <div class="form-actions" style="gap:1rem"><button type="button" id="step-3-prev" class="btn btn-secondary">上一步</button><button type="button" id="step-3-finish" class="btn btn-generate">完成冒險</button></div>
-                        </div>
-                    </div>
-                </form>
-            </section>
+        <div class="form-grid">
+          <div class="form-group">
+            <label><span class="badge">1</span> 暱稱 / 名字</label>
+            <input type="text" data-field="name" placeholder="例如：Tim">
+          </div>
+          <div class="form-group">
+            <label><span class="badge">2</span> 非 PM 背景 / 主修</label>
+            <input type="text" data-field="background" placeholder="例如：企管系 / 以前是工程師">
+          </div>
+          <div class="form-group full-width">
+            <label><span class="badge">3</span> 這幾年的有趣故事</label>
+            <textarea rows="3" data-field="exp" placeholder="例如：去過 OO 交換 / 遊學 / 獨旅 / Gap Year / 特殊技能 / 會滑雪"></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label><span class="badge">4</span> 職涯最重要的 Pivot 轉折點</label>
+            <textarea rows="3" data-field="pivot" placeholder="例如：決定轉行 PM 的那天"></textarea>
+          </div>
+          <div class="form-actions">
+            <span></span>
+            <button class="btn btn-gold" data-next="2">生成卡片 · 下一步 →</button>
+          </div>
         </div>
+      </div>
 
-        <section class="gallery-section">
-            <div class="gallery-header"><h2><i class="fa-solid fa-palette"></i> 本日行程</h2></div>
-            <div class="gallery-empty" id="gallery-empty"><p>目前藝廊還空空如也...</p></div>
-            <div class="gallery-grid hidden" id="gallery-grid"></div>
-        </section>
-
-        <!-- Final Passport Hidden by default -->
-        <div id="passport-ending-screen" class="hidden" style="text-align:center; padding: 2rem;">
-             <div id="passport-to-export" style="background:#f4f3ef; padding:40px; border-radius:20px; display:inline-block; border:1px solid #ccc;">
-                <h1 style="color:#8b7443">PM FLIGHT PASSPORT</h1>
-                <p id="pass-name">NAME: </p>
-                <p>Status: Journey Complete</p>
-             </div>
-             <div style="margin-top:20px">
-                <button id="btn-copy-passport" class="btn btn-primary">Copy Image</button>
-             </div>
+      <!-- ---------------- Step 2 ---------------- -->
+      <div id="step-2" class="step-panel hidden">
+        <div class="section-header">
+          <div class="section-heading">
+            <span class="eyebrow">Step 02 · Departure</span>
+            <h2>🛫 登機起飛</h2>
+          </div>
+          <p class="section-subtitle">接下來這一年，你想往哪裡飛？每題都可以複選。</p>
         </div>
-    </main>
+        <div class="form-grid" id="step-2-questions"></div>
+      </div>
 
-    <script src="starfield.js"></script>
-    <script src="app.js"></script>
+      <!-- ---------------- Step 3 ---------------- -->
+      <div id="step-3" class="step-panel hidden">
+        <div class="section-header">
+          <div class="section-heading">
+            <span class="eyebrow">Step 03 · Baggage</span>
+            <h2>🧳 行李整備</h2>
+          </div>
+          <p class="section-subtitle">這趟旅程你想跟大家一起做什麼？你對什麼最感興趣？</p>
+        </div>
+        <div class="form-grid" id="step-3-questions"></div>
+      </div>
+
+      <!-- ---------------- Passport ---------------- -->
+      <div id="step-4" class="step-panel hidden">
+        <div class="passport-wrap">
+          <div class="passport" id="passport">
+            <div class="passport-head">
+              <div class="crest">✈︎ ★ ✈︎</div>
+              <h1>PM FLIGHT PASSPORT</h1>
+            </div>
+            <div class="passport-body" id="passport-body"></div>
+            <div class="mrz" id="passport-mrz"></div>
+          </div>
+          <div class="passport-actions">
+            <button class="btn btn-ghost" data-goto="3">← 回去修改</button>
+            <button class="btn btn-ghost" id="btn-copy">📋 複製文字版</button>
+            <button class="btn btn-ghost" id="btn-download">⬇️ 下載圖片</button>
+            <button class="btn btn-gold" id="btn-new-passenger">➕ 換下一位旅客</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ---------------- Gallery ---------------- -->
+  <section class="gallery-section">
+    <div class="gallery-header">
+      <h2>✦ 同行組員 · PASSENGER MANIFEST</h2>
+      <span class="gallery-count" id="gallery-count">0 PAX ON BOARD</span>
+    </div>
+    <div class="gallery-empty" id="gallery-empty">目前藝廊還空空如也…完成 Step 1 就會生出你的旅客卡片。</div>
+    <div class="gallery-grid hidden" id="gallery-grid"></div>
+  </section>
+ </div>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-msg">
+  <div class="modal">
+    <p id="modal-msg"></p>
+    <div class="modal-actions">
+      <button class="btn btn-dark-ghost" id="modal-cancel">取消</button>
+      <button class="btn btn-gold" id="modal-ok">確定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   題庫
+   ========================================================================== */
+/* Step 2：四題複選，選項帶說明 */
+const CHOICE_QUESTIONS = [
+  {key:'q1', title:'你在團隊裡最常扮演的角色', hint:'可複選，選出最像你的樣子',
+   options:[
+     {label:'專案推手', desc:'把時程、資源、卡點一手接住，讓事情真的動起來'},
+     {label:'產品大腦', desc:'從用戶問題長出解法，決定什麼要做、什麼不做'},
+     {label:'商業大師', desc:'盯著數字與獲利模型，替每個決策算出商業帳'},
+     {label:'團隊導師', desc:'帶人、對齊、補位，讓團隊比上一季更會打仗'},
+   ]},
+  {key:'q2', title:'最想克服的瓶頸', hint:'可複選',
+   options:[
+     {label:'技術與數據', desc:'想聽懂工程師在吵什麼，也想自己撈得動數據'},
+     {label:'產品與商業感', desc:'想更快判斷什麼值得做、做了到底能不能賺'},
+     {label:'溝通與影響力', desc:'想在沒有直接職權的情況下，still 推得動人'},
+     {label:'視野與趨勢', desc:'想跳出手上的專案，看見整個產業在往哪裡走'},
+   ]},
+  {key:'q3', title:'最想提升的軟實力', hint:'可複選',
+   options:[
+     {label:'向上管理', desc:'讓主管理解你的判斷，也真的拿得到你要的資源'},
+     {label:'衝突化解', desc:'在利益打架的時候，把對立收斂成能往下走的討論'},
+     {label:'故事力', desc:'把複雜的東西，講成別人願意聽完而且記得住的版本'},
+     {label:'情緒韌性', desc:'專案燒起來時，還能穩住自己、也穩住團隊的節奏'},
+   ]},
+  {key:'q4', title:'最想推動的專案', hint:'可複選',
+   options:[
+     {label:'0 到 1 破局', desc:'從一張白紙開始，把新產品推到第一批真實用戶手上'},
+     {label:'AI 落地', desc:'把 AI 真的塞進流程或產品裡，而不是只做一個 Demo'},
+     {label:'系統重構', desc:'拆掉積很久的技術債與爛流程，重新把地基打好'},
+     {label:'數據優化', desc:'用實驗與指標，把既有產品的體感一格一格往上推'},
+   ]},
+];
+
+/* Step 3 之一：活動意願，沿用 Step 2 的選項卡操作方式 */
+const ACTIVITY_QUESTIONS = [
+  {key:'actPM', tone:'pm', icon:'🔍', title:'PM 活動', en:'PM Practice',
+   hint:'可複選',
+   options:[
+     {label:'PM Coffee Chat', desc:'邀請不同產業的 Sr PM 來分享實際工作內容'},
+     {label:'PM Case Study', desc:'拿真實案例拆解決策過程，一起復盤怎麼做會更好'},
+     {label:'PM Career：轉職、獵頭、模擬面試', desc:'履歷健檢、獵頭情報與模擬面試，替下一步先做準備'},
+     {label:'PM 讀書會', desc:'針對產品書或工具書探討工作流程'},
+   ]},
+  {key:'actAI', tone:'ai', icon:'🤖', title:'AI 活動', en:'AI Practice',
+   hint:'可複選',
+   options:[
+     {label:'AI Workflow 分享', desc:'學習用 Dify / Make / n8n 等工作流程的工具，打造 AI 生活'},
+     {label:'AI 產品黑客松', desc:'每次選定某主題，一起現場用任何 AI 工具做出 Prototype 互相挑戰'},
+     {label:'AI 產品拆解', desc:'拆市面上的 AI 產品，看它解了什麼問題、又怎麼收費'},
+     {label:'AI Product Demo', desc:'每人各分享最近觀察到的有趣產品，互相分享喜歡的產品'},
+   ]},
+  {key:'actFun', tone:'fun', icon:'🎁', title:'休閒活動', en:'Team Recreation',
+   hint:'可複選', style:'chips',
+   options:['卡丁車','登山','漆彈','劇本殺','雷射槍','射箭','密室逃脫','桌遊',
+            '匹克球','羽球','路跑','小酌','露營','包棟民宿'],
+  },
+];
+
+/* 選項可以是字串（藥丸型）或 {label, desc}（選項卡） */
+const optLabels = q => q.options.map(o => typeof o === 'string' ? o : o.label);
+
+/* Step 3 之二：期待的社群元素（統一四字、不跟上一題的活動名稱重疊） */
+const ELEMENTS_QUESTION = {
+  key:'elements',
+  tone:'expect', icon:'✨', en:'Community Expectations',
+  title:'期待的社群元素',
+  hint:'你希望這個社群長成什麼樣子？可複選',
+  options:['持續成長','實戰經驗','拓展視野','專業深度','互相啟發',
+           '人脈連結','跨界交流','資源互換','情報流通',
+           '共同創作','彼此互助','同行陪伴','心理安全','誠實回饋',
+           '情緒療癒','輕鬆自在','一起玩樂'],
+};
+
+/* ==========================================================================
+   狀態
+   ========================================================================== */
+/* v2：Step 3 改題後舊資料結構已不相容，換 key 讓舊草稿自然失效 */
+const STORE_KEY = 'pmflight.proto.v2';
+const blankDraft = () => ({
+  id:null, name:'', destination:'', background:'', exp:'', pivot:'',
+  choices:{}, others:{}, seat:'', done:false
+});
+
+let state = {passengers:[], draft:blankDraft()};
+try{
+  const raw = localStorage.getItem(STORE_KEY);
+  if(raw){ const p = JSON.parse(raw); state = {passengers:p.passengers||[], draft:p.draft||blankDraft()}; }
+}catch(e){ /* 壞掉的舊資料就當作全新開始 */ }
+
+/* 題目改版後，舊存檔可能留著已不存在的選項；它們在畫面上點不到、也取消不掉，載入時先清掉 */
+const VALID_CHOICES = new Map(
+  [...CHOICE_QUESTIONS, ...ACTIVITY_QUESTIONS, ELEMENTS_QUESTION]
+    .map(q => [q.key, new Set(optLabels(q))])
+);
+function pruneChoices(p){
+  if(!p || !p.choices) return p;
+  for(const key of Object.keys(p.choices)){
+    const valid = VALID_CHOICES.get(key);
+    if(!valid){ delete p.choices[key]; delete p.others?.[key]; continue; }
+    p.choices[key] = (p.choices[key] || []).filter(v => valid.has(v));
+  }
+  return p;
+}
+pruneChoices(state.draft);
+state.passengers.forEach(pruneChoices);
+
+const save = () => { try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} };
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* 沙箱 iframe 會擋掉原生 confirm()，改用自製對話框 */
+function askConfirm(msg, okLabel='確定'){
+  return new Promise(resolve => {
+    const back = $('#modal-backdrop'), ok = $('#modal-ok'), cancel = $('#modal-cancel');
+    $('#modal-msg').textContent = msg;
+    ok.textContent = okLabel;
+    back.classList.add('show');
+    ok.focus();
+
+    const close = answer => {
+      back.classList.remove('show');
+      ok.removeEventListener('click', onOk);
+      cancel.removeEventListener('click', onCancel);
+      back.removeEventListener('click', onBackdrop);
+      document.removeEventListener('keydown', onKey);
+      resolve(answer);
+    };
+    const onOk = () => close(true);
+    const onCancel = () => close(false);
+    const onBackdrop = e => { if(e.target === back) close(false); };
+    const onKey = e => { if(e.key === 'Escape') close(false); };
+
+    ok.addEventListener('click', onOk);
+    cancel.addEventListener('click', onCancel);
+    back.addEventListener('click', onBackdrop);
+    document.addEventListener('keydown', onKey);
+  });
+}
+
+function seatCode(name){
+  let h = 0; for(const ch of (name||'PM')) h = (h*31 + ch.codePointAt(0)) >>> 0;
+  return (h % 40 + 1) + 'ABCDEFHJK'[h % 9];
+}
+function avatarGradient(name){
+  let h = 0; for(const ch of (name||'PM')) h = (h*17 + ch.codePointAt(0)) >>> 0;
+  const hue = h % 360;
+  return `linear-gradient(135deg,hsl(${hue},60%,42%) 0%,hsl(${(hue+45)%360},70%,30%) 100%)`;
+}
+const initials = n => (n||'PM').trim().slice(0,2).toUpperCase();
+
+/* 已選答案（含「其他」自填） */
+function answersOf(p, key){
+  const picked = (p.choices?.[key] || []).slice();
+  const other = (p.others?.[key] || '').trim();
+  if(other) picked.push(other);
+  return picked;
+}
+
+/* 兩題活動合起來看 */
+const activityAnswers = p => ACTIVITY_QUESTIONS.flatMap(q => answersOf(p, q.key));
+
+/* ==========================================================================
+   題目渲染
+   ========================================================================== */
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function buildQuestions(){
+  /* 「其他」接在選項後面，延續同一串英文字母；沒有編號的題目就用 ＋ */
+  const otherRow = (key, letter, variant) => `
+    <span class="option-other-wrapper${variant === 'card' ? ' card' : ''}">
+      <button type="button" class="option-chip" data-other="1">${letter ? letter + '. ' : '＋ '}其他</button>
+      <input type="text" class="other-input hidden" data-other-input="${key}">
+    </span>`;
+
+  /* 題目標題與「可複選…」說明並排 */
+  const head = q => `
+    <div class="q-head">
+      <label>
+        ${q.icon ? `<span class="q-icon">${q.icon}</span>` : ''}
+        ${esc(q.title)}
+        ${q.en ? `<span class="q-en">${esc(q.en)}</span>` : ''}
+      </label>
+      <span class="q-hint">${esc(q.hint)}</span>
+    </div>`;
+
+  /* Step 2 與 Step 3 活動題共用：A~E 選項卡 + 說明 */
+  const richQuestion = q => `
+    <div class="form-group full-width"${q.tone ? ` data-tone="${q.tone}"` : ''}>
+      ${head(q)}
+      <div class="option-chip-group stack" data-question="${q.key}">
+        <div class="rich-options">
+          ${q.options.map((o,i) => `
+            <button type="button" class="rich-option" data-pick="${esc(o.label)}">
+              <b>${LETTERS[i]}. ${esc(o.label)}</b><span>${esc(o.desc)}</span>
+            </button>`).join('')}
+        </div>
+        ${otherRow(q.key, LETTERS[q.options.length], 'card')}
+      </div>
+    </div>`;
+
+  /* 藥丸型選項：沒有說明也沒有序號 */
+  const chipQuestion = q => `
+    <div class="form-group full-width"${q.tone ? ` data-tone="${q.tone}"` : ''}>
+      ${head(q)}
+      <div class="option-chip-group stack" data-question="${q.key}">
+        <div class="element-grid">
+          ${optLabels(q).map(o => `<button type="button" class="option-chip" data-pick="${esc(o)}">${esc(o)}</button>`).join('')}
+        </div>
+        ${otherRow(q.key, null)}
+        <p class="pick-count" data-count="${q.key}"></p>
+      </div>
+    </div>`;
+
+  $('#step-2-questions').innerHTML =
+    CHOICE_QUESTIONS.map(richQuestion).join('') + `
+    <div class="form-actions">
+      <button class="btn btn-ghost" data-goto="1">← 上一步</button>
+      <button class="btn btn-gold" data-next="3">下一步 →</button>
+    </div>`;
+
+  $('#step-3-questions').innerHTML =
+    ACTIVITY_QUESTIONS.map(q => q.style === 'chips' ? chipQuestion(q) : richQuestion(q)).join('') +
+    chipQuestion(ELEMENTS_QUESTION) + `
+    <div class="form-actions">
+      <button class="btn btn-ghost" data-goto="2">← 上一步</button>
+      <button class="btn btn-gold" data-next="4">🛬 完成冒險</button>
+    </div>`;
+}
+
+/* 更新「已選 N 個」 */
+function updateCounts(){
+  $$('[data-count]').forEach(el => {
+    const n = (state.draft.choices[el.dataset.count] || []).length
+            + ((state.draft.others[el.dataset.count] || '').trim() ? 1 : 0);
+    el.textContent = n ? `已選 ${n} 個` : '尚未選擇';
+    el.classList.toggle('has', n > 0);
+  });
+}
+
+/* 把 draft 寫回表單欄位 */
+function hydrateForm(){
+  const d = state.draft;
+  $$('[data-field]').forEach(el => el.value = d[el.dataset.field] || '');
+
+  $$('.option-chip-group').forEach(group => {
+    const key = group.dataset.question;
+    const picked = d.choices[key] || [];
+    group.querySelectorAll('[data-pick]').forEach(el =>
+      el.classList.toggle('active', picked.includes(el.dataset.pick)));
+
+    const otherBtn = group.querySelector('[data-other]');
+    const otherInput = group.querySelector('[data-other-input]');
+    const hasOther = !!(d.others[key] || '').trim();
+    otherBtn.classList.toggle('active', hasOther);
+    otherInput.classList.toggle('hidden', !hasOther);
+    otherInput.value = d.others[key] || '';
+  });
+
+  updateCounts();
+}
+
+/* ==========================================================================
+   步驟切換
+   ========================================================================== */
+let currentStep = 1;
+function goToStep(n){
+  currentStep = n;
+  [1,2,3,4].forEach(i => $('#step-'+i).classList.toggle('hidden', i !== n));
+
+  $$('.step').forEach((btn,i) => {
+    btn.classList.toggle('active', i+1 === n);
+    btn.classList.toggle('done', i+1 < n);
+  });
+  $$('.step-line').forEach((l,i) => l.classList.toggle('filled', i+1 < n));
+
+  if(n === 4) renderPassport();
+  $('#main-content').scrollIntoView({block:'start'});
+}
+
+/* ==========================================================================
+   卡片藝廊
+   ========================================================================== */
+function cardHTML(p, isDraft){
+  const chipRow = (label, items) => items.length
+    ? `<div class="mini-label">${esc(label)}</div>
+       <div class="mini-chips">${items.map(x=>`<span class="mini-chip">${esc(x)}</span>`).join('')}</div>`
+    : '';
+
+  const step2 = CHOICE_QUESTIONS
+    .map(q => chipRow(q.title, answersOf(p, q.key)))
+    .join('');
+
+  const acts = activityAnswers(p);
+  const els  = answersOf(p, 'elements');
+  const step3 = chipRow('想參加的活動', acts) + chipRow(ELEMENTS_QUESTION.title, els);
+
+  const uid = p.id || 'draft';
+
+  return `
+  <article class="profile-card" data-card="${uid}">
+    <div class="card-status-bar"></div>
+    <div class="card-header">
+      <div class="card-avatar" style="background:${avatarGradient(p.name)}">${esc(initials(p.name))}</div>
+      <div class="card-header-info">
+        <h3>${esc(p.name || 'Passenger')}</h3>
+        <p class="card-sub">🎓 ${esc(p.background || '—')} ${p.destination?'· ✈︎ '+esc(p.destination):''}</p>
+      </div>
+    </div>
+    <div class="customs-stamp">${isDraft ? 'IN PROGRESS' : 'APPROVED / CLEARED'}</div>
+    <div class="card-body">
+      <div class="card-item">
+        <span class="card-icon">🛫</span>
+        <div><label>這幾年的有趣故事</label><p>${esc(p.exp || '—')}</p></div>
+      </div>
+      <div class="card-item">
+        <span class="card-icon">🔄</span>
+        <div><label>職涯 Pivot 轉折點</label><p>${esc(p.pivot || '—')}</p></div>
+      </div>
+    </div>
+    <div class="card-tabs">
+      <button class="card-tab active" data-tab="step2">Step 2 · Future</button>
+      <button class="card-tab" data-tab="step3">Step 3 · Present</button>
+    </div>
+    <div class="card-tab-panels">
+      <div class="card-tab-panel active" data-panel="step2">
+        ${step2 || '<p class="card-empty-state">尚未完成 Step 2</p>'}
+      </div>
+      <div class="card-tab-panel" data-panel="step3">
+        ${step3 || '<p class="card-empty-state">尚未完成 Step 3</p>'}
+      </div>
+    </div>
+    ${isDraft ? '' : `<div class="card-footer">
+      <div class="card-actions">
+        <button class="card-mini-btn" data-edit="${uid}">編輯</button>
+        <button class="card-mini-btn" data-remove="${uid}">移除</button>
+      </div>
+    </div>`}
+  </article>`;
+}
+
+function renderGallery(){
+  const d = state.draft;
+  const draftVisible = !!(d.name || '').trim();
+  const list = state.passengers.slice().reverse();
+  const total = state.passengers.length + (draftVisible ? 1 : 0);
+
+  $('#gallery-count').textContent = `${total} PAX ON BOARD`;
+  $('#gallery-empty').classList.toggle('hidden', total > 0);
+  $('#gallery-grid').classList.toggle('hidden', total === 0);
+  $('#gallery-grid').innerHTML =
+    (draftVisible ? cardHTML(d, true) : '') + list.map(p => cardHTML(p, false)).join('');
+
+  requestAnimationFrame(() => $$('.profile-card').forEach(c => c.classList.add('in')));
+}
+
+/* ==========================================================================
+   護照
+   ========================================================================== */
+function renderPassport(){
+  const p = state.draft;
+  const name = (p.name || 'Passenger').toUpperCase();
+  const seat = p.seat || (p.seat = seatCode(p.name));
+
+  const futureChips = CHOICE_QUESTIONS.flatMap(q => answersOf(p, q.key));
+  const acts = activityAnswers(p);
+  const els  = answersOf(p, 'elements');
+
+  const chips = items => items.length
+    ? items.map(c=>`<span class="pp-chip">${esc(c)}</span>`).join('')
+    : '<span class="pp-chip">尚未選擇</span>';
+
+  /* 每個階段自帶一枚章，放在該段右側 */
+  const stage = (cls, title, body, stamp) => `
+    <div class="pp-stage">
+      <div class="pp-stage-main">
+        <div class="pp-section-title">${title}</div>
+        ${body}
+      </div>
+      <div class="stamp ${cls}">${stamp[0]}<em>${stamp[1]}</em>${stamp[2]}</div>
+    </div>`;
+
+  $('#passport-body').innerHTML = `
+    <div class="pp-fields">
+      <div class="pp-field"><label>Surname / 旅客</label><span>${esc(name)}</span></div>
+      <div class="pp-field"><label>Origin / 出發地</label><span>${esc(p.background || 'PAST')}</span></div>
+      <div class="pp-field"><label>Destination / 目的地</label><span>${esc(p.destination || 'Future & Growth')}</span></div>
+      <div class="pp-field"><label>Flight / Seat</label><span>JX-2026 · ${esc(seat)}</span></div>
+      <div class="pp-field"><label>Gate</label><span>Cafe</span></div>
+      <div class="pp-field"><label>Date of Issue</label><span>${new Date().toLocaleDateString('zh-TW')}</span></div>
+    </div>
+
+    <div class="pp-divider"></div>
+
+    ${stage('s1', 'PAST · 這一路怎麼飛過來的', `
+      <div class="pp-list">
+        <div><b>有趣故事</b><br>${esc(p.exp || '—')}</div>
+        <div><b>Pivot 轉折點</b><br>${esc(p.pivot || '—')}</div>
+      </div>`, ['IMMIGRATION','PAST','CLEARED'])}
+
+    ${stage('s2', 'FUTURE · 接下來想飛去哪',
+      `<div class="pp-chips">${chips(futureChips)}</div>`, ['DEPARTURE','FUTURE','BOARDED'])}
+
+    ${stage('s3', 'PRESENT · 想跟大家一起做的事',
+      `<div class="pp-chips">${chips(acts)}</div>`, ['ARRIVAL','PRESENT','WELCOME'])}
+
+    <div class="pp-section-title">EXPECTATIONS · ${esc(ELEMENTS_QUESTION.title)}</div>
+    <div class="pp-chips">${chips(els)}</div>`;
+
+  const mrzName = name.replace(/[^A-Z0-9]/g,'').padEnd(12,'<').slice(0,12);
+  const dst = (p.destination||'FUTURE').toUpperCase().replace(/[^A-Z0-9]/g,'').padEnd(10,'<').slice(0,10);
+  $('#passport-mrz').innerHTML =
+    `P&lt;JXPMFLIGHT&lt;&lt;${mrzName}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>JX2026${seat}&lt;${dst}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;01`;
+}
+
+/* ==========================================================================
+   護照圖片輸出：自己畫在 canvas 上（外部函式庫會被 CSP 擋掉）
+   ========================================================================== */
+const PP = {
+  ink:'#12161a', paper:'#f4f2ec', gold:'#bca46a', goldDark:'#8b7443',
+  text:'#1f2937', mid:'#4b5563', soft:'#7c8794',
+  chipBg:'#efe6d2', chipLine:'rgba(139,116,67,.4)', chipInk:'#4b3d18',
+  s1:'#0f766e', s2:'#b45309', s3:'#9f1239',
+};
+const F_SANS  = '"PingFang TC","Noto Sans TC","Helvetica Neue",Arial,sans-serif';
+const F_MONO  = 'ui-monospace,"SF Mono",Menlo,monospace';
+const F_SERIF = '"Times New Roman",Times,serif';
+
+function drawPassportImage(p){
+  const W = 760, PAD = 40, CW = W - PAD*2, SCALE = 2;
+  const STAMP_COL = 92, STAMP_R = 29;
+  const contentW = CW - STAMP_COL;
+
+  const cv = document.createElement('canvas');
+  const ctx = cv.getContext('2d');
+
+  /* ctx.letterSpacing 不是所有瀏覽器都支援，設不上就算了 */
+  const ls = v => { try{ ctx.letterSpacing = v; }catch(e){} };
+
+  const tokenize = s => String(s).match(/[A-Za-z0-9]+['’.,:]?|\s|[^\s]/g) || [];
+  function wrap(text, font, maxW){
+    ctx.font = font;
+    const out = []; let line = '';
+    for(const t of tokenize(text)){
+      if(t === ' ' && !line) continue;
+      const next = line + t;
+      if(line && ctx.measureText(next).width > maxW){ out.push(line.trimEnd()); line = (t === ' ' ? '' : t); }
+      else line = next;
+    }
+    if(line.trim()) out.push(line.trimEnd());
+    return out.length ? out : ['—'];
+  }
+
+  function roundRect(x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y,   x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x,   y+h, r);
+    ctx.arcTo(x,   y+h, x,   y,   r);
+    ctx.arcTo(x,   y,   x+w, y,   r);
+    ctx.closePath();
+  }
+
+  const name = (p.name || 'Passenger').toUpperCase();
+  const seat = p.seat || seatCode(p.name);
+  const futureChips = CHOICE_QUESTIONS.flatMap(q => answersOf(p, q.key));
+  const acts = activityAnswers(p);
+  const els  = answersOf(p, ELEMENTS_QUESTION.key);
+
+  const mrzName = name.replace(/[^A-Z0-9]/g,'').padEnd(12,'<').slice(0,12);
+  const mrzDst  = (p.destination || 'FUTURE').toUpperCase().replace(/[^A-Z0-9]/g,'').padEnd(10,'<').slice(0,10);
+  const mrz1 = `P<JXPMFLIGHT<<${mrzName}<<<<<<<<`;
+  const mrz2 = `JX2026${seat}<${mrzDst}<<<<<<<<<<<<<01`;
+
+  function sectionTitle(t, y, draw){
+    if(draw){
+      ctx.fillStyle = PP.goldDark; ctx.font = `800 10px ${F_MONO}`;
+      ls('1.6px'); ctx.textBaseline = 'top'; ctx.fillText(t, PAD, y); ls('0px');
+    }
+    return y + 19;
+  }
+
+  function chipsBlock(items, y, maxW, draw){
+    const font = `600 13px ${F_SANS}`, h = 24, padX = 11, gap = 6;
+    const list = items.length ? items : ['尚未選擇'];
+    let cx = PAD, cy = y;
+    ctx.font = font;
+    for(const it of list){
+      const w = ctx.measureText(it).width + padX*2;
+      if(cx > PAD && cx + w > PAD + maxW){ cx = PAD; cy += h + gap; }
+      if(draw){
+        roundRect(cx, cy, w, h, 12);
+        ctx.fillStyle = PP.chipBg; ctx.fill();
+        ctx.strokeStyle = PP.chipLine; ctx.lineWidth = 1; ctx.stroke();
+        ctx.fillStyle = PP.chipInk; ctx.font = font;
+        ctx.textBaseline = 'middle'; ctx.fillText(it, cx + padX, cy + h/2 + 0.5);
+        ctx.textBaseline = 'top';
+      }
+      cx += w + gap;
+    }
+    return cy + h;
+  }
+
+  function drawStamp(cxp, cyp, color, top, mid, bot, angle, draw){
+    if(!draw) return;
+    ctx.save();
+    ctx.translate(cxp, cyp); ctx.rotate(angle); ctx.globalAlpha = .75;
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, 0, STAMP_R, 0, Math.PI*2); ctx.stroke();
+    ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = `800 7px ${F_MONO}`;  ctx.fillText(top, 0, -13);
+    ctx.font = `800 11px ${F_MONO}`; ctx.fillText(mid, 0, 0);
+    ctx.font = `800 7px ${F_MONO}`;  ctx.fillText(bot, 0, 13);
+    ctx.restore();
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  }
+
+  /* 第一趟只量高度，第二趟才真的畫 */
+  function run(draw){
+    let y = 0;
+    const headH = 92;
+    if(draw){
+      ctx.fillStyle = PP.ink; ctx.fillRect(0, 0, W, headH);
+      ctx.fillStyle = PP.gold; ctx.fillRect(0, headH-3, W, 3);
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = PP.gold;
+      ctx.font = `400 15px ${F_SERIF}`; ls('4px');  ctx.fillText('✈  ★  ✈', W/2, 40);
+      ctx.font = `700 23px ${F_SERIF}`; ls('5px');  ctx.fillText('PM FLIGHT PASSPORT', W/2, 72);
+      ls('0px'); ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    }
+    y = headH + 30;
+
+    /* 基本欄位：三欄兩列 */
+    const colGap = 24, colW = (CW - colGap*2) / 3;
+    const fields = [
+      ['SURNAME / 旅客', name],
+      ['ORIGIN / 出發地', p.background || 'PAST'],
+      ['DESTINATION / 目的地', p.destination || 'Future & Growth'],
+      ['FLIGHT / SEAT', `JX-2026 · ${seat}`],
+      ['GATE', 'Cafe'],
+      ['DATE OF ISSUE', new Date().toLocaleDateString('zh-TW')],
+    ];
+    let rowTop = y, rowMax = 0;
+    fields.forEach((f, i) => {
+      const col = i % 3;
+      if(col === 0 && i){ rowTop += rowMax + 16; rowMax = 0; }
+      const x = PAD + col*(colW + colGap);
+      const lines = wrap(f[1], `600 14px ${F_SANS}`, colW);
+      if(draw){
+        ctx.fillStyle = PP.goldDark; ctx.font = `700 9px ${F_MONO}`;
+        ls('1.2px'); ctx.fillText(f[0], x, rowTop); ls('0px');
+        ctx.fillStyle = PP.text; ctx.font = `600 14px ${F_SANS}`;
+        lines.forEach((ln, k) => ctx.fillText(ln, x, rowTop + 15 + k*19));
+      }
+      rowMax = Math.max(rowMax, 15 + lines.length*19);
+    });
+    y = rowTop + rowMax + 22;
+
+    if(draw){
+      ctx.strokeStyle = 'rgba(139,116,67,.45)'; ctx.lineWidth = 1;
+      ctx.setLineDash([6,6]);
+      ctx.beginPath(); ctx.moveTo(PAD, y); ctx.lineTo(W-PAD, y); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    y += 24;
+
+    /* PAST */
+    let top = y;
+    let yy = sectionTitle('PAST · 這一路怎麼飛過來的', y, draw);
+    [['有趣故事', p.exp], ['Pivot 轉折點', p.pivot]].forEach(([lab, val]) => {
+      if(draw){ ctx.fillStyle = PP.soft; ctx.font = `700 11px ${F_SANS}`; ctx.fillText(lab, PAD, yy); }
+      yy += 16;
+      const lines = wrap(val || '—', `400 13px ${F_SANS}`, contentW);
+      if(draw){
+        ctx.fillStyle = PP.mid; ctx.font = `400 13px ${F_SANS}`;
+        lines.forEach((ln, k) => ctx.fillText(ln, PAD, yy + k*18));
+      }
+      yy += lines.length*18 + 9;
+    });
+    drawStamp(W - PAD - STAMP_R - 4, top + STAMP_R + 6, PP.s1, 'IMMIGRATION','PAST','CLEARED', -0.19, draw);
+    y = Math.max(yy, top + STAMP_R*2 + 14) + 12;
+
+    /* FUTURE */
+    top = y;
+    yy = chipsBlock(futureChips, sectionTitle('FUTURE · 接下來想飛去哪', y, draw), contentW, draw);
+    drawStamp(W - PAD - STAMP_R - 4, top + STAMP_R + 6, PP.s2, 'DEPARTURE','FUTURE','BOARDED', 0.12, draw);
+    y = Math.max(yy, top + STAMP_R*2 + 14) + 16;
+
+    /* PRESENT */
+    top = y;
+    yy = chipsBlock(acts, sectionTitle('PRESENT · 想跟大家一起做的事', y, draw), contentW, draw);
+    drawStamp(W - PAD - STAMP_R - 4, top + STAMP_R + 6, PP.s3, 'ARRIVAL','PRESENT','WELCOME', -0.09, draw);
+    y = Math.max(yy, top + STAMP_R*2 + 14) + 16;
+
+    /* EXPECTATIONS：沒有對應的章，可以用滿版寬度 */
+    y = chipsBlock(els, sectionTitle(`EXPECTATIONS · ${ELEMENTS_QUESTION.title}`, y, draw), CW, draw) + 26;
+
+    /* MRZ 機讀區 */
+    const mrzH = 58;
+    if(draw){
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, y, W, mrzH);
+      ctx.strokeStyle = '#ddd6c4'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke();
+      ctx.fillStyle = PP.mid; ctx.font = `400 12px ${F_MONO}`; ls('1.5px');
+      ctx.fillText(mrz1, PAD, y + 15);
+      ctx.fillText(mrz2, PAD, y + 33);
+      ls('0px');
+    }
+    return y + mrzH;
+  }
+
+  const H = Math.ceil(run(false));
+  cv.width = W * SCALE; cv.height = H * SCALE;
+  ctx.scale(SCALE, SCALE);
+  ctx.fillStyle = PP.paper; ctx.fillRect(0, 0, W, H);
+  run(true);
+  return cv;
+}
+
+/* 直接存檔。嵌在 iframe 裡時 <a download> 常被沙箱擋掉，所以依序嘗試
+   三種管道，哪一種被允許就用哪一種，全部失敗才回報實際錯誤 */
+/* 發佈成 Artifact 時，平台提供的 downloads 能力是唯一不會被 iframe 沙箱擋掉的存檔方式。
+   在本機直接開檔時不存在，所以要能優雅地退回一般做法。
+   在載入時就先解析好，這樣點擊當下不必 await，才不會弄丟使用者手勢。 */
+let claudeDownloads = null;
+(async () => {
+  try{
+    if(typeof claude !== 'undefined' && claude && typeof claude.use === 'function'){
+      claudeDownloads = await claude.use('downloads');
+    }
+  }catch(err){ claudeDownloads = null; }
+})();
+
+async function savePassportImage(){
+  const p = state.draft;
+  const safe = (p.name || 'passenger').replace(/[\\/:*?"<>|\s]+/g, '-') || 'passenger';
+  const filename = `PM-Flight-Passport-${safe}.jpg`;
+
+  const makeBlob = async () => {
+    try{
+      const cv = drawPassportImage(p);
+      return await new Promise(res => cv.toBlob(res, 'image/jpeg', 0.92));
+    }catch(err){ return null; }
+  };
+
+  /* 0. Artifact 內：交給平台存檔，會跳出平台自己的確認視窗 */
+  if(claudeDownloads){
+    const b = await makeBlob();
+    if(!b){ toast('圖片產生失敗，請再試一次'); return; }
+    try{
+      await claudeDownloads.save({filename, data:b});
+      toast('護照圖片已儲存 📸');
+    }catch(err){
+      const code = err && err.code;
+      if(code === 'declined') return;                       // 使用者按取消
+      else if(code === 'rate_limited') toast('剛剛已經有一個存檔視窗，請稍候再試');
+      else if(code === 'too_large')    toast('圖片太大，存檔失敗');
+      else toast('存檔失敗，請再試一次');
+    }
+    return;
+  }
+
+  /* showSaveFilePicker 與 navigator.share 都要求「還在使用者手勢裡」才能呼叫，
+     所以必須先開對話框、之後才畫圖；先 await 產圖會讓手勢失效。 */
+  let handle = null;
+  if(window.showSaveFilePicker){
+    try{
+      handle = await window.showSaveFilePicker({
+        suggestedName: filename,
+        types:[{description:'JPEG 圖片', accept:{'image/jpeg':['.jpg']}}],
+      });
+    }catch(err){
+      if(err && err.name === 'AbortError') return;   // 使用者自己按取消
+      handle = null;                                  // 沒權限就往下一種方式試
+    }
+  }
+
+  const blob = await makeBlob();
+  if(!blob){ toast('圖片產生失敗，請再試一次'); return; }
+
+  /* 1. 系統的「另存新檔」 */
+  if(handle){
+    try{
+      const stream = await handle.createWritable();
+      await stream.write(blob);
+      await stream.close();
+      toast('護照圖片已儲存 📸');
+      return;
+    }catch(err){ /* 寫入失敗就往下試 */ }
+  }
+
+  /* 2. 手機：系統分享，可存到相簿或檔案 */
+  try{
+    const file = new File([blob], filename, {type:'image/jpeg'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], title:'PM Flight Passport'});
+      return;
+    }
+  }catch(err){
+    if(err && err.name === 'AbortError') return;
+  }
+
+  /* 3. 一般下載連結。點完不能馬上移除，否則下載會被取消 */
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.rel = 'noopener';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { a.remove(); URL.revokeObjectURL(url); }, 10000);
+  toast('護照圖片已儲存 📸');
+}
+
+function passportText(){
+  const p = state.draft;
+  const lines = [
+    `✈︎ PM FLIGHT PASSPORT · JX-2026`,
+    `旅客：${p.name} ｜ 座位：${p.seat || seatCode(p.name)} ｜ 目的地：${p.destination || '—'}`,
+    ``,
+    `【PAST】`,
+    `背景：${p.background || '—'}`,
+    `有趣故事：${p.exp || '—'}`,
+    `Pivot：${p.pivot || '—'}`,
+    ``,
+    `【FUTURE】`,
+    ...CHOICE_QUESTIONS.map(q => `${q.title}：${answersOf(p,q.key).join('、') || '—'}`),
+    ``,
+    `【PRESENT】`,
+    ...ACTIVITY_QUESTIONS.map(q => `${q.title}：${answersOf(p,q.key).join('、') || '—'}`),
+    `${ELEMENTS_QUESTION.title}：${answersOf(p, ELEMENTS_QUESTION.key).join('、') || '—'}`,
+  ];
+  return lines.join('\n');
+}
+
+/* ==========================================================================
+   事件
+   ========================================================================== */
+buildQuestions();
+hydrateForm();
+renderGallery();
+
+/* 登機 */
+$('#boarding-name').addEventListener('input', e => {
+  state.draft.name = e.target.value;
+  state.draft.seat = seatCode(e.target.value);
+  $('#stub-seat').textContent = e.target.value.trim() ? state.draft.seat : '—';
+});
+$('#boarding-destination').addEventListener('input', e => {
+  state.draft.destination = e.target.value;
+  $('#stub-destination').textContent = e.target.value.trim() || 'Future & Growth';
+});
+$('#boarding-name').value = state.draft.name || '';
+$('#boarding-destination').value = state.draft.destination || '';
+
+function enterCabin(){
+  const name = $('#boarding-name').value.trim();
+  if(!name){ $('#boarding-name').focus(); toast('先填上你的名字才能登機 ✈︎'); return; }
+  state.draft.name = name;
+  state.draft.destination = $('#boarding-destination').value.trim();
+  state.draft.seat = seatCode(name);
+  save();
+
+  $('#onboarding-screen').classList.add('fly-out');
+  setTimeout(() => {
+    $('#onboarding-screen').classList.add('hidden');
+    $('#main-content-wrap').classList.remove('hidden');
+    hydrateForm();
+    renderGallery();
+    goToStep(1);
+  }, 600);
+}
+$('#boarding-btn').addEventListener('click', enterCabin);
+$('#nav-cabin').addEventListener('click', enterCabin);
+$('#boarding-destination').addEventListener('keydown', e => { if(e.key === 'Enter') enterCabin(); });
+$('#boarding-name').addEventListener('keydown', e => { if(e.key === 'Enter') $('#boarding-destination').focus(); });
+
+$('#brand-logo').addEventListener('click', () => {
+  $('#main-content-wrap').classList.add('hidden');
+  $('#onboarding-screen').classList.remove('hidden','fly-out');
+  window.scrollTo({top:0});
+});
+
+$('#nav-reset').addEventListener('click', async () => {
+  if(!await askConfirm('這會清掉這台裝置上的所有旅客資料，確定重新開始？', '清除重來')) return;
+  try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+  location.reload();
+});
+
+/* 表單輸入 → draft → 卡片即時更新 */
+$('#form-section').addEventListener('input', e => {
+  const t = e.target;
+  if(t.dataset.field)           state.draft[t.dataset.field] = t.value;
+  else if(t.dataset.otherInput) state.draft.others[t.dataset.otherInput] = t.value;
+  else return;
+  save(); updateCounts(); renderGallery();
+});
+
+/* chip 複選 + 其他 */
+$('#form-section').addEventListener('click', e => {
+  const opt = e.target.closest('[data-pick],[data-other]');
+  if(opt){
+    const group = opt.closest('.option-chip-group');
+    const key = group.dataset.question;
+
+    if(opt.dataset.other){
+      opt.classList.toggle('active');
+      const input = group.querySelector('[data-other-input]');
+      const on = opt.classList.contains('active');
+      input.classList.toggle('hidden', !on);
+      if(on) input.focus();
+      else { input.value = ''; state.draft.others[key] = ''; }
+    }else{
+      opt.classList.toggle('active');
+      state.draft.choices[key] = Array.from(group.querySelectorAll('[data-pick].active'))
+        .map(el => el.dataset.pick);
+    }
+    save(); updateCounts(); renderGallery();
+    return;
+  }
+
+  const nav = e.target.closest('[data-goto],[data-next]');
+  if(nav){
+    const target = Number(nav.dataset.goto || nav.dataset.next);
+    if(nav.dataset.next && !state.draft.name.trim()){
+      toast('先填上名字吧 🙌'); return;
+    }
+    goToStep(target);
+  }
+});
+
+/* 進度條 */
+$$('.step').forEach(btn => btn.addEventListener('click', () => goToStep(Number(btn.dataset.goto))));
+
+/* 卡片 tab / 編輯 / 移除 */
+$('#gallery-grid').addEventListener('click', async e => {
+  const tab = e.target.closest('.card-tab');
+  if(tab){
+    const card = tab.closest('.profile-card');
+    card.querySelectorAll('.card-tab').forEach(t => t.classList.toggle('active', t === tab));
+    card.querySelectorAll('.card-tab-panel').forEach(pnl =>
+      pnl.classList.toggle('active', pnl.dataset.panel === tab.dataset.tab));
+    return;
+  }
+  const edit = e.target.closest('[data-edit]');
+  if(edit){
+    const p = state.passengers.find(x => x.id === edit.dataset.edit);
+    if(!p) return;
+    if((state.draft.name||'').trim() &&
+       !await askConfirm(`目前有一份「${state.draft.name}」還沒送出，載入 ${p.name} 會蓋掉它。要繼續嗎？`, '載入')) return;
+    state.passengers = state.passengers.filter(x => x.id !== p.id);
+    state.draft = {...p, done:false};
+    save(); hydrateForm(); renderGallery(); goToStep(1);
+    toast(`已載入 ${p.name} 的資料`);
+    return;
+  }
+  const rm = e.target.closest('[data-remove]');
+  if(rm){
+    const target = state.passengers.find(x => x.id === rm.dataset.remove);
+    if(!await askConfirm(`要把 ${target ? target.name : '這位旅客'} 從名單移除嗎？`, '移除')) return;
+    state.passengers = state.passengers.filter(x => x.id !== rm.dataset.remove);
+    save(); renderGallery();
+  }
+});
+
+/* 護照動作 */
+$('#btn-download').addEventListener('click', savePassportImage);
+$('#btn-copy').addEventListener('click', async () => {
+  const text = passportText();
+  try{
+    await navigator.clipboard.writeText(text);
+    toast('已複製文字版護照 📋');
+    return;
+  }catch(err){ /* iframe 裡沒有剪貼簿權限，改用備援 */ }
+
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly','');
+  ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+  document.body.appendChild(ta);
+  ta.select();
+  const ok = (()=>{ try{ return document.execCommand('copy'); }catch(e){ return false; } })();
+  ta.remove();
+  toast(ok ? '已複製文字版護照 📋' : '複製被瀏覽器擋下，請改用「列印 / 存 PDF」');
+});
+$('#btn-new-passenger').addEventListener('click', () => {
+  const p = {...state.draft, id:'p_'+Date.now().toString(36), done:true};
+  state.passengers.push(p);
+  state.draft = blankDraft();
+  save();
+  hydrateForm(); renderGallery();
+  $('#boarding-name').value = ''; $('#boarding-destination').value = '';
+  $('#stub-destination').textContent = 'Future & Growth';
+  $('#stub-seat').textContent = '—';
+  $('#main-content-wrap').classList.add('hidden');
+  $('#onboarding-screen').classList.remove('hidden','fly-out');
+  window.scrollTo({top:0});
+  toast(`${p.name} 已登機，換下一位 ✈︎`);
+});
+
+/* ==========================================================================
+   星空背景
+   ========================================================================== */
+(function starfield(){
+  const cv = document.getElementById('starfield');
+  const ctx = cv.getContext('2d');
+  let w, h, stars = [], shooting = null, dpr = Math.min(devicePixelRatio || 1, 2);
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    w = cv.width = innerWidth * dpr;
+    h = cv.height = innerHeight * dpr;
+    cv.style.width = innerWidth + 'px';
+    cv.style.height = innerHeight + 'px';
+    const count = Math.round(innerWidth * innerHeight / 9000);
+    stars = Array.from({length:count}, () => ({
+      x: Math.random()*w, y: Math.random()*h,
+      r: (Math.random()*1.1 + .25) * dpr,
+      a: Math.random(), s: Math.random()*.012 + .003,
+      gold: Math.random() < .3
+    }));
+  }
+
+  function loop(){
+    ctx.clearRect(0,0,w,h);
+    for(const st of stars){
+      if(!calm) st.a += st.s;
+      const alpha = .28 + Math.abs(Math.sin(st.a)) * .55;
+      ctx.beginPath();
+      ctx.arc(st.x, st.y, st.r, 0, Math.PI*2);
+      ctx.fillStyle = st.gold ? `rgba(188,164,106,${alpha})` : `rgba(220,232,240,${alpha*.7})`;
+      ctx.fill();
+    }
+
+    if(calm){ return; }
+
+    if(!shooting && Math.random() < .0035){
+      shooting = {x: Math.random()*w*.7, y: Math.random()*h*.4, len:0, max:(140+Math.random()*120)*dpr};
+    }
+    if(shooting){
+      shooting.len += 9 * dpr;
+      const {x,y,len} = shooting;
+      const g = ctx.createLinearGradient(x, y, x+len, y+len*.45);
+      g.addColorStop(0,'rgba(188,164,106,0)');
+      g.addColorStop(1,'rgba(188,164,106,.85)');
+      ctx.strokeStyle = g; ctx.lineWidth = 1.2*dpr;
+      ctx.beginPath();
+      ctx.moveTo(x, y); ctx.lineTo(x+len, y+len*.45); ctx.stroke();
+      if(len > shooting.max) shooting = null;
+    }
+    requestAnimationFrame(loop);
+  }
+
+  /* calm 模式下 loop() 只畫一次就 return，所以縮放後要補畫 */
+  addEventListener('resize', () => { resize(); if(calm) loop(); });
+  resize(); loop();
+})();
+</script>
 </body>
 </html>
