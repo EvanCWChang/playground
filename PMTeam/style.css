@@ -3183,27 +3183,34 @@ body {
     margin-right: 6px !important;
 }
 
-/* Input Styles: clean, fine border, light background (matching boarding pass style) */
-.form-group input {
-    background-color: #fdfbf7 !important; /* Light cream warm background like the ticket */
-    border: 1px solid rgba(139, 116, 67, 0.3) !important; /* Golden border */
+/* Input & Textarea Styles: clean, fine border, light background (matching boarding pass style) */
+.form-group input,
+.form-group textarea {
+    background-color: #fdfbf7 !important;
+    border: 1px solid rgba(139, 116, 67, 0.3) !important;
     border-radius: 8px !important;
-    color: #111518 !important; /* Dark text for high contrast and readability */
+    color: #111518 !important;
     font-size: 1rem !important;
     padding: 12px 16px !important;
     box-shadow: none !important;
     transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
 }
 
-.form-group input:focus {
-    border-color: #8b7443 !important; /* Golden focus */
-    background-color: #ffffff !important; /* Pure white on focus */
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #8b7443 !important;
+    background-color: #ffffff !important;
     color: #111518 !important;
-    box-shadow: 0 0 0 3px rgba(139, 116, 67, 0.15) !important; /* Elegant subtle focus glow */
+    box-shadow: 0 0 0 3px rgba(139, 116, 67, 0.15) !important;
+    outline: none !important;
 }
 
-.form-group input::placeholder {
-    color: rgba(17, 21, 24, 0.4) !important; /* Legible dark placeholder */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(17, 21, 24, 0.4) !important;
     font-size: 0.9rem !important;
 }
 
