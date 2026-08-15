@@ -389,72 +389,88 @@
                             <p class="section-subtitle">檢查你擁有的專業技能，以及旅途中需要的夥伴支援</p>
                         </div>
                         <div class="form-grid">
-                        <!-- 1. 早上開機必備儀式 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-morning"><span class="badge badge-primary">21</span> ☕ 早上開機必備儀式</label>
-                            <input type="text" id="input-present-morning" placeholder="例如：美式咖啡 / 聽音樂 15 分鐘 / 漂浮發呆">
+                            <!-- Q5. 社群期待 (搬移並重新編號) -->
+                            <div class="form-group full-width">
+                                <label><span class="badge badge-primary">15</span> Q5. 【社群期待】如果接下來要參加 PM 社群交流，你最希望獲得什麼？</label>
+                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
+                                <div class="option-chip-group multi-choice-group" data-question="q10">
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="拓展視野：Coffee Chat、產業特務分享、跨界對談">A. 拓展視野：Coffee Chat、產業特務分享、跨界對談</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作">B. 實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享">C. 職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享</button>
+                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="抱團取暖：PM 吐槽與療癒同樂會、同儕交流">D. 抱團取暖：PM 吐槽與療癒同樂會、同儕交流</button>
+                                    <div class="option-other-wrapper">
+                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
+                                        <input type="text" class="other-input hidden" id="q10-other" placeholder="請填寫其他選項">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 16. 早上開機必備儀式 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-morning"><span class="badge badge-primary">16</span> ☕ 早上開機必備儀式</label>
+                                <input type="text" id="input-present-morning" placeholder="例如：美式咖啡 / 聽音樂 15 分鐘 / 漂浮發呆">
+                            </div>
+
+                            <!-- 17. 跟你溝通最順暢的小撇步 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-comm"><span class="badge badge-primary">17</span> ⚡ 跟你溝通最順暢的小撇步</label>
+                                <input type="text" id="input-present-comm" placeholder="例如：比起打字更喜歡面聊 / 請直接講重點">
+                            </div>
+
+                            <!-- 18. 你的地雷 / 能量歸零開關 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-mine"><span class="badge badge-primary">18</span> 🪫 你的地雷 / 能量歸零開關</label>
+                                <input type="text" id="input-present-mine" placeholder="例如：臨時插急件 / 沒目的的會議">
+                            </div>
+
+                            <!-- 19. 你的充電方式 / 快樂源泉 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-charge"><span class="badge badge-primary">19</span> 🔋 你的充電方式 / 快樂源泉</label>
+                                <input type="text" id="input-present-charge" placeholder="例如：吃甜點 / 聽 Podcast / 狂揍手作貓咪">
+                            </div>
+
+                            <!-- 20. 你可以給團隊的硬核支援 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-support-hard"><span class="badge badge-primary">20</span> 💡 你可以給團隊的硬核支援</label>
+                                <input type="text" id="input-present-support-hard" placeholder="例如：熟練 Figma / 幫忙除錯 SQL / 擅長寫文件">
+                            </div>
+
+                            <!-- 21. 你可以給團隊的私房支援 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-support-soft"><span class="badge badge-primary">21</span> 🍔 你可以給團隊的私房支援</label>
+                                <input type="text" id="input-present-support-soft" placeholder="例如：知道全公司最讚便當 / 團購食物大師">
+                            </div>
+
+                            <!-- 22. 你現在最需要的「工作應援」 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-need-work"><span class="badge badge-primary">22</span> 🆘 你現在最需要的「工作應援」</label>
+                                <input type="text" id="input-present-need-work" placeholder="例如：求 Code Review / 需要數據工具教學">
+                            </div>
+
+                            <!-- 23. 你現在最需要的「生活應援」 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-need-life"><span class="badge badge-primary">23</span> 🏃‍♂️ 你現在最需要的「生活應援」</label>
+                                <input type="text" id="input-present-need-life" placeholder="例如：求運動揪團夥伴 / 求推薦好看美劇">
+                            </div>
+
+                            <!-- 24. 你最欣賞 PM 團隊的一個優點 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-admire"><span class="badge badge-primary">24</span> ❤️ 你最欣賞 PM 團隊的一個優點</label>
+                                <input type="text" id="input-present-admire" placeholder="例如：大家反應很快 / 包容度很高">
+                            </div>
+
+                            <!-- 25. 想給現在 the PM 團隊大家的一句話 -->
+                            <div class="form-group full-width">
+                                <label for="input-present-message"><span class="badge badge-primary">25</span> 💌 想給現在的 PM 團隊大家的一句話</label>
+                                <input type="text" id="input-present-message" placeholder="例如：下半年大家一起加油，準時下班！">
+                            </div>
                         </div>
 
-                        <!-- 2. 跟你溝通最順暢的小撇步 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-comm"><span class="badge badge-primary">22</span> ⚡ 跟你溝通最順暢的小撇步</label>
-                            <input type="text" id="input-present-comm" placeholder="例如：比起打字更喜歡面聊 / 請直接講重點">
-                        </div>
-
-                        <!-- 3. 你的地雷 / 能量歸零開關 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-mine"><span class="badge badge-primary">23</span> 🪫 你的地雷 / 能量歸零開關</label>
-                            <input type="text" id="input-present-mine" placeholder="例如：臨時插急件 / 沒目的的會議">
-                        </div>
-
-                        <!-- 4. 你的充電方式 / 快樂源泉 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-charge"><span class="badge badge-primary">24</span> 🔋 你的充電方式 / 快樂源泉</label>
-                            <input type="text" id="input-present-charge" placeholder="例如：吃甜點 / 聽 Podcast / 狂揍手作貓咪">
-                        </div>
-
-                        <!-- 5. 你可以給團隊的硬核支援 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-support-hard"><span class="badge badge-primary">25</span> 💡 你可以給團隊的硬核支援</label>
-                            <input type="text" id="input-present-support-hard" placeholder="例如：熟練 Figma / 幫忙除錯 SQL / 擅長寫文件">
-                        </div>
-
-                        <!-- 6. 你可以給團隊的私房支援 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-support-soft"><span class="badge badge-primary">26</span> 🍔 你可以給團隊的私房支援</label>
-                            <input type="text" id="input-present-support-soft" placeholder="例如：知道全公司最讚便當 / 團購食物大師">
-                        </div>
-
-                        <!-- 7. 你現在最需要的「工作應援」 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-need-work"><span class="badge badge-primary">27</span> 🆘 你現在最需要的「工作應援」</label>
-                            <input type="text" id="input-present-need-work" placeholder="例如：求 Code Review / 需要數據工具教學">
-                        </div>
-
-                        <!-- 8. 你現在最需要的「生活應援」 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-need-life"><span class="badge badge-primary">28</span> 🏃‍♂️ 你現在最需要的「生活應援」</label>
-                            <input type="text" id="input-present-need-life" placeholder="例如：求運動揪團夥伴 / 求推薦好看美劇">
-                        </div>
-
-                        <!-- 9. 你最欣賞 PM 團隊的一個優點 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-admire"><span class="badge badge-primary">29</span> ❤️ 你最欣賞 PM 團隊的一個優點</label>
-                            <input type="text" id="input-present-admire" placeholder="例如：大家反應很快 / 包容度很高">
-                        </div>
-
-                        <!-- 10. 想給現在 the PM 團隊大家的一句話 -->
-                        <div class="form-group full-width">
-                            <label for="input-present-message"><span class="badge badge-primary">30</span> 💌 想給現在的 PM 團隊大家的一句話</label>
-                            <input type="text" id="input-present-message" placeholder="例如：下半年大家一起加油，準時下班！">
+                        <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+                            <button type="button" id="step-3-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
+                            <button type="button" id="step-3-finish" class="btn btn-generate">完成冒險 / 登入行程 <i class="fa-solid fa-check"></i></button>
                         </div>
                     </div>
-
-                    <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
-                        <button type="button" id="step-3-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
-                        <button type="button" id="step-3-finish" class="btn btn-generate">完成冒險 / 登入行程 <i class="fa-solid fa-check"></i></button>
-                    </div>
-                </div>
             </form>
             </section>
 
