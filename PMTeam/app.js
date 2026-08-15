@@ -26,31 +26,55 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const steps = [document.getElementById("step-1-container"), document.getElementById("step-2-container"), document.getElementById("step-3-container")];
-    const progressSteps = [document.getElementById("progress-step-1"), document.getElementById("progress-step-2"), document.getElementById("progress-step-3"), document.getElementById("progress-step-4")];
-    const progressLines = [document.getElementById("progress-line-1"), document.getElementById("progress-line-2"), document.getElementById("progress-line-3")];
+    const steps = [
+        document.getElementById("step-1-container"),
+        document.getElementById("step-2-container"),
+        document.getElementById("step-3-container")
+    ];
+    const progressSteps = [
+        document.getElementById("progress-step-1"),
+        document.getElementById("progress-step-2"),
+        document.getElementById("progress-step-3"),
+        document.getElementById("progress-step-4")
+    ];
+    const progressLines = [
+        document.getElementById("progress-line-1"),
+        document.getElementById("progress-line-2"),
+        document.getElementById("progress-line-3")
+    ];
 
     function goToStep(stepNum) {
+        console.log("Navigating to step:", stepNum);
         const formSection = document.querySelector(".form-section");
         const endingScreen = document.getElementById("passport-ending-screen");
-        console.log("Navigating to step:", stepNum);
         
         if (stepNum <= 3) {
             if (formSection) formSection.classList.remove("hidden");
             if (endingScreen) endingScreen.classList.add("hidden");
+            
             steps.forEach((s, i) => {
                 if (s) {
-                    if (i === stepNum - 1) s.classList.remove("hidden");
-                    else s.classList.add("hidden");
+                    if (i === stepNum - 1) {
+                        s.classList.remove("hidden");
+                        s.style.display = "block";
+                    } else {
+                        s.classList.add("hidden");
+                        s.style.display = "none";
+                    }
                 }
             });
         } else {
             if (formSection) formSection.classList.add("hidden");
-            if (endingScreen) endingScreen.classList.remove("hidden");
+            if (endingScreen) {
+                endingScreen.classList.remove("hidden");
+                endingScreen.style.display = "block";
+            }
         }
         
-        progressSteps.forEach((ps, i) => ps && (i < stepNum ? ps.classList.add("active") : ps.classList.remove("active")));
-        progressLines.forEach((pl, i) => pl && (pl.style.backgroundColor = i < stepNum - 1 ? "#bca46a" : "rgba(188, 164, 106, 0.2)"));
+        progressSteps.forEach((ps, i) => ps && ps.classList.toggle("active", i < stepNum));
+        progressLines.forEach((pl, i) => {
+            if (pl) pl.style.backgroundColor = i < stepNum - 1 ? "#bca46a" : "rgba(188, 164, 106, 0.2)";
+        });
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -88,8 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 const group = btn.closest(".multi-choice-group");
                 const other = document.getElementById(group.dataset.question + "-other");
                 if (other) {
-                    if (btn.classList.contains("active")) { other.classList.remove("hidden"); other.focus(); }
-                    else { other.classList.add("hidden"); other.value = ""; }
+                    if (btn.classList.contains("active")) {
+                        other.classList.remove("hidden");
+                        other.style.display = "inline-block";
+                        other.focus();
+                    } else {
+                        other.classList.add("hidden");
+                        other.style.display = "none";
+                        other.value = "";
+                    }
                 }
             }
         });
@@ -136,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (galleryEmpty) galleryEmpty.classList.add("hidden");
         if (galleryGrid) {
             galleryGrid.classList.remove("hidden");
+            galleryGrid.style.display = "grid";
             galleryGrid.insertBefore(div.firstChild, galleryGrid.firstChild);
         }
     }
