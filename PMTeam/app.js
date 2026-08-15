@@ -1060,31 +1060,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 渲染自填卡片到藝廊
     function renderToGallery() {
-        // 直接從 inputs 擷取目前填寫值，不使用 defaults，若為空則顯示空白
+        // 直接從 inputs 擷取目前填寫值
         const currentName = (inputs.name && inputs.name.value.trim()) || "";
         const inputBg = inputs.background && inputs.background.value.trim();
         const currentBackground = inputBg ? `🎓 ${inputBg}` : "";
+        
+        // 對照 Step 1 題目的內容
         const currentExp = (inputs.exp && inputs.exp.value.trim()) || "";
         const currentPivot = (inputs.pivot && inputs.pivot.value.trim()) || "";
-        const currentPit = (inputs.pit && inputs.pit.value.trim()) || "";
-        const currentProud = (inputs.proud && inputs.proud.value.trim()) || "";
-        const currentFunfact = (inputs.funfact && inputs.funfact.value.trim()) || "";
-        const currentInfluence = (inputs.influence && inputs.influence.value.trim()) || "";
-        const currentQuote = (inputs.quote && inputs.quote.value.trim()) || "";
         
-        // 暱稱前兩個字作為頭像文字，若無則顯示 "?"
+        // 暱稱前兩個字作為頭像文字
         const currentAvatar = currentName ? currentName.substring(0, 2).toUpperCase() : "?";
         
         const currentStep2Answers = updateStep2Selections();
         const currentStep3Answers = collectStep3Answers();
 
-        // 生成一個不重複的隨機背景顏色，讓藝廊更繽紛
         const hue = Math.floor(Math.random() * 360);
         const randomAvatarBg = `linear-gradient(135deg, hsl(${hue}, 70%, 45%) 0%, hsl(${(hue + 40) % 360}, 80%, 35%) 100%)`;
-
         const lockClass = isGalleryUnlocked ? "" : "is-locked";
 
-        // 建立精巧的全新畫像卡 HTML 結構
         const cardHtml = `
             <div class="profile-card ${lockClass}" style="opacity: 0; transform: scale(0.9); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
                 <div class="card-status-bar"></div>
@@ -1113,40 +1107,26 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p>${currentPivot}</p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="card-item font-danger">
-                        <span class="card-icon"><i class="fa-solid fa-skull-crossbones"></i></span>
-                        <div class="card-item-content">
-                            <label>踩過最大的坑</label>
-                            <p>${currentPit}</p>
-                        </div>
-                    </div>
+                <div class="card-tabs">
+                    <button type="button" class="card-tab active" data-tab="step2">Step 2</button>
+                    <button type="button" class="card-tab" data-tab="step3">Step 3</button>
+                </div>
+                <div class="card-tab-panels">
+                    <div class="card-tab-panel active" data-panel="step2">${buildStep2PanelHtml(currentStep2Answers)}</div>
+                    <div class="card-tab-panel" data-panel="step3">${buildStep3PanelHtml(currentStep3Answers)}</div>
+                </div>
 
-                    <div class="card-item">
-                        <span class="card-icon"><i class="fa-solid fa-trophy"></i></span>
-                        <div class="card-item-content">
-                            <label>最引以為傲的事</label>
-                            <p>${currentProud}</p>
-                        </div>
-                    </div>
-
-                    <div class="card-grid-2">
-                        <div class="card-item">
-                            <span class="card-icon"><i class="fa-solid fa-dragon"></i></span>
-                            <div class="card-item-content">
-                                <label>Fun Fact</label>
-                                <p>${currentFunfact}</p>
-                            </div>
-                        </div>
-                        <div class="card-item">
-                            <span class="card-icon"><i class="fa-solid fa-book"></i></span>
-                            <div class="card-item-content">
-                                <label>推薦書/電影</label>
-                                <p>${currentInfluence}</p>
-                            </div>
-                        </div>
+                <div class="card-footer">
+                    <div class="quote-container">
+                        <i class="fa-solid fa-quote-left quote-icon-left"></i>
+                        <p id="card-quote">"PM Flight Journey"</p>
+                        <i class="fa-solid fa-quote-right quote-icon-right"></i>
                     </div>
                 </div>
+            </div>
+        `;
 
                 <div class="card-tabs">
                     <button type="button" class="card-tab active" data-tab="step2">Step 2</button>
