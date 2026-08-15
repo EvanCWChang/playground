@@ -91,22 +91,60 @@ document.addEventListener("DOMContentLoaded", () => {
         const exp = inputs.exp.value.trim() || "";
         const pvt = inputs.pivot.value.trim() || "";
         const avatar = name.substring(0, 2).toUpperCase();
+        const hue = Math.floor(Math.random() * 360);
+        const randomAvatarBg = `linear-gradient(135deg, hsl(${hue}, 70%, 45%) 0%, hsl(${(hue + 40) % 360}, 80%, 35%) 100%)`;
         const cardHtml = `
-            <div class="profile-card">
+            <div class="profile-card" style="opacity: 0; transform: scale(0.9); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                <div class="card-status-bar"></div>
                 <div class="card-header">
-                    <div class="card-avatar" style="background:#bca46a">${avatar}</div>
-                    <div class="card-header-info"><h3>${name}</h3><p class="card-sub">${bg}</p></div>
+                    <div class="card-avatar" style="background: ${randomAvatarBg}">${avatar}</div>
+                    <div class="card-header-info">
+                        <h3>${name}</h3>
+                        <p class="card-sub">🎓 ${bg}</p>
+                    </div>
                 </div>
+                <div class="customs-stamp">APPROVED / CLEARED</div>
                 <div class="card-body">
-                    <div class="card-item"><label>這幾年的有趣故事</label><p>${exp}</p></div>
-                    <div class="card-item"><label>職涯 Pivot 轉折點</label><p>${pvt}</p></div>
+                    <div class="card-item">
+                        <span class="card-icon"><i class="fa-solid fa-plane-departure"></i></span>
+                        <div class="card-item-content">
+                            <label>這幾年的有趣故事</label>
+                            <p>${exp}</p>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-icon"><i class="fa-solid fa-arrows-spin"></i></span>
+                        <div class="card-item-content">
+                            <label>職涯 Pivot 轉折點</label>
+                            <p>${pvt}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer"><p>PM Flight Journey</p></div>
+                <div class="card-tabs">
+                    <button type="button" class="card-tab active" data-tab="step2">Step 2</button>
+                    <button type="button" class="card-tab" data-tab="step3">Step 3</button>
+                </div>
+                <div class="card-tab-panels">
+                    <div class="card-tab-panel active" data-panel="step2"><p class="card-empty-state">尚未完成 Step 2</p></div>
+                    <div class="card-tab-panel" data-panel="step3"><p class="card-empty-state">尚未完成 Step 3</p></div>
+                </div>
+                <div class="card-footer">
+                    <div class="quote-container">
+                        <i class="fa-solid fa-quote-left quote-icon-left"></i>
+                        <p id="card-quote">"PM Flight Journey"</p>
+                        <i class="fa-solid fa-quote-right quote-icon-right"></i>
+                    </div>
+                </div>
+            </div>`;
+                </div>
+                </div>
             </div>`;
         const div = document.createElement("div");
         div.innerHTML = cardHtml.trim();
         if (galleryEmpty) galleryEmpty.style.display = "none";
         if (galleryGrid) {
+            const cardNode = div.firstChild;
+            setTimeout(() => { cardNode.style.opacity = "1"; cardNode.style.transform = "scale(1)"; }, 50);
             galleryGrid.classList.remove("hidden");
             galleryGrid.style.display = "grid";
             galleryGrid.insertBefore(div.firstChild, galleryGrid.firstChild);
