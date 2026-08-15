@@ -85,6 +85,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (submitBtn) {
+    const s2prev = document.getElementById("step-2-prev");
+    const s2next = document.getElementById("step-2-next");
+    const s3prev = document.getElementById("step-3-prev");
+    const s3finish = document.getElementById("step-3-finish");
+
+    if (s2prev) s2prev.addEventListener("click", () => goToStep(1));
+    if (s2next) s2next.addEventListener("click", () => goToStep(3));
+    if (s3prev) s3prev.addEventListener("click", () => goToStep(2));
+    if (s3finish) s3finish.addEventListener("click", () => goToStep(4));
+
         submitBtn.addEventListener("click", () => {
             renderToGallery();
             goToStep(2);
