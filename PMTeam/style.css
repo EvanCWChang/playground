@@ -3743,23 +3743,25 @@ body {
     outline: none !important;
 }
 
-#step-1-container input,
+/* 強制統一 Step 1 所有輸入框外觀 */
+#step-1-container input[type="text"],
 #step-1-container textarea {
     background-color: #ffffff !important;
-    border: 1px solid #cbd5e1 !important; /* Standard border color */
-    border-radius: 8px !important;
-    padding: 0.75rem !important;
+    border: 1px solid #cbd5e1 !important; /* 統一使用 Q1 的淺灰色邊框 */
+    border-radius: 12px !important;       /* 統一使用 Q1 的圓角程度 */
+    padding: 12px 16px !important;
     font-size: 0.95rem !important;
     color: #1e293b !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-    transition: border-color 0.2s, box-shadow 0.2s !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    outline: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
 }
 
 #step-1-container input:focus,
 #step-1-container textarea:focus {
     border-color: #bca46a !important;
     box-shadow: 0 0 0 3px rgba(188, 164, 106, 0.2) !important;
-    outline: none !important;
 }
