@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const submitBtn = document.getElementById("submit-btn");
+    const multiChoiceOptions = Array.from(document.querySelectorAll(".multi-choice-option"));
     const galleryEmpty = document.getElementById("gallery-empty");
     const galleryGrid = document.getElementById("gallery-grid");
 
@@ -67,6 +68,20 @@ document.addEventListener("DOMContentLoaded", () => {
         onboardingScreen.classList.add("hidden");
         mainContent.classList.remove("hidden");
         mainContent.style.opacity = "1";
+    });
+
+    multiChoiceOptions.forEach(btn => {
+        btn.addEventListener("click", () => {
+            btn.classList.toggle("active");
+            if (btn.dataset.choice === "E") {
+                const group = btn.closest(".multi-choice-group");
+                const other = document.getElementById(group.dataset.question + "-other");
+                if (other) {
+                    if (btn.classList.contains("active")) { other.classList.remove("hidden"); other.focus(); }
+                    else { other.classList.add("hidden"); other.value = ""; }
+                }
+            }
+        });
     });
 
     if (submitBtn) {
