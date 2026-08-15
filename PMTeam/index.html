@@ -28,15 +28,67 @@
             <p class="hero-description">職涯這趟長途飛行裡，能坐在相鄰位置成為旅伴，是一期一會的幸運。</p>
         </div>
         <div class="boarding-pass" id="boarding-pass-card">
+            <!-- 登機票左半部：主機票 -->
             <div class="ticket-left">
-                <div class="ticket-header"><span class="airline">XC ╳ PM</span><span class="flight-no">JX-2026</span></div>
-                <div class="ticket-details">
-                    <div class="detail-group"><label>PASSENGER NAME</label><input type="text" id="boarding-name" placeholder="請輸入名字"></div>
-                    <div class="detail-group"><label>DESTINATION</label><input type="text" id="boarding-destination" placeholder="目的地"></div>
+                <div class="ticket-header">
+                    <span class="airline"><i class="fa-solid fa-star"></i> XC ╳ PM</span>
+                    <span class="flight-no">FLIGHT JX-2026</span>
+                </div>
+                <div class="ticket-body">
+                    <div class="airport-codes">
+                        <div class="code-block">
+                            <span class="code">PAST</span>
+                        </div>
+                        <div class="plane-animation">
+                            <i class="fa-solid fa-plane plane-icon"></i>
+                        </div>
+                        <div class="code-block text-right">
+                            <span class="code">FUTR</span>
+                        </div>
+                    </div>
+                    <div class="ticket-details">
+                        <div class="detail-group">
+                            <label>PASSENGER NAME / 旅客姓名</label>
+                            <input type="text" id="boarding-name" placeholder="請輸入名字" required autocomplete="off">
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-group">
+                                <label>DESTINATION / 目的地</label>
+                                <input type="text" id="boarding-destination" placeholder="請輸入此時最想去的國家" required autocomplete="off">
+                            </div>
+                            <div class="detail-group" style="min-width: 100px;">
+                                <label>GATE / 登機門</label>
+                                <span class="detail-value" style="display: block; margin-top: 5px;">小樹屋</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="ticket-divider"><div class="notch top"></div><div class="dashed-line"></div><div class="notch bottom"></div></div>
-            <div class="ticket-right"><div class="stub-body"><div class="detail-group"><label>GATE</label><span class="detail-value">小樹屋</span></div></div></div>
+            
+            <!-- 登機票切撕線與圓形凹孔 -->
+            <div class="ticket-divider">
+                <div class="notch top"></div>
+                <div class="dashed-line"></div>
+                <div class="notch bottom"></div>
+            </div>
+            
+            <!-- 登機票右半部：存根聯 -->
+            <div class="ticket-right">
+                <div class="stub-body">
+                    <div class="detail-group">
+                        <label>FLIGHT / 航班</label>
+                        <span class="detail-value" style="font-size: 0.85rem; color: #bca46a;">JX-2026</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>DESTINATION / 目的地</label>
+                        <span class="detail-value" id="stub-destination" style="font-size: 0.8rem;">Future & Growth</span>
+                    </div>
+                    <div class="detail-group">
+                        <label>GATE / 登機門</label>
+                        <span class="detail-value" style="font-size: 0.8rem;">小樹屋</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="button" id="boarding-btn" class="btn btn-boarding">🎫 領取機票</button>
     </div>
