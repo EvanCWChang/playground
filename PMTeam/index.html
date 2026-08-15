@@ -170,8 +170,8 @@
 
                         <!-- 3. 最酷海外/異地經歷 -->
                         <div class="form-group full-width">
-                            <label for="input-exp"><span class="badge badge-primary">3</span> 過往最酷的海外/異地經歷</label>
-                            <input type="text" id="input-exp" placeholder="例如：交換學生 / 遊學 / 獨旅經歷">
+                            <label for="input-exp"><span class="badge badge-primary">3</span> 這幾年的有趣故事</label>
+                            <input type="text" id="input-exp" placeholder="例如：去過 OO 交換 / 遊學 / 獨旅 / GapYear / 特殊技能 / 會滑雪">
                         </div>
 
                         <!-- 4. 重要 Pivot 轉折點 -->
@@ -180,34 +180,7 @@
                             <input type="text" id="input-pivot" placeholder="安排轉行 PM 的那天">
                         </div>
 
-                        <!-- 7. 隱藏才藝 / 特殊專長 -->
                         <div class="form-group full-width">
-                            <label for="input-talent"><span class="badge badge-primary">7</span> 隱藏才藝 / 特殊專長</label>
-                            <input type="hidden" id="input-talent" value="">
-                            <p style="margin: 0.45rem 0 0.8rem; color: var(--text-muted); font-size: 0.94rem;">選 1～3 個你想分享的能力或愛好</p>
-                            <div class="option-chip-group" id="talent-options">
-                                <button type="button" class="option-chip" data-value="繪畫">🎨 繪畫</button>
-                                <button type="button" class="option-chip" data-value="滑板">🛹 滑板</button>
-                                <button type="button" class="option-chip" data-value="滑雪">🎿 滑雪</button>
-                                <button type="button" class="option-chip" data-value="樂器">🎵 樂器</button>
-                                <button type="button" class="option-chip" data-value="路跑">🏃 路跑</button>
-                                <button type="button" class="option-chip" data-value="烹飪">🍳 烹飪</button>
-                                <button type="button" class="option-chip" data-value="攝影">📷 攝影</button>
-                                <button type="button" class="option-chip" data-value="健身">💪 健身</button>
-                                <button type="button" class="option-chip" data-value="書法">✍️ 書法</button>
-                                <button type="button" class="option-chip" data-value="烘焙">🥐 烘焙</button>
-                                <button type="button" class="option-chip" data-value="園藝">🌱 園藝</button>
-                                <button type="button" class="option-chip" data-value="旅行">🧳 旅行</button>
-                                <button type="button" class="option-chip" data-value="打球">🏀 打球</button>
-                                <button type="button" class="option-chip" data-value="桌遊">🎲 桌遊</button>
-                                <button type="button" class="option-chip" data-value="編程">💻 編程</button>
-                                <button type="button" class="option-chip" data-value="手作">🧵 手作</button>
-                                <button type="button" class="option-chip" data-value="潛水">🤿 潛水</button>
-                                <button type="button" class="option-chip" data-value="跳舞">💃 跳舞</button>
-                                <button type="button" class="option-chip" data-value="吉他">🎸 吉他</button>
-                                <button type="button" class="option-chip" data-value="電影">🎬 電影</button>
-                            </div>
-                        </div>
                         <div class="form-actions form-actions-center">
                             <button type="button" id="submit-btn" class="btn btn-generate">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> ✨ 生成客製化機票 (下一步)
@@ -283,103 +256,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">15</span> Q5. 【壞習慣】🚫 下半年你最想徹底戒掉的職場壞習慣是什麼？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
-                                <div class="option-chip-group multi-choice-group" data-question="q5">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="太晚說不：不敢拒絕不合理需求，導致團隊跟自己一起加班">A. 太晚說不：不敢拒絕不合理需求，導致團隊跟自己一起加班</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="拖延關鍵溝通：棘手問題想太久才找人討論，最後演變成大火災">B. 拖延關鍵溝通：棘手問題想太久才找人討論，最後演變成大火災</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="憑直覺決策：缺乏數據或用戶驗證就憑感覺定規格，事後再補救">C. 憑直覺決策：缺乏數據或用戶驗證就憑感覺定規格，事後再補救</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="完美主義過頭：規格收得太細，導致產品上線太慢錯過市場時機">D. 完美主義過頭：規格收得太細，導致產品上線太慢錯過市場時機</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q5-other" placeholder="請填寫其他選項">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">16</span> Q6. 【新習慣】🧘 下半年你想建立什麼個人新習慣？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
-                                <div class="option-chip-group multi-choice-group" data-question="q6">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="工作自動化：善用 AI / Notion 工具，將重複性行政工作縮短一半">A. 工作自動化：善用 AI / Notion 工具，將重複性行政工作縮短一半</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="知識輸出：建立每週/每個月寫 Product Blog 或學習筆記的習慣">B. 知識輸出：建立每週/每個月寫 Product Blog 或學習筆記的習慣</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="定期高質量復盤：專案結束後徹底做 Retrospective，不重蹈覆轍">C. 定期高質量復盤：專案結束後徹底做 Retrospective，不重蹈覆轍</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="準時關機下班：建立工作與生活的清晰界線，給自己完整的休息時間">D. 準時關機下班：建立工作與生活的清晰界線，給自己完整的休息時間</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q6-other" placeholder="請填寫其他選項">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">17</span> Q7. 【私下目標】🌈 下半年私下最想完成的生活目標是什麼？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
-                                <div class="option-chip-group multi-choice-group" data-question="q7">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="身體解鎖：養成固定運動習慣、解鎖一項新運動或達成體態目標">A. 身體解鎖：養成固定運動習慣、解鎖一項新運動或達成體態目標</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="技能與興趣：學會一項非工作相關的技能（如調酒、烹飪、樂器、語言）">B. 技能與興趣：學會一項非工作相關的技能（如調酒、烹飪、樂器、語言）</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="深度閱讀 / 考照：讀完 X 本經典好書，或考取一張專業證照">C. 深度閱讀 / 考照：讀完 X 本經典好書，或考取一張專業證照</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="體驗生活：安排一場告別工作手機的完全放空假期">D. 體驗生活：安排一場告別工作手機的完全放空假期</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q7-other" placeholder="請填寫其他選項">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">18</span> Q8. 【旅遊充電】✈️ 下半年最想去哪裡旅遊充電？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
-                                <div class="option-chip-group multi-choice-group" data-question="q8">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="日韓近郊放鬆：去日本/韓國滑雪、美食爆吃、逛街充電">A. 日韓近郊放鬆：去日本/韓國滑雪、美食爆吃、逛街充電</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="東南亞海島度假：去峇里島/泰國海灘躺平、按摩、享受陽光">B. 東南亞海島度假：去峇里島/泰國海灘躺平、按摩、享受陽光</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label=" 歐美深度探索：去歐洲/美洲體驗不同文化、建築與大自然">C. 歐美深度探索：去歐洲/美洲體驗不同文化、建築與大自然</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="國內微旅行：找個山林包棟民宿或露營，享受週末露營/小旅行">D. 國內微旅行：找個山林包棟民宿或露營，享受週末露營/小旅行</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q8-other" placeholder="請填寫其他選項">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">19</span> Q9. 【遠期願景】🌟 理想中的 Northern Star：1-2 年後的你希望在哪裡？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
-                                <div class="option-chip-group multi-choice-group" data-question="q9">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="垂直升遷：成為能帶領團隊、決定產品戰略的 Senior PM / Team Lead">A. 垂直升遷：成為能帶領團隊、決定產品戰略的 Senior PM / Team Lead</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="橫向跳槽：進入夢寐以求的國際大廠、爆發期新創，大幅提升薪資天花板">B. 橫向跳槽：進入夢寐以求的國際大廠、爆發期新創，大幅提升薪資天花板</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="跨國 / 遠端：解鎖 100% 遠端工作或跨國團隊，達成數位遊牧生活">C. 跨國 / 遠端：解鎖 100% 遠端工作或跨國團隊，達成數位遊牧生活</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="斜槓 / 創業：擁有自己的個人 brand、Side Project 或成為獨立顧問">D. 斜槓 / 創業：擁有自己的個人 brand、Side Project 或成為獨立顧問</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q9-other" placeholder="請填寫其他選項">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label><span class="badge badge-primary">20</span> Q10. 【社群期待】如果接下來要參加 PM 社群交流，你最希望獲得什麼？</label>
-                                <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
-                                <div class="option-chip-group multi-choice-group" data-question="q10">
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="A" data-label="拓展視野：Coffee Chat、產業特務分享、跨界對談">A. 拓展視野：Coffee Chat、產業特務分享、跨界對談</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="B" data-label="實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作">B. 實戰技能：Product Building 工作坊、Case Study 拆解、技術/數據實作</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="C" data-label="職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享">C. 職涯解答：獵頭講座、Senior Mentor 門診、轉職過來人分享</button>
-                                    <button type="button" class="option-chip multi-choice-option" data-choice="D" data-label="抱團取暖：PM 吐槽與療癒同樂會、同儕交流">D. 抱團取暖：PM 吐槽與療癒同樂會、同儕交流</button>
-                                    <div class="option-other-wrapper">
-                                        <button type="button" class="option-chip multi-choice-option" data-choice="E" data-label="其他">E. 其他</button>
-                                        <input type="text" class="other-input hidden" id="q10-other" placeholder="請填寫其他選項">
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
                                 <button type="button" id="step-2-prev" class="btn btn-secondary" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1;">上一步</button>
                                 <button type="button" id="step-2-next" class="btn btn-generate">下一步 (行李整備) <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
-                    </div>
-
                     </div>
 
                     <!-- Step 3: Present 行李整備 -->
@@ -389,7 +270,7 @@
                             <p class="section-subtitle">檢查你擁有的專業技能，以及旅途中需要的夥伴支援</p>
                         </div>
                         <div class="form-grid">
-                            <!-- Q5. 社群期待 (搬移並重新編號) -->
+                            <!-- Q5. 社群期待 (從 Step 2 搬移) -->
                             <div class="form-group full-width">
                                 <label><span class="badge badge-primary">15</span> Q5. 【社群期待】如果接下來要參加 PM 社群交流，你最希望獲得什麼？</label>
                                 <p class="question-note" style="color: #7a7a7a;">可複選，若選擇 E：其他，請在下方填寫</p>
@@ -405,63 +286,53 @@
                                 </div>
                             </div>
 
-                            <!-- 16. 早上開機必備儀式 -->
                             <div class="form-group full-width">
                                 <label for="input-present-morning"><span class="badge badge-primary">16</span> ☕ 早上開機必備儀式</label>
                                 <input type="text" id="input-present-morning" placeholder="例如：美式咖啡 / 聽音樂 15 分鐘 / 漂浮發呆">
                             </div>
 
-                            <!-- 17. 跟你溝通最順暢的小撇步 -->
                             <div class="form-group full-width">
                                 <label for="input-present-comm"><span class="badge badge-primary">17</span> ⚡ 跟你溝通最順暢的小撇步</label>
                                 <input type="text" id="input-present-comm" placeholder="例如：比起打字更喜歡面聊 / 請直接講重點">
                             </div>
 
-                            <!-- 18. 你的地雷 / 能量歸零開關 -->
                             <div class="form-group full-width">
                                 <label for="input-present-mine"><span class="badge badge-primary">18</span> 🪫 你的地雷 / 能量歸零開關</label>
                                 <input type="text" id="input-present-mine" placeholder="例如：臨時插急件 / 沒目的的會議">
                             </div>
 
-                            <!-- 19. 你的充電方式 / 快樂源泉 -->
                             <div class="form-group full-width">
                                 <label for="input-present-charge"><span class="badge badge-primary">19</span> 🔋 你的充電方式 / 快樂源泉</label>
                                 <input type="text" id="input-present-charge" placeholder="例如：吃甜點 / 聽 Podcast / 狂揍手作貓咪">
                             </div>
 
-                            <!-- 20. 你可以給團隊的硬核支援 -->
                             <div class="form-group full-width">
                                 <label for="input-present-support-hard"><span class="badge badge-primary">20</span> 💡 你可以給團隊的硬核支援</label>
                                 <input type="text" id="input-present-support-hard" placeholder="例如：熟練 Figma / 幫忙除錯 SQL / 擅長寫文件">
                             </div>
 
-                            <!-- 21. 你可以給團隊的私房支援 -->
                             <div class="form-group full-width">
                                 <label for="input-present-support-soft"><span class="badge badge-primary">21</span> 🍔 你可以給團隊的私房支援</label>
                                 <input type="text" id="input-present-support-soft" placeholder="例如：知道全公司最讚便當 / 團購食物大師">
                             </div>
 
-                            <!-- 22. 你現在最需要的「工作應援」 -->
                             <div class="form-group full-width">
                                 <label for="input-present-need-work"><span class="badge badge-primary">22</span> 🆘 你現在最需要的「工作應援」</label>
                                 <input type="text" id="input-present-need-work" placeholder="例如：求 Code Review / 需要數據工具教學">
                             </div>
 
-                            <!-- 23. 你現在最需要的「生活應援」 -->
                             <div class="form-group full-width">
                                 <label for="input-present-need-life"><span class="badge badge-primary">23</span> 🏃‍♂️ 你現在最需要的「生活應援」</label>
                                 <input type="text" id="input-present-need-life" placeholder="例如：求運動揪團夥伴 / 求推薦好看美劇">
                             </div>
 
-                            <!-- 24. 你最欣賞 PM 團隊的一個優點 -->
                             <div class="form-group full-width">
                                 <label for="input-present-admire"><span class="badge badge-primary">24</span> ❤️ 你最欣賞 PM 團隊的一個優點</label>
                                 <input type="text" id="input-present-admire" placeholder="例如：大家反應很快 / 包容度很高">
                             </div>
 
-                            <!-- 25. 想給現在 the PM 團隊大家的一句話 -->
                             <div class="form-group full-width">
-                                <label for="input-present-message"><span class="badge badge-primary">25</span> 💌 想給現在的 PM 團隊大家的一句話</label>
+                                <label for="input-present-message"><span class="badge badge-primary">25</span> 💌 想給現在 the PM 團隊大家的一句話</label>
                                 <input type="text" id="input-present-message" placeholder="例如：下半年大家一起加油，準時下班！">
                             </div>
                         </div>
