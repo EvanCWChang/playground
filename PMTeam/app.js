@@ -1060,19 +1060,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 渲染自填卡片到藝廊
     function renderToGallery() {
-        // 直接從 inputs 與 defaults 擷取目前的所有填寫值
-        const currentName = (inputs.name && inputs.name.value.trim()) || defaults.name;
+        // 直接從 inputs 擷取目前填寫值，不使用 defaults，若為空則顯示空白
+        const currentName = (inputs.name && inputs.name.value.trim()) || "";
         const inputBg = inputs.background && inputs.background.value.trim();
-        const currentBackground = inputBg ? `🎓 ${inputBg}` : defaults.background;
-        const currentExp = (inputs.exp && inputs.exp.value.trim()) || defaults.exp;
-        const currentPivot = (inputs.pivot && inputs.pivot.value.trim()) || defaults.pivot;
-        const currentPit = (inputs.pit && inputs.pit.value.trim()) || defaults.pit;
-        const currentProud = (inputs.proud && inputs.proud.value.trim()) || defaults.proud;
-        const currentTalent = (inputs.talent && inputs.talent.value.trim()) || defaults.talent;
-        const currentFunfact = (inputs.funfact && inputs.funfact.value.trim()) || defaults.funfact;
-        const currentInfluence = (inputs.influence && inputs.influence.value.trim()) || defaults.influence;
-        const currentQuote = (inputs.quote && inputs.quote.value.trim()) || defaults.quote;
-        const currentAvatar = currentName.substring(0, 2).toUpperCase();
+        const currentBackground = inputBg ? `🎓 ${inputBg}` : "";
+        const currentExp = (inputs.exp && inputs.exp.value.trim()) || "";
+        const currentPivot = (inputs.pivot && inputs.pivot.value.trim()) || "";
+        const currentPit = (inputs.pit && inputs.pit.value.trim()) || "";
+        const currentProud = (inputs.proud && inputs.proud.value.trim()) || "";
+        const currentFunfact = (inputs.funfact && inputs.funfact.value.trim()) || "";
+        const currentInfluence = (inputs.influence && inputs.influence.value.trim()) || "";
+        const currentQuote = (inputs.quote && inputs.quote.value.trim()) || "";
+        
+        // 暱稱前兩個字作為頭像文字，若無則顯示 "?"
+        const currentAvatar = currentName ? currentName.substring(0, 2).toUpperCase() : "?";
+        
         const currentStep2Answers = updateStep2Selections();
         const currentStep3Answers = collectStep3Answers();
 
@@ -1099,7 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card-item">
                         <span class="card-icon"><i class="fa-solid fa-plane-departure"></i></span>
                         <div class="card-item-content">
-                            <label>最酷異地經歷</label>
+                            <label>這幾年的有趣故事</label>
                             <p>${currentExp}</p>
                         </div>
                     </div>
@@ -1130,26 +1132,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <div class="card-grid-2">
                         <div class="card-item">
-                            <span class="card-icon"><i class="fa-solid fa-masks-theater"></i></span>
-                            <div class="card-item-content">
-                                <label>隱藏才藝</label>
-                                <p>${currentTalent}</p>
-                            </div>
-                        </div>
-                        <div class="card-item">
                             <span class="card-icon"><i class="fa-solid fa-dragon"></i></span>
                             <div class="card-item-content">
                                 <label>Fun Fact</label>
                                 <p>${currentFunfact}</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card-item">
-                        <span class="card-icon"><i class="fa-solid fa-book"></i></span>
-                        <div class="card-item-content">
-                            <label>推薦書/電影</label>
-                            <p>${currentInfluence}</p>
+                        <div class="card-item">
+                            <span class="card-icon"><i class="fa-solid fa-book"></i></span>
+                            <div class="card-item-content">
+                                <label>推薦書/電影</label>
+                                <p>${currentInfluence}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
