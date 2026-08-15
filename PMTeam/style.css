@@ -3701,3 +3701,43 @@ body {
     height: 100% !important;
 }
 
+
+/* Step 1 Specific Styles */
+#step-1-container .form-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
+}
+
+#step-1-container .form-group.full-width {
+    grid-column: span 2 !important;
+}
+
+#step-1-container label {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+#step-1-container input,
+#step-1-container textarea {
+    background-color: #ffffff !important; /* White inputs on khaki background */
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 0.75rem !important;
+    font-size: 0.95rem !important;
+    color: #1e293b !important;
+    width: 100% !important;
+    transition: all 0.2s ease !important;
+}
+
+#step-1-container input:focus,
+#step-1-container textarea:focus {
+    border-color: #bca46a !important;
+    box-shadow: 0 0 0 3px rgba(188, 164, 106, 0.1) !important;
+    outline: none !important;
+}
