@@ -64,7 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.classList.toggle("active");
             if (btn.dataset.choice === "E") {
                 const group = btn.closest(".multi-choice-group");
-                const other = document.getElementById(group.dataset.question + "-other");
+                const questionKey = group ? group.dataset.question : (btn.id ? btn.id.split("-")[0] : "q1");
+                const other = document.getElementById(questionKey + "-other");
                 if (other) {
                     if (btn.classList.contains("active")) { other.classList.remove("hidden"); other.style.display = "inline-block"; other.focus(); }
                     else { other.classList.add("hidden"); other.style.display = "none"; other.value = ""; }
@@ -80,10 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    document.getElementById("step-2-prev").addEventListener("click", () => goToStep(1));
-    document.getElementById("step-2-next").addEventListener("click", () => goToStep(3));
-    document.getElementById("step-3-prev").addEventListener("click", () => goToStep(2));
-    document.getElementById("step-3-finish").addEventListener("click", () => goToStep(4));
+    const s2prev = document.getElementById("step-2-prev");
+    const s2next = document.getElementById("step-2-next");
+    const s3prev = document.getElementById("step-3-prev");
+    const s3finish = document.getElementById("step-3-finish");
+
+    if (s2prev) s2prev.addEventListener("click", () => goToStep(1));
+    if (s2next) s2next.addEventListener("click", () => goToStep(3));
+    if (s3prev) s3prev.addEventListener("click", () => goToStep(2));
+    if (s3finish) s3finish.addEventListener("click", () => goToStep(4));
 
     function renderToGallery() {
         const name = inputs.name.value.trim() || "Passenger";
@@ -136,18 +142,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>
             </div>`;
-                </div>
-                </div>
-            </div>`;
+        
         const div = document.createElement("div");
         div.innerHTML = cardHtml.trim();
         if (galleryEmpty) galleryEmpty.style.display = "none";
         if (galleryGrid) {
             const cardNode = div.firstChild;
-            setTimeout(() => { cardNode.style.opacity = "1"; cardNode.style.transform = "scale(1)"; }, 50);
+            setTimeout(() => { 
+                cardNode.style.opacity = "1"; 
+                cardNode.style.transform = "scale(1)"; 
+            }, 50);
             galleryGrid.classList.remove("hidden");
             galleryGrid.style.display = "grid";
-            galleryGrid.insertBefore(div.firstChild, galleryGrid.firstChild);
+            galleryGrid.insertBefore(cardNode, galleryGrid.firstChild);
         }
     }
 });
