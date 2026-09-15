@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>俄羅斯方塊</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../game.js" defer></script>
+
+  <!-- CL-SDK-GENERATED-CODE-START -->
+  <link
+    rel="stylesheet"
+    href="https://websdk.cresclab.com/latest/default-ui/dist/default.css"
+  />
+  <script>
+    window.onClWidgetScriptLoad = function () {
+      window.clWidget = window.createClWidget({
+        clWebChannelId: "CL-CD6519EC",
+        plugins: [clPluginDataLayer()],
+      });
+    };
+  </script>
+  <script
+    src="https://websdk.cresclab.com/latest/core/dist/iife/plugins/dataLayer/window.global.js"
+    defer
+  ></script>
+  <script
+    src="https://websdk.cresclab.com/latest/default-preset/dist/iife/production/window.global.js"
+    defer
+  ></script>
+  <!-- CL-SDK-GENERATED-CODE-END -->
+</head>
+<body>
+  <main class="app">
+    <section class="game-panel">
+      <h1>俄羅斯方塊</h1>
+
+      <div class="game-layout">
+        <canvas id="board" width="300" height="600"></canvas>
+
+        <aside class="sidebar">
+          <div class="stat">
+            <span>分數</span>
+            <strong id="score">0</strong>
+          </div>
+
+          <div class="stat">
+            <span>等級</span>
+            <strong id="level">1</strong>
+          </div>
+
+          <div class="stat">
+            <span>消除行數</span>
+            <strong id="lines">0</strong>
+          </div>
+
+          <div class="next-box">
+            <span>下一個</span>
+            <canvas id="next" width="120" height="120"></canvas>
+          </div>
+
+          <button id="startBtn">開始</button>
+          <button id="pauseBtn">暫停</button>
+          <button id="restartBtn">重新開始</button>
+        </aside>
+      </div>
+
+      <div class="mobile-controls">
+        <button data-action="left">左</button>
+        <button data-action="rotate">旋轉</button>
+        <button data-action="right">右</button>
+        <button data-action="down">下</button>
+        <button data-action="drop">落下</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
